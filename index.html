@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F7F8FA">
-<title>AMH Platform by Ayman Al-Hayek: applied statistics, Lean Six Sigma and industrial engineering</title>
-<meta name="description" content="AMH Platform by Ayman Al-Hayek: learn applied statistics, Lean Six Sigma (White to Master Black Belt) and industrial engineering with labs, games, a scientific calculator and a 600-question bank.">
+<title>AMH Corner by Ayman Al-Hayek: applied statistics, Lean Six Sigma and industrial engineering</title>
+<meta name="description" content="AMH Corner by Ayman Al-Hayek: learn applied statistics, Lean Six Sigma (White to Master Black Belt) and industrial engineering with labs, games, a scientific calculator and a 600-question bank.">
 <meta name="theme-color" content="#0B1520" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%230B1220'/%3E%3Cpath fill='%23F7F8FA' d='M12 33V15h4.6L24 25l7.4-10H36v18h-4.2V22l-6.2 8.4h-3.2L16.2 22v11z'/%3E%3Ccircle cx='39.2' cy='8.8' r='3.1' fill='%23E5484D'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%230B1220'/%3E%3Cpath fill='%23F7F8FA' d='M12 10h6v22h18v6H12z'/%3E%3Crect x='20.5' y='22.5' width='7' height='7' rx='1' fill='%23E5484D'/%3E%3C/svg%3E">
 <meta name="author" content="Ayman Al-Hayek">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap">
 <style>
 /* =========================================================
-   AMH Platform: "control-chart paper" visual system
+   AMH Corner: "control-chart paper" visual system
    Paper + slate ink; colour only where a control chart uses it:
    red = limits/alarms, green = centre line/OK, amber = warning zone,
    blue = anything you can click.
@@ -1025,50 +1025,67 @@ body.dark .ls-t{color:#F0A63A}body.dark .la-t{color:#EC5FA5}
 /* ===== AMH Platform: logo and opening intro ===== */
 /* ---------- intro ---------- */
 body.intro-on{overflow:hidden}
-#intro{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 40%,#13243A 0%,#0B1520 55%,#070E16 100%);color:#EEF2F5;cursor:pointer;overflow:hidden;
-  transition:clip-path .85s cubic-bezier(.7,0,.2,1),opacity .85s ease;clip-path:circle(150% at 50% 50%)}
-#intro::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;
-  -webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 45%,#000 20%,transparent 75%);animation:in-fade 1.4s ease both}
-#intro.out{clip-path:circle(0% at 50% 42%);opacity:.6;pointer-events:none}
+#intro{--beat:0;position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 40%,#111C2B 0%,#0A111A 55%,#05090E 100%);color:#EEF2F5;overflow:hidden;cursor:default;
+  transition:clip-path 1s cubic-bezier(.7,0,.2,1),opacity 1s ease;clip-path:inset(0 0 0 0 round 0)}
+#intro::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 15%,transparent 72%);mask-image:radial-gradient(ellipse at 50% 45%,#000 15%,transparent 72%);opacity:calc(.7 + var(--beat) * .8)}
+#intro.out{clip-path:inset(46% 46% 46% 46% round 24px);opacity:0;pointer-events:none}
 .in-cv{position:absolute;inset:0;pointer-events:none}
-.in-stage{position:relative;width:min(720px,92vw);text-align:center;display:flex;flex-direction:column;align-items:center}
-.in-logo{width:132px;height:132px}
-.in-logo svg{width:100%;height:100%;opacity:0;transform:scale(.96);transition:opacity .45s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
-#intro.logo-on .in-logo svg{opacity:1;transform:none}
-#intro.logo-on .in-logo .s{animation:sig-pulse 1.6s ease-out .2s 2}
-@keyframes sig-pulse{0%{filter:drop-shadow(0 0 0 rgba(229,50,62,.9))}40%{filter:drop-shadow(0 0 7px rgba(229,50,62,.95))}100%{filter:drop-shadow(0 0 0 rgba(229,50,62,0))}}
-#intro .in-logo .t{fill:rgba(255,255,255,.035);stroke:rgba(255,255,255,.22);stroke-width:1}#intro .in-logo .g{fill:#F1F4F8}#intro .in-logo .s{fill:#FF5A5F}
 
-.in-word{margin:26px 0 0;display:flex;gap:.28em;align-items:baseline;justify-content:center;flex-wrap:wrap;font-family:"Geist","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;font-size:clamp(2.6rem,9vw,5.2rem);line-height:1;color:#F4F7FA}
-.in-word .w1{font-weight:700;letter-spacing:-.03em}
-.in-word .w2{font-weight:300;letter-spacing:-.035em;color:#AEBBCB}
-.in-word span span{display:inline-block;opacity:0;transform:translateY(.55em);filter:blur(6px)}
-#intro.words .in-word span span{animation:in-letter .7s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--d) * 45ms)}
-#intro.words .in-word .w2 span{animation-delay:calc(180ms + var(--d) * 38ms)}
-.in-name{font-size:clamp(1.05rem,2.6vw,1.4rem);margin:16px 0 4px;letter-spacing:.02em;font-weight:600;color:#EEF2F5;opacity:0}
+/* the gate: one tap starts sound and motion */
+.in-gate{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .5s ease,transform .6s ease;cursor:pointer}
+#intro.go .in-gate{opacity:0;transform:scale(.96);pointer-events:none}
+.in-gate-logo{width:96px;height:96px;animation:gate-breathe 3.2s ease-in-out infinite}
+#intro .gate .t{fill:none;stroke:rgba(255,255,255,.28);stroke-width:1}
+#intro .gate .g{fill:none;stroke:#EEF2F5;stroke-width:1.2;stroke-dasharray:110;stroke-dashoffset:110;animation:gate-draw 1.6s cubic-bezier(.6,0,.2,1) .2s forwards}
+#intro .gate .s{fill:#FF5A5F;opacity:0;animation:gate-in .5s ease 1.5s forwards}
+.in-gate-name{margin:6px 0 0;font:600 1.5rem "Geist","Segoe UI",system-ui,sans-serif;letter-spacing:-.03em;color:#F2F5F9}
+.in-tap{position:relative;margin-top:14px;font:600 1rem "Geist","Segoe UI",system-ui,sans-serif;color:#0A111A;background:#F2F5F9;border:none;border-radius:999px;padding:13px 30px;cursor:pointer}
+.in-tap-ring{position:absolute;inset:-6px;border-radius:999px;border:1px solid rgba(242,245,249,.5);animation:tap-ring 1.8s ease-out infinite}
+.in-tap:focus-visible{outline:3px solid #7EA2FF;outline-offset:6px}
+.in-gate-hint{margin:2px 0 0;font:500 .8rem "Geist","Segoe UI",system-ui,sans-serif;color:#7F92A6}
+@keyframes gate-draw{to{stroke-dashoffset:0}}
+@keyframes gate-in{to{opacity:1}}
+@keyframes gate-breathe{50%{transform:scale(1.03)}}
+@keyframes tap-ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.25,1.6);opacity:0}}
+
+/* the stage: logo, name and enter */
+.in-stage{position:relative;width:min(720px,92vw);text-align:center;display:flex;flex-direction:column;align-items:center;visibility:hidden}
+#intro.go .in-stage{visibility:visible}
+.in-logo{width:124px;height:124px}
+.in-logo svg{width:100%;height:100%;opacity:0;transform:scale(.9);transition:opacity .35s ease,transform .9s cubic-bezier(.2,1.4,.3,1)}
+#intro.logo-on .in-logo svg{opacity:1;transform:scale(calc(1 + var(--beat) * .06))}
+#intro .big .t{fill:rgba(255,255,255,.04);stroke:rgba(255,255,255,.22);stroke-width:1}
+#intro .big .g{fill:#F2F5F9}
+#intro .big .s{fill:#FF5A5F;filter:drop-shadow(0 0 calc(4px + var(--beat) * 14px) rgba(255,90,95,.8))}
+.in-word{margin:24px 0 0;display:flex;gap:.26em;align-items:baseline;justify-content:center;flex-wrap:wrap;font-family:"Geist","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;font-size:clamp(2.7rem,9.5vw,5.6rem);line-height:1;color:#F4F7FA}
+.in-word .w1{font-weight:700;letter-spacing:-.035em}
+.in-word .w2{font-weight:300;letter-spacing:-.04em;color:#AEBBCB}
+.in-word span span{display:inline-block;opacity:0;transform:translate(-.35em,.45em) rotate(-8deg);filter:blur(8px);transform-origin:0 100%}
+#intro.words .in-word span span{animation:in-letter .8s cubic-bezier(.2,.9,.2,1) forwards;animation-delay:calc(var(--d) * 55ms)}
+#intro.words .in-word .w2 span{animation-delay:calc(200ms + var(--d) * 45ms)}
+.in-name{font:600 clamp(1.05rem,2.6vw,1.35rem) "Geist","Segoe UI",system-ui,sans-serif;margin:18px 0 4px;color:#EEF2F5;opacity:0}
 .in-name span{font-weight:400;color:#8FA2B4;margin-right:4px}
-.in-tag{font-size:clamp(.82rem,1.9vw,.98rem);color:#8FA2B4;margin:0 auto;max-width:36em;opacity:0}
-#intro.words .in-name{animation:in-up .7s ease .55s forwards}
-#intro.words .in-tag{animation:in-up .7s ease .72s forwards}
-.in-cap{display:flex;align-items:center;gap:10px;margin:26px auto 18px;width:min(260px,64vw);font:600 .72rem/1 "Segoe UI",system-ui,Arial,sans-serif;color:#6F8396;opacity:0}
-.in-cap i{flex:1;height:2px;background:rgba(255,255,255,.12);border-radius:2px;position:relative;overflow:hidden}
-.in-cap i::after{content:"";position:absolute;inset:0;width:0;background:linear-gradient(90deg,#5FC79F,#7EA2FF)}
-#intro.words .in-cap{animation:in-fade .4s ease .85s forwards}
-#intro.words .in-cap i::after{animation:in-load 2.2s linear .9s forwards}
-.in-go{font:600 1rem "Segoe UI",system-ui,Arial,sans-serif;color:#0B1520;background:#EEF2F5;border:none;border-radius:999px;padding:12px 30px;cursor:pointer;opacity:0;transition:background .2s,transform .2s}
-.in-go:hover{background:#fff;transform:translateY(-1px)}
-#intro.words .in-go{animation:in-up .6s ease 1s forwards}
-.in-go:focus-visible{outline:3px solid #7EA2FF;outline-offset:3px}
-.in-skip{position:absolute;right:max(18px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));font:600 .82rem "Segoe UI",system-ui,Arial,sans-serif;color:#9FB0BF;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 14px;cursor:pointer}
-.in-skip:hover{color:#fff;border-color:#fff}
-@keyframes in-fade{to{opacity:1}}
+.in-tag{font:400 clamp(.84rem,1.9vw,.98rem) "Geist","Segoe UI",system-ui,sans-serif;color:#8FA2B4;margin:0 auto;max-width:36em;opacity:0}
+#intro.words .in-name{animation:in-up .7s ease .6s forwards}
+#intro.words .in-tag{animation:in-up .7s ease .78s forwards}
+.in-go{margin-top:26px;font:600 1rem "Geist","Segoe UI",system-ui,sans-serif;color:#0A111A;background:#F2F5F9;border:none;border-radius:999px;padding:13px 30px;cursor:pointer;opacity:0;transition:transform .2s}
+.in-go:hover{transform:translateY(-1px)}
+#intro.words .in-go{animation:in-up .6s ease 1.05s forwards}
+.in-go:focus-visible{outline:3px solid #7EA2FF;outline-offset:4px}
+.in-ctl{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));display:flex;gap:8px}
+.in-ctl button{font:600 .82rem "Geist","Segoe UI",system-ui,sans-serif;color:#B6C3D1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 14px;cursor:pointer;display:grid;place-items:center}
+.in-ctl button:hover{color:#fff;border-color:#fff}
+.in-mute{width:36px;height:34px;padding:0!important}
+.in-mute svg{width:17px;height:17px}
+.in-mute .x{display:none}.in-mute[aria-pressed="true"] .x{display:block}.in-mute[aria-pressed="true"] .w{display:none}
 @keyframes in-letter{to{opacity:1;transform:none;filter:none}}
 @keyframes in-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes in-load{to{width:100%}}
-/* reduced motion: a still title card */
-#intro.still .in-logo svg,#intro.still .in-word span span,#intro.still .in-name,#intro.still .in-tag,#intro.still .in-go{opacity:1;transform:none;filter:none;animation:none}
-#intro.still .in-cap{display:none}
-@media (prefers-reduced-motion:reduce){#intro{transition:opacity .3s ease}#intro.out{clip-path:none;opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  #intro{transition:opacity .3s ease}#intro.out{clip-path:none;opacity:0}
+  .in-gate-logo,.in-tap-ring{animation:none}#intro .gate .g{stroke-dashoffset:0;animation:none}#intro .gate .s{opacity:1;animation:none}
+  #intro.go .in-logo svg,#intro.go .in-word span span,#intro.go .in-name,#intro.go .in-tag,#intro.go .in-go{opacity:1;transform:none;filter:none;animation:none}
+}
 
 .credit{display:block;margin-top:6px;color:var(--ink-2)}
 .credit b{font-family:var(--head);color:var(--ink)}
@@ -1161,7 +1178,7 @@ h3{font-weight:650}
 </style>
 <style>
 /* =========================================================
-   AMH Platform design system
+   AMH Corner design system
    Type: Geist (UI and reading) + Geist Mono (numbers, code).
    Colour: neutral, slightly cool greys; one blue accent for interaction;
    red / green / amber keep their control-chart meaning (alarm / in control / warning).
@@ -1430,6 +1447,76 @@ body.fo-zen-on .qbar{z-index:62}
 
 </style>
 <style>
+/* ===== Innovators Corner ===== */
+#ic-head[hidden]{display:none}
+.ic-band{position:sticky;top:57px;z-index:30;background:var(--header);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--rule)}
+.ic-band-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:8px max(24px,env(safe-area-inset-right,0px)) 8px max(24px,env(safe-area-inset-left,0px));overflow-x:auto;scrollbar-width:none}
+.ic-name{display:inline-flex;align-items:center;gap:8px;font:650 .95rem var(--head);color:var(--ink);text-decoration:none;white-space:nowrap}
+.ic-mark{width:12px;height:12px;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);position:relative}
+.ic-mark::after{content:"";position:absolute;left:2px;bottom:2px;width:4px;height:4px;background:var(--red)}
+.ic-tabs{display:flex;gap:2px}
+.ic-tabs a{font:500 .88rem var(--head);color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.ic-tabs a:hover{color:var(--ink)}
+.ic-tabs a[aria-current="page"]{background:var(--ink);color:var(--paper)}
+
+/* hero with the constellation */
+.ic-hero{position:relative;margin:8px 0 34px;border-radius:20px;overflow:hidden;background:#0A0F17;color:#EEF2F7;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);min-height:420px;border:1px solid #1C2532}
+.ic-hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.ic-hero-txt{position:relative;padding:44px 0 40px 44px;display:flex;flex-direction:column;justify-content:center}
+.ic-kicker{font:500 .8rem var(--mono);color:#8FA0B4;margin:0 0 14px;letter-spacing:-.01em}
+.ic-hero h1{color:#F5F7FA;font-size:clamp(2.4rem,5.4vw,4.2rem);font-weight:700;letter-spacing:-.045em;line-height:.98;margin:0 0 16px}
+.ic-lede{color:#B4C0CE;font-size:1.05rem;max-width:34ch;margin:0}
+.ic-sky{position:relative;min-height:340px}
+#icsky{position:absolute;inset:0;width:100%;height:calc(100% - 46px);display:block;touch-action:manipulation}
+.ic-tip{position:absolute;left:20px;right:20px;bottom:12px;margin:0;font-size:.88rem;color:#D6DEE8;min-height:2.6em}
+.ic-tip .muted{color:#8FA0B4}
+.ic-tip a{color:#9DB6FF}
+@media(max-width:860px){.ic-hero{grid-template-columns:1fr;min-height:0}.ic-hero-txt{padding:30px 22px 6px}.ic-sky{min-height:360px}}
+
+/* today */
+.ic-today{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:860px){.ic-today{grid-template-columns:1fr}}
+.ic-card{display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--rule);border-radius:16px;background:var(--sheet);color:var(--ink);text-decoration:none;box-shadow:var(--shadow-sm);transition:transform .2s ease,box-shadow .2s ease,border-color .2s}
+.ic-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--ink) 22%,var(--rule))}
+.ic-card b{font:650 1.08rem/1.3 var(--head);letter-spacing:-.015em}
+.ic-card p{margin:4px 0 0;color:var(--ink-2);font-size:.92rem}
+.ic-lab{font:600 .72rem var(--head);color:var(--red);letter-spacing:.02em}
+.ic-big{font:700 2.6rem/1 var(--head);letter-spacing:-.04em;margin:6px 0 4px}
+.ic-story{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.ic-story .muted{color:color-mix(in srgb,var(--paper) 65%,transparent)!important}
+
+/* doors */
+.ic-doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:860px){.ic-doors{grid-template-columns:1fr}}
+.ic-door{position:relative;display:flex;flex-direction:column;padding:26px 24px 22px;border:1px solid var(--rule);border-radius:18px;background:var(--sheet);color:var(--ink);text-decoration:none;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease}
+.ic-door::after{content:"";position:absolute;right:-1px;top:-1px;width:56px;height:56px;border-left:2px solid var(--rule);border-bottom:2px solid var(--rule);border-bottom-left-radius:4px;transition:border-color .25s,width .25s,height .25s}
+.ic-door:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.ic-door:hover::after{border-color:var(--red);width:72px;height:72px}
+.ic-num{font:700 3rem/1 var(--head);letter-spacing:-.05em;color:var(--ink)}
+.ic-door h3{font-size:1.25rem;margin:10px 0 6px}
+.ic-door p{color:var(--ink-2);margin:0 0 10px;font-size:.94rem}
+.ic-door ul{margin:0 0 16px;padding-left:18px;color:var(--ink-2);font-size:.88rem}
+.ic-go{margin-top:auto;font:600 .9rem var(--head);color:var(--blue)}
+.ic-go::after{content:" →"}
+
+/* timeline */
+.ic-line{list-style:none;margin:0;padding:6px 2px 18px;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,280px);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;position:relative;scrollbar-width:thin}
+.ic-line li{scroll-snap-align:start;position:relative;padding:28px 18px 18px;border:1px solid var(--rule);border-radius:14px;background:var(--sheet);display:flex;flex-direction:column;gap:4px}
+.ic-line li::before{content:"";position:absolute;left:18px;top:14px;width:8px;height:8px;border-radius:2px;background:var(--red)}
+.ic-yr{position:absolute;left:34px;top:9px;font:600 .78rem var(--mono);color:var(--ink-3)}
+.ic-line b{font:650 1rem var(--head)}
+.ic-line p{margin:4px 0 0;font-size:.88rem;color:var(--ink-2)}
+.ic-use{border-top:1px dashed var(--rule);padding-top:8px;margin-top:auto!important}
+
+@media(max-width:760px){.ic-band{top:52px}.ic-band-in{padding-inline:16px;gap:12px}}
+@media(prefers-reduced-motion:reduce){.ic-card,.ic-door{transition:none}.ic-card:hover,.ic-door:hover{transform:none}}
+@supports not (color: color-mix(in srgb, red, blue)){.ic-band{background:var(--paper)}}
+.ic-sky{display:flex;flex-direction:column;min-height:360px}
+#icsky{position:relative;inset:auto;flex:1;min-height:290px;height:auto}
+.ic-tip{position:static;padding:4px 22px 18px;min-height:3.4em}
+
+</style>
+<style>
 /* ===== Phone fixes (loaded last) ===== */
 @media (max-width:760px){
   /* the menu sheet: a bottom sheet that sits above the tab bar */
@@ -1445,7 +1532,7 @@ body.fo-zen-on .qbar{z-index:62}
   .meter{gap:6px}
   .fobtn,.kbtn{min-width:38px;min-height:38px;justify-content:center;padding:0}
   .theme-sw button{width:32px;height:32px}
-  .brand .bw span{display:none}
+  .brand .bw span{display:inline}
   .brand{gap:8px}
   /* comfortable touch rows */
   .links-list a,.toc a{padding-block:4px}
@@ -1470,97 +1557,178 @@ body.fo-zen-on .qbar{z-index:62}
 @media (max-width:760px){ body,.view{overflow-x:clip} }
 @supports not (overflow:clip){ @media (max-width:760px){ .view{overflow-x:hidden} } }
 
+/* ===== Calculator on phones: the whole calculator fits one screen, like the real thing ===== */
+@media (max-width:760px){
+  #view-calc.show{padding-top:8px}
+  #view-calc .page-head{display:none}
+  #view-calc .model-switch{margin:0 auto 8px;max-width:450px;display:flex}
+  #view-calc .model-switch button{flex:1;padding:6px 8px;font-size:.85rem}
+  #view-calc .sci{padding:10px 10px 12px;border-radius:22px 22px 26px 26px}
+  #view-calc .sci-top{padding:0 4px}
+  #view-calc .sci-brand{font-size:1.35rem}
+  #view-calc .sci-sub{display:none}
+  #view-calc .lcd{margin-top:6px;padding:6px}
+  #view-calc .lcd:not(.wide) .lcd-body{height:clamp(84px,13dvh,140px)}
+  #view-calc .sci-ctl{padding:8px 2px 2px;gap:6px}
+  #view-calc .rk{width:40px;height:40px;margin-top:14px}
+  #view-calc .rpad{width:108px;height:86px}
+  #view-calc .rpad [data-nav=up],#view-calc .rpad [data-nav=down]{left:36px;width:36px;height:28px}
+  #view-calc .rpad [data-nav=left],#view-calc .rpad [data-nav=right]{top:24px;width:36px;height:38px}
+  #view-calc .sci-fn{gap:2px 5px;padding:4px 0 6px}
+  #view-calc .sci-num{gap:4px 6px;padding:2px 0 0}
+  #view-calc .sk .lab{min-height:11px;font-size:.52rem}
+  #view-calc .sk .cap{height:clamp(24px,3.6dvh,34px)}
+  #view-calc .sk.n .cap,#view-calc .sk.del .cap{height:clamp(32px,4.9dvh,46px);font-size:1.3rem}
+  #view-calc .hh-help{margin-top:18px}
+}
+@media (max-width:760px){
+  #view-calc.show{padding-top:0;margin-top:-12px}
+  #view-calc .model-switch{margin-bottom:6px}
+  #view-calc .sci{padding-top:8px}
+  #view-calc .sci-top{padding:0 4px;align-items:center}
+  #view-calc .sci-brand{font-size:1.15rem;line-height:1.2}
+  #view-calc .sci-model{font-size:.72rem}
+  #view-calc .lcd:not(.wide) .lcd-body{height:clamp(78px,11dvh,130px)}
+  #view-calc .sci-ctl{padding:4px 2px 0}
+  #view-calc .rk{width:38px;height:38px;margin-top:10px}
+  #view-calc .rpad{height:78px}
+  #view-calc .rpad [data-nav=up],#view-calc .rpad [data-nav=down]{height:26px}
+  #view-calc .rpad [data-nav=left],#view-calc .rpad [data-nav=right]{top:20px}
+  #view-calc .sk .cap{height:clamp(24px,3.2dvh,34px)}
+  #view-calc .sk.n .cap,#view-calc .sk.del .cap{height:clamp(32px,4.4dvh,46px)}
+}
+@media (max-width:760px){
+  #view-calc .lcd:not(.wide) .lcd-body{height:clamp(62px,10dvh,130px)}
+  #view-calc .sk .cap{height:clamp(21px,3dvh,34px)}
+  #view-calc .sk.n .cap,#view-calc .sk.del .cap{height:clamp(27px,4.1dvh,46px);font-size:clamp(1.05rem,2.6dvh,1.3rem)}
+  #view-calc .rk{margin-top:clamp(4px,1.2dvh,10px)}
+}
+@media (max-width:760px) and (max-height:780px){ #view-calc .sci{padding-bottom:6px} #view-calc .sci-num{gap:3px 6px} #view-calc .sci-fn{padding-bottom:4px} }
+
 </style>
 </head>
 <body>
-<noscript><div style="position:fixed;inset:0;z-index:2000;background:#F7F8FA;color:#0B1220;font:16px/1.55 system-ui,Segoe UI,Arial,sans-serif;padding:28px 20px;overflow:auto"><div style="max-width:520px;margin:0 auto"><h1 style="font-size:1.5rem;margin:0 0 10px">Open AMH Platform in your browser</h1><p>This page was opened in a preview viewer (for example from WhatsApp, Telegram, email or the Files app). Previews switch off the code the site needs, so the sections cannot open.</p><p><b>To fix it:</b> use the share or "Open in" button and choose <b>Chrome</b> or <b>Safari</b>, or open the online link you were sent.</p></div></div></noscript>
+<noscript><div style="position:fixed;inset:0;z-index:2000;background:#F7F8FA;color:#0B1220;font:16px/1.55 system-ui,Segoe UI,Arial,sans-serif;padding:28px 20px;overflow:auto"><div style="max-width:520px;margin:0 auto"><h1 style="font-size:1.5rem;margin:0 0 10px">Open AMH Corner in your browser</h1><p>This page was opened in a preview viewer (for example from WhatsApp, Telegram, email or the Files app). Previews switch off the code the site needs, so the sections cannot open.</p><p><b>To fix it:</b> use the share or "Open in" button and choose <b>Chrome</b> or <b>Safari</b>, or open the online link you were sent.</p></div></div></noscript>
 <script>
-/* ===== AMH Platform: logo and opening intro =====
-   Story in five seconds: scattered data (noise) falls into a bell curve (statistics finds order),
-   then flows into the AMH mark, an M drawn as a process trace between control limits with one
-   point outside the upper limit (the signal an engineer acts on).
-   Canvas particles hand over to a crisp SVG logo at the exact same place and size.
-   Plays once per browser session. Click, tap, Enter, Space or Escape skips. Respects prefers-reduced-motion. */
-const AMH_POLY = [[12, 33], [12, 15], [16.6, 15], [24, 25], [31.4, 15], [36, 15], [36, 33], [31.8, 33], [31.8, 22], [25.6, 30.4], [22.4, 30.4], [16.2, 22], [16.2, 33]];
-const AMH_SIG = [39.2, 8.8];
-const AMH_D = "M12 33V15h4.6L24 25l7.4-10H36v18h-4.2V22l-6.2 8.4h-3.2L16.2 22v11z";
+/* ===== AMH Corner: opening intro with sound =====
+   Browsers only allow sound after the visitor taps, so the intro opens on a "Tap to enter" gate.
+   The tap starts the music and a 3D scene drawn on canvas:
+   1. two beams draw a huge right angle (the corner) from the tap point, and a graph-paper floor unfolds in perspective;
+   2. data points stream in and build a 3D bell-curve histogram whose bars pulse with the music (live audio analysis);
+   3. the camera swings, the axes fold into the logo's L and the bars collapse into its square;
+   4. the name reveals letter by letter, then Enter. Leaving closes the screen like an aperture and fades the music.
+   Plays once per browser session. Skip and mute are always available. Respects prefers-reduced-motion. */
+const AMH_L = "M12 10h6v22h18v6H12z";
 function amhMark(size = 32, cls = "") {
-  return `<svg class="amh-logo ${cls}" width="${size}" height="${size}" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="t" x=".5" y=".5" width="47" height="47" rx="11.5"/><path class="g" d="${AMH_D}"/><circle class="s" cx="${AMH_SIG[0]}" cy="${AMH_SIG[1]}" r="3.1"/></svg>`; }
-const inPoly = (x, y, P) => { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) { const [xi, yi] = P[i], [xj, yj] = P[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+  return `<svg class="amh-logo ${cls}" width="${size}" height="${size}" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="t" x=".5" y=".5" width="47" height="47" rx="11.5"/><path class="g" d="${AMH_L}"/><rect class="s" x="20.5" y="22.5" width="7" height="7" rx="1"/></svg>`; }
 
 (function () {
-  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;      // easeInOutCubic
-  const out = t => 1 - Math.pow(1 - t, 4);                                       // easeOutQuart
-  const clamp = t => t < 0 ? 0 : t > 1 ? 1 : t;
+  const clamp = t => t < 0 ? 0 : t > 1 ? 1 : t, ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, out = t => 1 - Math.pow(1 - t, 3), lerp = (a, b, t) => a + (b - a) * t;
   const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const SRC = "assets/intro.mp3";
 
   function build() {
     if (document.getElementById("intro")) return;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const d = document.createElement("div"); d.id = "intro"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-label", "Welcome to AMH Platform by Ayman Al-Hayek");
+    const d = document.createElement("div"); d.id = "intro"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-label", "Welcome to AMH Corner by Ayman Al-Hayek");
     d.innerHTML = `<canvas class="in-cv" aria-hidden="true"></canvas>
-      <div class="in-stage">
-        <div class="in-logo">${amhMark(132, "big")}</div>
-        <h1 class="in-word" aria-label="AMH Platform"><span class="w1">${"AMH".split("").map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span><span class="w2">${"Platform".split("").map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span></h1>
-        <p class="in-name"><span>by</span> Ayman Al-Hayek</p>
-        <p class="in-tag">Applied statistics, Lean Six Sigma and industrial engineering</p>
-        <div class="in-cap" aria-hidden="true"><span>σ</span><i></i><span class="in-n">n = 640</span></div>
-        <button class="in-go" type="button">Enter the platform</button>
-      </div>
-      <button class="in-skip" type="button">Skip</button>`;
+      <div class="in-gate"><div class="in-gate-logo">${amhMark(96, "gate")}</div><p class="in-gate-name">AMH Corner</p>
+        <button class="in-tap" type="button"><span class="in-tap-ring" aria-hidden="true"></span>Tap to enter</button><p class="in-gate-hint">Sound on for the full intro</p></div>
+      <div class="in-stage" aria-live="polite"><div class="in-logo">${amhMark(124, "big")}</div>
+        <h1 class="in-word" aria-label="AMH Corner"><span class="w1">${[..."AMH"].map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span><span class="w2">${[..."Corner"].map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span></h1>
+        <p class="in-name"><span>by</span> Ayman Al-Hayek</p><p class="in-tag">Applied statistics, Lean Six Sigma and industrial engineering</p>
+        <button class="in-go" type="button">Enter AMH Corner</button></div>
+      <div class="in-ctl"><button class="in-mute" type="button" aria-pressed="false" aria-label="Mute music"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="w" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="x" d="m16 9 6 6m0-6-6 6"/></svg></button><button class="in-skip" type="button">Skip</button></div>`;
     document.body.appendChild(d); document.body.classList.add("intro-on");
-    const cv = d.querySelector(".in-cv"), ctx = cv.getContext("2d"), logo = d.querySelector(".in-logo svg");
-    let W, H, dpr, raf, done = false, t0 = 0;
+    const cv = d.querySelector(".in-cv"), ctx = cv.getContext("2d"), logo = d.querySelector(".in-logo svg"), audio = new Audio(SRC);
+    audio.preload = "auto"; audio.volume = .9;
+    let W, H, dpr, raf, t0 = 0, done = false, started = false, analyser = null, fbuf = null, energy = 0, ox = 0, oy = 0;
 
+    const fadeAudio = () => { const v0 = audio.volume, s = performance.now(); const step = () => { const k = (performance.now() - s) / 1400; audio.volume = Math.max(0, v0 * (1 - k)); if (k < 1) requestAnimationFrame(step); else audio.pause(); }; if (!audio.paused) step(); };
     const close = () => { if (done) return; done = true; try { sessionStorage.setItem("amh-intro", "1"); } catch (e) {}
-      d.classList.add("out"); document.body.classList.remove("intro-on"); removeEventListener("keydown", onKey); removeEventListener("resize", size);
-      setTimeout(() => { cancelAnimationFrame(raf); d.remove(); const m = document.getElementById("main"); if (m) m.focus({ preventScroll: true }); }, 900); };
-    const onKey = e => { if (["Enter", " ", "Escape"].includes(e.key)) { e.preventDefault(); close(); } };
-    d.addEventListener("click", close); addEventListener("keydown", onKey);
+      fadeAudio(); d.classList.add("out"); document.body.classList.remove("intro-on"); removeEventListener("keydown", onKey); removeEventListener("resize", size);
+      setTimeout(() => { cancelAnimationFrame(raf); d.remove(); const m = document.getElementById("main"); if (m) m.focus({ preventScroll: true }); }, 1000); };
+    const onKey = e => { if (e.key === "Escape") { e.preventDefault(); close(); } else if (!started && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); start(innerWidth / 2, innerHeight / 2); } };
+    addEventListener("keydown", onKey);
+    d.querySelector(".in-skip").onclick = e => { e.stopPropagation(); close(); };
+    d.querySelector(".in-go").onclick = e => { e.stopPropagation(); close(); };
+    const mute = d.querySelector(".in-mute"); mute.onclick = e => { e.stopPropagation(); audio.muted = !audio.muted; mute.setAttribute("aria-pressed", audio.muted); mute.setAttribute("aria-label", audio.muted ? "Unmute music" : "Mute music"); };
+    d.querySelector(".in-tap").onclick = e => { e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); start(r.left + r.width / 2, r.top + r.height / 2); };
+    d.addEventListener("click", e => { if (!started) start(e.clientX, e.clientY); });
+    setTimeout(() => d.querySelector(".in-tap").focus({ preventScroll: true }), 80);
 
-    if (reduced) { d.classList.add("still"); setTimeout(() => d.querySelector(".in-go").focus({ preventScroll: true }), 60); setTimeout(close, 2600); return; }
+    function start(x, y) { if (started) return; started = true; ox = x; oy = y; d.classList.add("go");
+      audio.play().catch(() => {});
+      if (/^https?:/.test(location.protocol)) { try { const A = new (window.AudioContext || window.webkitAudioContext)(); const src = A.createMediaElementSource(audio); analyser = A.createAnalyser(); analyser.fftSize = 256; analyser.smoothingTimeConstant = .7; src.connect(analyser); analyser.connect(A.destination); fbuf = new Uint8Array(analyser.frequencyBinCount); A.resume(); } catch (e) { analyser = null; } }
+      if (reduced) { d.classList.add("logo-on", "words"); setTimeout(() => d.querySelector(".in-go").focus({ preventScroll: true }), 300); return; }
+      size(); addEventListener("resize", size); raf = requestAnimationFrame(frame);
+      setTimeout(() => !done && d.querySelector(".in-go").focus({ preventScroll: true }), 5600);
+      setTimeout(() => !done && close(), 16000); }
 
-    /* ---------- particles ---------- */
-    const N = innerWidth < 600 ? 420 : 640, P = []; d.querySelector(".in-n").textContent = `n = ${N}`;
-    function size() { dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); targets(); }
-    function targets() {
-      /* bell curve: a dot plot of N normal values, bins stacked upward from a baseline */
-      const r = logo.getBoundingClientRect(), bins = 41, bw = Math.min(W * .82, 760) / bins, x0 = W / 2 - bins * bw / 2, base = r.top + r.height * .95, dot = Math.max(2.4, bw * .42);
-      const vals = P.map(p => p.z), cnt = new Array(bins).fill(0);
-      vals.forEach((z, i) => { const b = Math.max(0, Math.min(bins - 1, Math.round(z / 3.2 * (bins - 1) / 2 + (bins - 1) / 2))); P[i].hx = x0 + (b + .5) * bw; P[i].hy = base - cnt[b]++ * dot * 1.05; });
-      const mx = Math.max(...cnt) * dot * 1.05, room = r.height * 1.9; if (mx > room) { const k = room / mx; P.forEach(p => p.hy = base - (base - p.hy) * k); }
-      /* logo: points along the M trace and the control limits, in the SVG's screen coordinates */
-      const sx = r.width / 48, sy = r.height / 48, L = (x, y) => [r.left + x * sx, r.top + y * sy], nM = Math.round(N * .74), nE = N - nM - 1;
-      for (let i = 0; i < nM; i++) { let x, y; do { x = 12 + Math.random() * 24; y = 15 + Math.random() * 18; } while (!inPoly(x, y, AMH_POLY)); [P[i].lx, P[i].ly] = L(x, y); }
-      for (let j = 0; j < nE; j++) { const u = j / nE * 4, side = u | 0, f = u - side, k = 2 + f * 44, e = [[k, 1], [47, k], [48 - k, 47], [1, 48 - k]][side]; [P[nM + j].lx, P[nM + j].ly] = L(e[0], e[1]); P[nM + j].lim = "e"; }
-      const s = P[N - 1]; [s.lx, s.ly] = L(AMH_SIG[0], AMH_SIG[1]); s.sig = true; }
-    for (let i = 0; i < N; i++) P.push({ z: gauss(), x: Math.random(), y: Math.random(), vx: (Math.random() - .5) * .0006, vy: (Math.random() - .5) * .0006, d1: Math.random() * .35, d2: Math.random() * .3, r: .8 + Math.random() * 1.2 });
-    size(); addEventListener("resize", size);
-    P.forEach(p => { p.sx = p.x * W; p.sy = p.y * H; });
+    /* ---------- the 3D scene ---------- */
+    const BINS = 17, bars = []; { const cnt = new Array(BINS).fill(0); for (let i = 0; i < 900; i++) { const b = Math.round(gauss() * 3.1 + (BINS - 1) / 2); if (b >= 0 && b < BINS) cnt[b]++; } const mx = Math.max(...cnt); cnt.forEach((c, i) => bars.push({ h: c / mx, d: Math.abs(i - (BINS - 1) / 2) * .05 })); }
+    const P = Array.from({ length: innerWidth < 600 ? 260 : 520 }, () => ({ a: Math.random() * 6.283, r: .9 + Math.random() * .6, s: .6 + Math.random() * .8, b: Math.floor(Math.random() * BINS), k: Math.random() }));
+    function size() { dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    /* camera: world x (right), y (up), z (depth); yaw rotates around y */
+    function proj(x, y, z, cam) { const cy = Math.cos(cam.yaw), sy = Math.sin(cam.yaw), cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
+      let X = x * cy - z * sy, Z = x * sy + z * cy; let Y = y * cp - Z * sp; Z = y * sp + Z * cp; Z += cam.dist;
+      const f = cam.fov / Z; return [cam.cx + X * f, cam.cy - Y * f, Z]; }
+    function level() { if (!analyser) return .35 + .25 * Math.sin(performance.now() / 260) ** 2; analyser.getByteFrequencyData(fbuf); let s = 0; for (let i = 1; i < 18; i++) s += fbuf[i]; return s / (17 * 255); }
 
-    /* timeline in seconds */
-    const T = { gather: .25, bell: 1.05, bellHold: 2.15, logo: 2.35, logoEnd: 3.55, end: 6.6 };
-    function frame(now) { if (!t0) t0 = now; const t = (now - t0) / 1000;
-      ctx.clearRect(0, 0, W, H);
-      const fade = t < T.logoEnd ? 1 : 1 - clamp((t - T.logoEnd) / .35);
-      if (fade > 0) for (const p of P) {
-        p.sx += p.vx * W; p.sy += p.vy * H;                                                  // drifting noise
-        const a = ease(clamp((t - T.gather - p.d1) / (T.bell - T.gather))), b = ease(clamp((t - T.bellHold - p.d2) / (T.logo - T.bellHold + .6)));
-        let x = p.sx + (p.hx - p.sx) * a, y = p.sy + (p.hy - p.sy) * a;
-        if (b > 0) { x += (p.lx - x) * b; y += (p.ly - y) * b; }
-        const alpha = clamp(t / .5) * fade, rad = p.r * (1 - .45 * b) + (p.sig ? 4 * b : 0) + (a > .98 && b < .02 ? .5 : 0);
-        ctx.fillStyle = p.sig && b > .3 ? `rgba(255,77,87,${alpha})` : p.lim && b > .5 ? `rgba(226,234,242,${alpha * .35})` : `rgba(226,234,242,${alpha * (.55 + .45 * a)})`;
-        ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill(); }
-      /* the bell curve's outline glows for a moment while the dots stand as a histogram */
-      const g = clamp((t - T.bell - .15) / .35) * (1 - clamp((t - T.bellHold) / .3));
-      if (g > 0) { const r = logo.getBoundingClientRect(), base = r.top + r.height * .95, w = Math.min(W * .82, 760), mid = W / 2, top = Math.min(...P.map(p => p.hy));
-        ctx.strokeStyle = `rgba(126,162,255,${.85 * g})`; ctx.lineWidth = 2; ctx.beginPath();
-        for (let i = 0; i <= 120; i++) { const u = -3.2 + 6.4 * i / 120, xx = mid + u / 6.4 * w, yy = base - (base - top + 4) * Math.exp(-u * u / 2); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); } ctx.stroke(); }
-      if (t > T.logoEnd - .15) d.classList.add("logo-on");
-      if (t > T.logoEnd + .1) d.classList.add("words");
-      if (t < T.end) raf = requestAnimationFrame(frame); else close(); }
-    raf = requestAnimationFrame(frame);
-    setTimeout(() => !done && d.querySelector(".in-go").focus({ preventScroll: true }), 4300); }
+    function frame(now) { if (!t0) t0 = now; const t = (now - t0) / 1000; ctx.clearRect(0, 0, W, H);
+      energy = lerp(energy, level(), .25);
+      const r = logo.getBoundingClientRect(), lx = r.left + r.width * .3, ly = r.top + r.height * .75;     // logo's corner, where the L turns
+      const morph = ease(clamp((t - 3.0) / 1.1));                                                             // 3D scene -> logo
+      const unit = Math.min(W, H) * .052;
+      const cam = { yaw: lerp(-.62, -.05, ease(clamp((t - .6) / 2.6))) + Math.sin(t * .4) * .04 * (1 - morph), pitch: lerp(.18, .42, ease(clamp(t / 2.4))), dist: W < 600 ? 30 : 22, fov: Math.min(W, H) * 1.25,
+        cx: lerp(W / 2, lx, morph), cy: lerp(H * .62, ly, morph) };
+      const sc = lerp(1, .09, morph); const pr = (x, y, z) => { const p = proj(x * sc, y * sc, z * sc, cam); return p; };
+      const fade = 1 - clamp((t - 3.9) / .5);
+
+      /* 1. the corner beams from the tap point */
+      const beam = out(clamp(t / .7));
+      if (fade > 0) { const [vx, vy] = pr(-8.5, 0, 0); const bx = lerp(ox, vx, ease(clamp((t - .35) / .7))), by = lerp(oy, vy, ease(clamp((t - .35) / .7)));
+        ctx.save(); ctx.globalAlpha = fade; ctx.lineCap = "round";
+        const g = .55 + energy * .9; ctx.shadowColor = "rgba(255,90,95,.9)"; ctx.shadowBlur = 18 * g;
+        ctx.strokeStyle = "#F4F6FA"; ctx.lineWidth = 2.2;
+        const [ax, ay] = pr(-8.5, 9 * beam, 0), [cx2, cy2] = pr(-8.5 + 17.5 * beam, 0, 0);
+        if (t < .35) { ctx.beginPath(); ctx.moveTo(ox, oy - H * beam); ctx.lineTo(ox, oy); ctx.lineTo(ox + W * beam, oy); ctx.stroke(); }
+        else { ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.lineTo(cx2, cy2); ctx.stroke(); }
+        ctx.shadowBlur = 0; ctx.fillStyle = "#FF5A5F"; ctx.beginPath(); ctx.arc(t < .35 ? ox : bx, t < .35 ? oy : by, 4 + energy * 6, 0, 6.283); ctx.fill(); ctx.restore(); }
+
+      /* 2. the graph-paper floor unfolding from the corner */
+      const floor = ease(clamp((t - .5) / 1.1));
+      if (floor > 0 && fade > 0) { ctx.save(); ctx.globalAlpha = .55 * fade; ctx.strokeStyle = "rgba(140,170,220,.35)"; ctx.lineWidth = 1;
+        for (let i = 0; i <= 18; i++) { const x = -8.5 + i, zz = 10 * floor; const [a1, b1] = pr(x, 0, 0), [a2, b2] = pr(x, 0, zz); ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke(); }
+        for (let j = 0; j <= 10 * floor; j++) { const [a1, b1] = pr(-8.5, 0, j), [a2, b2] = pr(9.5, 0, j); ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke(); }
+        ctx.restore(); }
+
+      /* 3. data streams in and builds a 3D bell-curve histogram that pulses with the music */
+      const grow = t - 1.1;
+      if (grow > -.6 && fade > 0) {
+        P.forEach(p => { const tt = clamp((grow + .6 - p.k * .9) / 1.1); if (tt <= 0 || tt >= 1) return; const bx = -7.5 + p.b, [tx, ty] = pr(bx, bars[p.b].h * 6 * tt, 2), e = out(tt);
+          const sx = W / 2 + Math.cos(p.a) * W * p.r, sy = H / 2 + Math.sin(p.a) * H * p.r; ctx.fillStyle = `rgba(230,238,248,${.8 * (1 - e) + .2})`;
+          ctx.beginPath(); ctx.arc(lerp(sx, tx, e), lerp(sy, ty, e), 1.2 + p.s, 0, 6.283); ctx.fill(); });
+        const order = bars.map((b, i) => i).sort((a, b) => b - a);
+        order.forEach(i => { const b = bars[i], g = ease(clamp((grow - b.d) / 1.3)); if (g <= 0) return;
+          const h = b.h * 6 * g * (1 + energy * .55 * (1 - morph)), x0 = -7.9 + i, x1 = x0 + .8, z0 = 1.6, z1 = 2.4;
+          const v = [[x0, 0, z0], [x1, 0, z0], [x1, h, z0], [x0, h, z0], [x0, 0, z1], [x1, 0, z1], [x1, h, z1], [x0, h, z1]].map(q => pr(...q));
+          const face = (idx, fill) => { ctx.fillStyle = fill; ctx.beginPath(); idx.forEach((k, n) => n ? ctx.lineTo(v[k][0], v[k][1]) : ctx.moveTo(v[k][0], v[k][1])); ctx.closePath(); ctx.fill(); };
+          const hot = Math.abs(i - (BINS - 1) / 2) < 1.5, a = fade;
+          face([0, 1, 2, 3], hot ? `rgba(229,72,77,${.92 * a})` : `rgba(226,234,244,${.88 * a})`);
+          face([3, 2, 6, 7], hot ? `rgba(255,140,140,${.95 * a})` : `rgba(255,255,255,${.95 * a})`);
+          face([1, 5, 6, 2], hot ? `rgba(170,40,46,${.9 * a})` : `rgba(150,165,185,${.85 * a})`); });
+      }
+
+      /* 4. hand-over to the real logo, then the words */
+      if (t > 3.75) d.classList.add("logo-on");
+      if (t > 4.1) d.classList.add("words");
+      if (t > 3.8 && t < 4.4) { const k = (t - 3.8) / .6; ctx.fillStyle = `rgba(255,90,95,${.35 * (1 - k)})`; ctx.beginPath(); ctx.arc(lx, ly, k * Math.max(W, H) * .6, 0, 6.283); ctx.fill(); }
+      /* afterglow: a quiet field of points that breathes with the music */
+      if (t > 4) { const a = clamp((t - 4) / 1); ctx.fillStyle = `rgba(200,215,235,${.25 * a})`; for (let i = 0; i < 70; i++) { const px = (i * 97.3 + t * 8) % W, py = (i * 53.7 + Math.sin(t * .7 + i) * 12) % H; ctx.beginPath(); ctx.arc(px, py, .8 + energy * 1.8 * ((i % 5) / 4), 0, 6.283); ctx.fill(); } }
+      d.style.setProperty("--beat", energy.toFixed(3));
+      if (!done) raf = requestAnimationFrame(frame); }
+  }
 
   window.playIntro = () => { try { sessionStorage.removeItem("amh-intro"); } catch (e) {} build(); };
   let seen = false; try { seen = !!sessionStorage.getItem("amh-intro"); } catch (e) {}
@@ -1570,17 +1738,17 @@ const inPoly = (x, y, P) => { let c = false; for (let i = 0, j = P.length - 1; i
 </script>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="top-in">
-  <a class="brand" href="#home" aria-label="AMH Platform home">
-    <svg class="amh-logo" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="t" width="48" height="48" rx="12"/><path class="g" d="M12 33V15h4.6L24 25l7.4-10H36v18h-4.2V22l-6.2 8.4h-3.2L16.2 22v11z"/><circle class="s" cx="39.2" cy="8.8" r="3.1"/></svg><span class="bw"><b>AMH</b><span>Platform</span></span>
+  <a class="brand" href="#home" aria-label="AMH Corner home">
+    <svg class="amh-logo" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="t" width="48" height="48" rx="12"/><path class="g" d="M12 10h6v22h18v6H12z"/><rect class="s" x="20.5" y="22.5" width="7" height="7" rx="1"/></svg><span class="bw"><b>AMH</b><span>Corner</span></span>
   </a>
   <nav class="links" id="links" aria-label="Main">
     <a data-v="home" href="#home">Today</a>
     <a data-v="learn" href="#learn">Terms</a>
     <a data-v="labs" href="#labs">Labs</a>
-    <a data-v="calc" href="#calc">AMH Calculator</a>
-    <a data-v="mcq" href="#mcq">Question bank</a>
+    <a data-v="calc" href="#calc">Calculator</a>
+    <a data-v="mcq" href="#mcq">Questions</a>
     <a data-v="bb" href="#bb">LSS</a>
-    <a data-v="plan" href="#plan">Plan</a>
+    <a data-v="corner" href="#corner">Innovators</a>
   </nav>
   <button class="allbtn" id="menuBtn" aria-expanded="false" aria-controls="drawer">All sections</button>
   <div class="meter">
@@ -1597,9 +1765,9 @@ const inPoly = (x, y, P) => { let c = false; for (let i = 0, j = P.length - 1; i
 
 <div class="drawer" id="drawer" aria-label="All sections">
   <div class="drawer-in">
-    <div class="dgroup"><h4>Learn</h4><a data-v="home" href="#home">Today</a><a data-v="road" href="#road">DMAIC road</a><a data-v="learn" href="#learn">Terms</a><a data-v="bb" href="#bb">LSS (White to Master Black Belt)</a><a data-v="cases" href="#cases">Case studies</a><a data-v="tasks" href="#tasks">Real-life tasks</a></div>
+    <div class="dgroup"><h4>Learn</h4><a data-v="home" href="#home">Today</a><a data-v="road" href="#road">DMAIC road</a><a data-v="learn" href="#learn">Terms</a><a data-v="bb" href="#bb">LSS (White to Master Black Belt)</a><a data-v="tasks" href="#tasks">Real-life tasks</a></div>
     <div class="dgroup"><h4>Practise</h4><a data-v="labs" href="#labs">Labs</a><a data-v="calc" href="#calc">AMH Calculator</a><a data-v="mcq" href="#mcq">Question bank</a><a data-v="quiz" href="#quiz">Chapter challenges</a><a data-v="games" href="#games">Stat games</a><a data-v="board" href="#board">Whiteboard</a></div>
-    <div class="dgroup"><h4>Explore</h4><a data-v="videos" href="#videos">Video library</a><a data-v="inno" href="#inno">Innovation</a><a data-v="ai" href="#ai">AI for IE</a><a data-v="res" href="#res">Sources and books</a></div>
+    <div class="dgroup"><h4>Explore</h4><a data-v="videos" href="#videos">Video library</a><a data-v="corner" href="#corner">Innovators Corner</a><a data-v="res" href="#res">Sources and books</a></div>
     <div class="dgroup"><h4>Organise</h4><a data-v="plan" href="#plan">Plan and focus timer</a><a data-v="quran" href="#quran">Quran library</a></div>
   </div>
 </div>
@@ -1622,6 +1790,7 @@ const inPoly = (x, y, P) => { let c = false; for (let i = 0, j = P.length - 1; i
   <div class="view" id="view-bb"></div>
   <div class="view" id="view-quran"></div>
   <div class="view" id="view-videos"></div>
+  <div class="view" id="view-corner"></div>
   <div class="view" id="view-mcq"></div>
 </main>
 
@@ -1635,7 +1804,7 @@ const inPoly = (x, y, P) => { let c = false; for (let i = 0, j = P.length - 1; i
 
 <div class="modal" id="modal" role="dialog" aria-modal="true"><div id="mbox"></div></div>
 <div class="toast" id="toast" role="status"></div>
-<footer>AMH Platform. Definitions, formulas and criteria follow the textbooks, standards and papers listed under Sources. Teaching-case numbers are illustrative.<span class="credit">Created by <b>Ayman Al-Hayek</b> (AMH). <button type="button" onclick="playIntro()">Replay the intro</button></span><span class="credit">Your progress is saved in this browser only. <button type="button" onclick="backupProgress()">Back up my progress</button> <label style="cursor:pointer;text-decoration:underline">Restore from a file<input type="file" accept=".json,application/json" hidden onchange="restoreProgress(this.files[0])"></label></span></footer>
+<footer>AMH Corner. Definitions, formulas and criteria follow the textbooks, standards and papers listed under Sources. Teaching-case numbers are illustrative.<span class="credit">Created by <b>Ayman Al-Hayek</b> (AMH). <button type="button" onclick="playIntro()">Replay the intro</button></span><span class="credit">Your progress is saved in this browser only. <button type="button" onclick="backupProgress()">Back up my progress</button> <label style="cursor:pointer;text-decoration:underline">Restore from a file<input type="file" accept=".json,application/json" hidden onchange="restoreProgress(this.files[0])"></label></span></footer>
 
 <script>
 /* ===== Small statistics library (no external dependencies) ===== */
@@ -5539,8 +5708,8 @@ function tickTimer() { const p = P_(), c = el("clock"); if (!p.timer) { if (c &&
     try { new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAAgICA").play(); } catch (e) {}
     if (document.querySelector("#view-plan.show")) renderPlan(); return; }
   if (c) { const s = Math.ceil(left / 1000); c.textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`; if (el("fmsg")) el("fmsg").textContent = "Focus. Phone face down."; }
-  document.title = `${c ? c.textContent : ""} focus, AMH Platform`.replace(/^ /, ""); }
-setInterval(() => { if ((ST.plan || {}).timer || el("clock")) tickTimer(); if (!(ST.plan || {}).timer && document.title.includes("focus")) document.title = "AMH Platform by Ayman Al-Hayek: applied statistics, Lean Six Sigma and industrial engineering"; }, 1000);
+  document.title = `${c ? c.textContent : ""} focus, AMH Corner`.replace(/^ /, ""); }
+setInterval(() => { if ((ST.plan || {}).timer || el("clock")) tickTimer(); if (!(ST.plan || {}).timer && document.title.includes("focus")) document.title = "AMH Corner by Ayman Al-Hayek: applied statistics, Lean Six Sigma and industrial engineering"; }, 1000);
 
 </script>
 <script>
@@ -6078,9 +6247,9 @@ function renderCalc(tab) { if (CALC.model !== "graph") return renderSci(tab); CA
   </div>`;
   wireCalcHeader(); const H = el("hh");
   H.querySelectorAll("[data-app]").forEach(b => b.onclick = () => renderCalc(b.dataset.app));
-  H.querySelectorAll(".hk").forEach(b => b.addEventListener("pointerdown", e => { e.preventDefault(); hhPress(b); }));
+  H.querySelectorAll(".hk").forEach(b => sciTap(b, () => hhPress(b)));
   H.querySelectorAll(".hk").forEach(b => b.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hhPress(b); } }));
-  H.querySelectorAll("[data-nav]").forEach(b => b.addEventListener("pointerdown", e => { e.preventDefault(); hhNav(b.dataset.nav); b.classList.add("hit"); setTimeout(() => b.classList.remove("hit"), 120); }));
+  H.querySelectorAll("[data-nav]").forEach(b => sciTap(b, () => hhNav(b.dataset.nav)));
   el("hhcat").onclick = e => { e.preventDefault(); renderCalc("cat"); };
   el("devbody").addEventListener("focusin", e => { if (e.target.matches("input:not([type=range]):not([type=checkbox]),textarea")) CALC.target = e.target; });
   ({ calc: calcTab, graph: graphTab, stats: statsTab, dist: distTab, cat: catTab })[CALC.tab]();
@@ -6277,9 +6446,9 @@ function renderSci(tab) { CALC.model = "sci"; if (tab) SC.app = { calc: "comp", 
     <li><b>MODE</b> opens STAT, GRAPH, DIST, CAS (symbolic derivatives), MATRIX and CATALOG. SHIFT 7 is CONST and SHIFT 8 is CONV.</li></ul></aside></div>`;
   wireCalcHeader();
   const R = el("sci");
-  R.querySelectorAll(".sk,.rk").forEach(b => b.addEventListener("pointerdown", e => { e.preventDefault(); sciPress(b); }));
+  R.querySelectorAll(".sk,.rk").forEach(b => sciTap(b, () => sciPress(b)));
   R.querySelectorAll(".sk,.rk").forEach(b => b.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); sciPress(b); } }));
-  R.querySelectorAll("[data-nav]").forEach(b => b.addEventListener("pointerdown", e => { e.preventDefault(); if (navigator.vibrate) navigator.vibrate(5); b.classList.add("hit"); setTimeout(() => b.classList.remove("hit"), 110); sciNav(b.dataset.nav); }));
+  R.querySelectorAll("[data-nav]").forEach(b => sciTap(b, () => sciNav(b.dataset.nav)));
   el("devbody").addEventListener("focusin", e => { if (e.target.matches("input:not([type=range]):not([type=checkbox]),textarea")) CALC.target = e.target; });
   sciApp(SC.app); }
 
@@ -6457,6 +6626,16 @@ sciNav = function (d) {
   if (d === "left") { neLeft(); sciComp(); return; } if (d === "right") { neRight(); sciComp(); return; }
   if (neVert(d)) { sciComp(); return; }
   if (d === "up" && list.length && neEmpty()) { SC.showing = list[list.length - 1]; sciComp(); } };
+
+/* A key works like a real button: it shows as pressed when touched, and only counts when the finger lifts
+   without having moved. Swiping to scroll the page (which starts on a key) therefore never types anything. */
+function sciTap(b, fire) { let id = null, x0 = 0, y0 = 0;
+  const end = () => { id = null; b.classList.remove("hit"); };
+  b.addEventListener("pointerdown", e => { if (e.button > 0) return; e.preventDefault(); id = e.pointerId; x0 = e.clientX; y0 = e.clientY; b.classList.add("hit"); });
+  b.addEventListener("pointermove", e => { if (id === e.pointerId && Math.hypot(e.clientX - x0, e.clientY - y0) > 12) end(); });
+  b.addEventListener("pointerup", e => { if (id !== e.pointerId) return; end(); if (navigator.vibrate) navigator.vibrate(6); fire(); });
+  ["pointercancel", "pointerleave"].forEach(ev => b.addEventListener(ev, end));
+  }
 
 </script>
 <script>
@@ -6952,17 +7131,17 @@ function acResult(b, X) { const ok = X.pct >= b.pass;
 /* ---------- practice certificate ---------- */
 function acCert(k) { const b = AC[k], p = acState().pass[k];
   if (!p) { el("view-bb").innerHTML = acHead(k) + `<p>You have not passed the ${b.n} exam yet. <a href="#bb/exam-${k}">Take the exam</a>.</p>`; return; }
-  el("view-bb").innerHTML = acHead(k) + `<div class="ac-cert" id="accert"><p class="small ui muted">AMH Platform, LSS Academy</p><p>This practice certificate shows that</p><input id="acname" value="${esc(acState().name || "")}" placeholder="Type your name" aria-label="Your name"><p>passed the</p><h3>${b.n} exam</h3><p>with a score of <b>${p.pct}%</b> on ${niceD(p.date)}.</p><p class="small muted">A learning record from AMH Platform by Ayman Al-Hayek. It is not an accredited Lean Six Sigma certification.</p></div>
+  el("view-bb").innerHTML = acHead(k) + `<div class="ac-cert" id="accert"><p class="small ui muted">AMH Corner, LSS Academy</p><p>This practice certificate shows that</p><input id="acname" value="${esc(acState().name || "")}" placeholder="Type your name" aria-label="Your name"><p>passed the</p><h3>${b.n} exam</h3><p>with a score of <b>${p.pct}%</b> on ${niceD(p.date)}.</p><p class="small muted">A learning record from AMH Corner by Ayman Al-Hayek. It is not an accredited Lean Six Sigma certification.</p></div>
    <div class="row" style="justify-content:center"><button class="btn primary" id="acprint">Print or save as PDF</button><a class="btn quiet" href="#bb/${k}">Back</a></div>`;
   el("acname").oninput = e => { acState().name = e.target.value; save(); };
   el("acprint").onclick = () => { document.body.classList.add("printcert"); print(); setTimeout(() => document.body.classList.remove("printcert"), 500); }; }
 
 /* ---------- back up and restore progress (progress lives in each student's own browser) ---------- */
-function backupProgress() { const blob = new Blob([JSON.stringify({ app: "AMH Platform", saved: new Date().toISOString(), data: ST }, null, 1)], { type: "application/json" });
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `amh-platform-progress-${fmtD(new Date())}.json`; document.body.appendChild(a); a.click(); a.remove(); toast("Progress file saved"); }
+function backupProgress() { const blob = new Blob([JSON.stringify({ app: "AMH Corner", saved: new Date().toISOString(), data: ST }, null, 1)], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `amh-corner-progress-${fmtD(new Date())}.json`; document.body.appendChild(a); a.click(); a.remove(); toast("Progress file saved"); }
 function restoreProgress(file) { if (!file) return; const r = new FileReader();
-  r.onload = () => { try { const j = JSON.parse(r.result); if (!j || !["AMH Platform", "StatLab IE"].includes(j.app) || typeof j.data !== "object") throw 0;
-      localStorage.setItem(KEY, JSON.stringify(j.data)); toast("Progress restored"); setTimeout(() => location.reload(), 600); } catch (e) { toast("That file is not an AMH Platform progress file"); } };
+  r.onload = () => { try { const j = JSON.parse(r.result); if (!j || !["AMH Corner", "AMH Platform", "StatLab IE"].includes(j.app) || typeof j.data !== "object") throw 0;
+      localStorage.setItem(KEY, JSON.stringify(j.data)); toast("Progress restored"); setTimeout(() => location.reload(), 600); } catch (e) { toast("That file is not an AMH Corner progress file"); } };
   r.readAsText(file); }
 
 </script>
@@ -8137,7 +8316,7 @@ function howToUse() { const steps = [
     ["Practise before you read.", "Try the question or the lab first, then read the term. Struggling first makes the explanation stick."],
     ["Review your mistakes.", "Wrong answers come back after 1, 3, 7, 14 and 30 days in the question bank until you master them."],
     ["Use real data.", "Do the real-life tasks with your own numbers. That is what turns knowledge into skill, and into a portfolio."]];
-  return `<section class="howto"><div class="page-head"><h2>How to get the most from AMH Platform</h2><p>Six habits that turn this site into real skill.</p></div><ol class="steps howto-steps">${steps.map(([h, t]) => `<li><b>${h}</b> ${t}</li>`).join("")}</ol></section>`; }
+  return `<section class="howto"><div class="page-head"><h2>How to get the most from AMH Corner</h2><p>Six habits that turn this site into real skill.</p></div><ol class="steps howto-steps">${steps.map(([h, t]) => `<li><b>${h}</b> ${t}</li>`).join("")}</ol></section>`; }
 
 function studyPlanSection() { const c = ST.studyPlan || { goal: ST.path || "newstats", min: 45, days: 5, start: fmtD(new Date()) }, has = !!ST.studyPlan;
   let body = ""; if (has) { const days = spBuild(c), total = days.reduce((s, d) => s + d.items.reduce((a, i) => a + i.min, 0), 0), weeks = chunk(days, Math.max(1, c.days)), today_ = fmtD(new Date());
@@ -8196,7 +8375,7 @@ function showHomeTab(t) { ST.homeTab = t; localStorage.setItem(KEY, JSON.stringi
 /* ---------- Start here (first visit) ---------- */
 function startHere() { const c = { goal: ST.path || "", min: 45, days: 5, start: fmtD(new Date()) };
   return `<section class="start" aria-labelledby="sth">
-    <p class="start-hi">Welcome to AMH Platform by Ayman Al-Hayek</p>
+    <p class="start-hi">Welcome to AMH Corner by Ayman Al-Hayek</p>
     <h1 id="sth">Start here</h1>
     <p class="lede">Three quick steps and the site will tell you exactly what to study each day.</p>
     <ol class="start-steps">
@@ -8250,8 +8429,8 @@ function route() { const h = location.hash.slice(1) || "home", [v, arg] = h.spli
   if (wasOpen && h === shownHash) return; shownHash = h; show(v, arg); }
 function show(v, arg) { document.querySelectorAll(".view").forEach(s => s.classList.remove("show")); const s = el("view-" + v) || el("view-home"); s.classList.add("show");
   ST.seen = ST.seen || { labs: {} }; ST.seen.labs = ST.seen.labs || {}; if (el("view-" + v)) { ST.seen[v] = 1; if (v === "labs") ST.seen.labs[arg || TOOLS[0].id] = 1; if (!["home", "res"].includes(v)) logActivity(); localStorage.setItem(KEY, JSON.stringify(ST)); } document.body.classList.remove("menu-open");
-  document.querySelectorAll("a[data-v]").forEach(a => { const on = a.dataset.v === v; a.classList.toggle("active", on); on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"); }); setMenu(false); curDraw = null;
-  ({ home: renderHome, road: renderRoad, learn: renderLearn, labs: renderLabs, cases: renderCases, tasks: renderTasks, quiz: renderQuiz, res: renderRes, inno: renderInno, games: renderGames, ai: renderAI, plan: renderPlan, board: renderBoard, calc: renderCalc, bb: renderBB, mcq: renderMCQ, quran: a => renderQuran(a), videos: a => renderVideos(a) }[v] || renderHome)(arg); window.scrollTo(0, 0); }
+  document.querySelectorAll("a[data-v]").forEach(a => { const on = a.dataset.v === v || (a.dataset.v === "corner" && ["inno", "cases", "ai"].includes(v)); a.classList.toggle("active", on); on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"); }); setMenu(false); curDraw = null;
+  ({ home: renderHome, road: renderRoad, learn: renderLearn, labs: renderLabs, cases: renderCases, tasks: renderTasks, quiz: renderQuiz, res: renderRes, inno: renderInno, games: renderGames, ai: renderAI, plan: renderPlan, board: renderBoard, calc: renderCalc, bb: renderBB, mcq: renderMCQ, quran: a => renderQuran(a), videos: a => renderVideos(a), corner: a => renderCorner(a) }[v] || renderHome)(arg); window.scrollTo(0, 0); }
 
 /* ---------- home ---------- */
 const HERO_DATA = [49.2, 51.1, 50.4, 48.3, 49.8, 52.0, 50.6, 47.9, 49.5, 51.8, 50.2, 48.8, 50.9, 49.1, 52.6, 50.3, 48.6, 51.2, 49.7, 50.8, 48.9, 51.5, 58.4, 50.6, 49.4, 51.0, 48.7, 50.1, 51.9, 49.6];
@@ -8611,7 +8790,7 @@ function qLoad(r, s, play = true, at = 0) { const Q = qState(); Q.r = r; Q.s = s
 function qToggle() { if (!QA.src) return qLoad(qState().r, qState().s, true, qState().t); QA.paused ? QA.play().catch(() => {}) : QA.pause(); }
 function qStep(d) { const Q = qState(); qLoad(Q.r, (Q.s + d + 114) % 114); }
 function qMeta() { if (!("mediaSession" in navigator)) return; const Q = qState(), S = QURAN_SURAHS[Q.s], R = QURAN_RECITERS[Q.r];
-  navigator.mediaSession.metadata = new MediaMetadata({ title: `${S[1]}  ${S[0]}`, artist: `${R[1]}  ${R[0]}`, album: "AMH Platform, Quran library" });
+  navigator.mediaSession.metadata = new MediaMetadata({ title: `${S[1]}  ${S[0]}`, artist: `${R[1]}  ${R[0]}`, album: "AMH Corner, Quran library" });
   [["play", () => QA.play()], ["pause", () => QA.pause()], ["previoustrack", () => qStep(-1)], ["nexttrack", () => qStep(1)],
    ["seekto", e => { QA.currentTime = e.seekTime; }], ["seekbackward", () => { QA.currentTime -= 10; }], ["seekforward", () => { QA.currentTime += 10; }]]
    .forEach(([a, f]) => { try { navigator.mediaSession.setActionHandler(a, f); } catch (e) {} }); }
@@ -8748,7 +8927,93 @@ if (el("fobtn")) el("fobtn").onclick = focusSetup;
 
 </script>
 <script>
-/* ===== AMH Platform UI: theme (system / light / dark) and quick search (Ctrl+K) ===== */
+/* ===== Innovators Corner: one home for innovation stories, case studies and AI for IE =====
+   Overview page + a shared tab header shown above the three existing pages (#inno, #cases, #ai). */
+const IC_TABS = [["corner", "Overview"], ["inno", "Stories and ideas"], ["cases", "Case studies"], ["ai", "AI for IE"]];
+const IC_VIEWS = IC_TABS.map(t => t[0]);
+const icYear = h => +((h.y.match(/\d{4}/) || ["1900"])[0]);
+const icPick = (arr, salt) => arr[(dayIndex() * 7 + salt) % arr.length];
+
+/* shared header, lives outside the views so it survives any re-render of a page */
+const ICH = document.createElement("div"); ICH.id = "ic-head"; ICH.hidden = true;
+el("main").insertBefore(ICH, el("main").firstChild);
+function icHead(cur) {
+  ICH.innerHTML = `<div class="ic-band"><div class="ic-band-in"><a href="#corner" class="ic-name"><span class="ic-mark" aria-hidden="true"></span>Innovators Corner</a>
+    <nav class="ic-tabs" aria-label="Innovators Corner">${IC_TABS.map(([k, l]) => `<a href="#${k}" ${k === cur ? 'aria-current="page"' : ""}>${l}</a>`).join("")}</nav></div></div>`;
+  ICH.hidden = false; }
+addEventListener("hashchange", icSync); function icSync() { const v = (location.hash.slice(1) || "home").split("/")[0]; if (IC_VIEWS.includes(v)) icHead(v); else ICH.hidden = true; if (v !== "corner") icStop(); }
+
+/* ---------- constellation of innovators ---------- */
+let IC_RAF = 0;
+function icStop() { cancelAnimationFrame(IC_RAF); IC_RAF = 0; }
+function icConstellation(cv, tip) {
+  const H = HEROES.map(h => ({ h, yr: icYear(h) })).sort((a, b) => a.yr - b.yr), y0 = 1815, y1 = 1945, ctx = cv.getContext("2d");
+  let W = 0, Ht = 0, dpr = 1, pts = [], sel = -1, t0 = performance.now();
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const layout = () => { dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; Ht = cv.clientHeight; cv.width = W * dpr; cv.height = Ht * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const pad = W < 600 ? 22 : 48, lanes = W < 600 ? 5 : 4;
+    pts = H.map((o, i) => ({ ...o, x: pad + (o.yr - y0) / (y1 - y0) * (W - pad * 2), y: Ht * .22 + ((i * 3) % lanes) / (lanes - 1) * Ht * .52 + (i % 2 ? 8 : -8), ph: i * 1.7 })); };
+  const links = []; H.forEach((a, i) => H.forEach((b, j) => { if (j > i && Math.abs(a.yr - b.yr) <= 14) links.push([i, j]); }));
+  const col = n => getComputedStyle(document.body).getPropertyValue(n).trim();
+  function frame(now) { if (!cv.isConnected || !el("view-corner").classList.contains("show")) return icStop();
+    const t = (now - t0) / 1000, ink = "#E9EEF5", acc = "#E5484D";
+    ctx.clearRect(0, 0, W, Ht);
+    /* decade axis */
+    ctx.strokeStyle = "rgba(233,238,245,.12)"; ctx.lineWidth = 1; ctx.font = "500 11px Geist, Segoe UI, sans-serif"; ctx.fillStyle = "rgba(233,238,245,.38)"; ctx.textAlign = "center";
+    for (let d = 1820; d <= 1940; d += 20) { const x = pts.length ? 48 + 0 : 0, X = (W < 600 ? 22 : 48) + (d - y0) / (y1 - y0) * (W - (W < 600 ? 44 : 96)); ctx.beginPath(); ctx.moveTo(X, Ht * .12); ctx.lineTo(X, Ht * .86); ctx.stroke(); ctx.fillText(d + "s", X, Ht * .95); }
+    const P = pts.map(p => ({ ...p, X: p.x + (reduced ? 0 : Math.sin(t * .6 + p.ph) * 3), Y: p.y + (reduced ? 0 : Math.cos(t * .5 + p.ph) * 4) }));
+    /* links, with a pulse travelling along each: ideas passing between generations */
+    links.forEach(([i, j], k) => { const a = P[i], b = P[j], hot = sel === i || sel === j;
+      ctx.strokeStyle = hot ? "rgba(229,72,77,.75)" : "rgba(233,238,245,.14)"; ctx.lineWidth = hot ? 1.6 : 1; ctx.beginPath(); ctx.moveTo(a.X, a.Y); ctx.lineTo(b.X, b.Y); ctx.stroke();
+      if (!reduced) { const u = ((t * .35 + k * .137) % 1); ctx.fillStyle = hot ? acc : "rgba(233,238,245,.55)"; ctx.beginPath(); ctx.arc(a.X + (b.X - a.X) * u, a.Y + (b.Y - a.Y) * u, hot ? 2.4 : 1.4, 0, 6.283); ctx.fill(); } });
+    P.forEach((p, i) => { const on = i === sel, r = on ? 7 : 4.5;
+      if (on) { ctx.fillStyle = "rgba(229,72,77,.18)"; ctx.beginPath(); ctx.arc(p.X, p.Y, 16 + Math.sin(t * 4) * 2, 0, 6.283); ctx.fill(); }
+      ctx.fillStyle = on ? acc : ink; ctx.beginPath(); ctx.arc(p.X, p.Y, r, 0, 6.283); ctx.fill();
+      if (W >= 700 || on) { ctx.fillStyle = on ? "#fff" : "rgba(233,238,245,.62)"; ctx.font = (on ? "600 12px " : "500 10.5px ") + "Geist, Segoe UI, sans-serif"; ctx.textAlign = "center"; ctx.fillText(p.h.n.replace(/ \(.*?\)|‘.*?’/g, "").split(" ").slice(-1)[0], p.X, p.Y - (on ? 14 : 10)); } });
+    if (!reduced) IC_RAF = requestAnimationFrame(frame); }
+  const pick = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = -1, bd = 30;
+    pts.forEach((p, i) => { const d = Math.hypot(p.x - x, p.y - y); if (d < bd) { bd = d; best = i; } }); return best; };
+  const show = i => { sel = i; if (i < 0) { tip.innerHTML = `<span class="muted">Tap a point to meet an innovator.</span>`; return; } const h = pts[i].h;
+    tip.innerHTML = `<b>${esc(h.n)}</b> <span class="muted">${h.y}, ${esc(h.f)}</span><br>${h.gave.split(". ")[0]}.${h.t && TERM[h.t] ? ` <a href="#term/${h.t}">Related term</a>` : ""}`; if (reduced) frame(performance.now()); };
+  cv.onpointermove = e => { if (e.pointerType === "mouse") { const i = pick(e); cv.style.cursor = i >= 0 ? "pointer" : "default"; } };
+  cv.onclick = e => show(pick(e));
+  layout(); new ResizeObserver(() => { layout(); if (reduced) frame(performance.now()); }).observe(cv);
+  show(H.findIndex(o => o.h === HEROES[(dayIndex() * 11) % HEROES.length]));
+  icStop(); IC_RAF = requestAnimationFrame(frame); }
+
+/* ---------- overview page ---------- */
+function renderCorner() { icHead("corner");
+  const story = icPick(STORIES, 1), cs = icPick(CASES, 3), ai = icPick(AI_USES, 5), vids = dailyVideos(3, VIDEOS.filter(v => /Quality and Lean|Data, AI|Six Sigma|Industrial/.test(v.g || "")), 31);
+  const sorted = [...HEROES].sort((a, b) => icYear(a) - icYear(b));
+  el("view-corner").innerHTML = `
+  <section class="ic-hero"><div class="ic-hero-txt"><p class="ic-kicker">${HEROES.length} innovators, ${STORIES.length} stories, ${CASES.length} case studies, ${AI_USES.length} AI applications</p>
+     <h1>Innovators Corner</h1><p class="ic-lede">The people, factories, hospitals and algorithms that turned data into better work. Read how they did it, then use the same tools yourself.</p></div>
+   <div class="ic-sky"><canvas id="icsky" aria-label="Constellation of ${HEROES.length} innovators placed by birth year; lines join people whose working lives overlapped"></canvas><p class="ic-tip" id="ictip" aria-live="polite"></p></div></section>
+
+  <section><div class="page-head"><h2>Today in the Corner</h2><p>A new story, case and AI application every day.</p></div>
+   <div class="ic-today">
+    <a class="ic-card ic-story" href="#inno"><span class="ic-lab">Story of the day</span><span class="ic-big">${story.big}</span><b>${esc(story.t)}</b><span class="muted small">${story.cap}</span></a>
+    <a class="ic-card" href="#cases"><span class="ic-lab">Case of the day</span><b>${esc(cs.t)}</b><span class="muted small">${esc(cs.era || "")}</span><p>${cs.story.slice(0, 170).replace(/\s\S*$/, "")}…</p></a>
+    <a class="ic-card" href="#ai"><span class="ic-lab">AI for IE</span><b>${esc(ai.t)}</b><span class="muted small">${esc(ai.area)}</span><p>${esc(ai.prob)}</p></a></div></section>
+
+  <section><div class="page-head"><h2>Step inside</h2></div>
+   <div class="ic-doors">
+    <a class="ic-door" href="#inno"><span class="ic-num">${STORIES.length}</span><h3>Stories and ideas</h3><p>Code-breaking, lunchboxes, million-dollar prizes and the headlines statistics wrote. Plus articles, project ideas and frontier topics.</p><ul>${STORIES.slice(0, 3).map(s => `<li>${esc(s.t)}</li>`).join("")}</ul><span class="ic-go">Open stories</span></a>
+    <a class="ic-door" href="#cases"><span class="ic-num">${CASES.length}</span><h3>Case studies</h3><p>Real projects from breweries to hospitals, each with the data, the tool that cracked it and the lesson for your work.</p><ul>${CASES.slice(0, 3).map(c => `<li>${esc(c.t)}</li>`).join("")}</ul><span class="ic-go">Open case studies</span></a>
+    <a class="ic-door" href="#ai"><span class="ic-num">${AI_USES.length}</span><h3>AI for IE</h3><p>Where machine learning helps an industrial engineer today: the problem, the model, the data you need and the trap to avoid.</p><ul>${AI_USES.slice(0, 3).map(a => `<li>${esc(a.t)}</li>`).join("")}</ul><span class="ic-go">Open AI for IE</span></a></div></section>
+
+  <section><div class="page-head"><h2>Two centuries of innovators</h2><p>Scroll the timeline. Each card says what the person gave us and how you can use it this week.</p></div>
+   <ol class="ic-line">${sorted.map(h => `<li><span class="ic-yr">${icYear(h)}</span><b>${esc(h.n)}</b><span class="muted small">${esc(h.f)}</span><p>${h.gave.split(". ")[0]}.</p><p class="ic-use"><b class="ui">Try it.</b> ${h.use}</p></li>`).join("")}</ol></section>
+
+  <section><div class="page-head"><h2>Watch</h2><p>Three videos on innovation in quality, operations and data, new every day. Over a thousand more in the video library.</p></div>
+   <div class="vids">${vids.map(v => videoFacade(v)).join("")}</div><div class="row" style="margin-top:14px"><a class="btn" href="#videos">Open the video library</a></div></section>`;
+  wireVideos(el("view-corner")); icConstellation(el("icsky"), el("ictip")); }
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", icSync); else icSync();
+
+</script>
+<script>
+/* ===== AMH Corner UI: theme (system / light / dark) and quick search (Ctrl+K) ===== */
 
 /* ---------- theme ---------- */
 const THEME_MQ = matchMedia("(prefers-color-scheme: dark)");
@@ -8802,7 +9067,7 @@ function ckSearch(q) { const I = ckIndex(); q = q.trim().toLowerCase();
       let s = t === q ? 100 : t.startsWith(q) ? 80 : t.split(/[\s(:,]+/).some(w => w.startsWith(words[0])) ? 60 : t.includes(q) ? 40 : 10;
       if (x.g === "Term") s += 5; return [s, x]; }).filter(Boolean).sort((a, b) => b[0] - a[0]).slice(0, 40).map(a => a[1]); }
 
-const CK = document.createElement("div"); CK.className = "cmdk"; CK.setAttribute("role", "dialog"); CK.setAttribute("aria-modal", "true"); CK.setAttribute("aria-label", "Search AMH Platform");
+const CK = document.createElement("div"); CK.className = "cmdk"; CK.setAttribute("role", "dialog"); CK.setAttribute("aria-modal", "true"); CK.setAttribute("aria-label", "Search AMH Corner");
 CK.innerHTML = `<div class="cmdk-box"><div class="cmdk-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
   <input id="ckq" type="text" placeholder="Search terms, labs, belts, games…" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="cklist" aria-autocomplete="list"><kbd>Esc</kbd></div>
   <div class="cmdk-list" id="cklist" role="listbox"></div>
