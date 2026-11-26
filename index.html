@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F7F8FA">
 <title>AMH Corner by Ayman Al-Hayek: applied statistics, Lean Six Sigma and industrial engineering</title>
-<meta name="description" content="AMH Corner by Ayman Al-Hayek: learn applied statistics, Lean Six Sigma (White to Master Black Belt) and industrial engineering with labs, games, a scientific calculator and a 600-question bank.">
+<meta name="description" content="AMH Corner by Ayman Al-Hayek: learn applied statistics, Lean Six Sigma (White to Black Belt) and industrial engineering with labs, games, a scientific calculator and a 600-question bank.">
 <meta name="theme-color" content="#0B1520" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%230B1220'/%3E%3Cpath fill='%23F7F8FA' d='M12 10h6v22h18v6H12z'/%3E%3Crect x='20.5' y='22.5' width='7' height='7' rx='1' fill='%23E5484D'/%3E%3C/svg%3E">
 <meta name="author" content="Ayman Al-Hayek">
@@ -1126,7 +1126,7 @@ h3{font-weight:650}
 .verdict{border-left-width:1px!important;border:1px solid}
 
 /* ===== LSS Academy ===== */
-.ac-ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--sheet)}
+.ac-ladder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--sheet)}
 .ac-ladder a{display:flex;flex-direction:column;gap:4px;padding:14px 14px 12px;text-decoration:none;color:var(--ink);border-right:1px solid var(--rule);position:relative;min-width:0}
 .ac-ladder a:last-child{border-right:none}
 .ac-ladder a:hover{background:var(--paper)}
@@ -1783,14 +1783,14 @@ function amhMark(size = 32, cls = "") {
       caption("Learn from the people who built the field.", T, 26, 31.2, H * .9); }
 
     /* ---------- scene 6: belts (31–36) ---------- */
-    const BELTS = [["White Belt", "#F4F6F8"], ["Yellow Belt", "#E5BE3C"], ["Green Belt", "#2E8B57"], ["Black Belt", "#1A2430"], ["Master Black Belt", "#7A1F2B"]];
-    function scene6(T) { const p = span(T, 31, 36.4); if (p <= 0 || p >= 1) return; const k = inout(p, .05, .1), u = U(), bw = Math.min(W * .78, 640), bh = Math.min(H * .07, 46), x0 = (W - bw) / 2, y0 = H * .5 - 2.5 * (bh + 10);
+    const BELTS = [["White Belt", "#F4F6F8"], ["Yellow Belt", "#E5BE3C"], ["Green Belt", "#2E8B57"], ["Black Belt", "#1A2430"]];
+    function scene6(T) { const p = span(T, 31, 36.4); if (p <= 0 || p >= 1) return; const k = inout(p, .05, .1), u = U(), bw = Math.min(W * .78, 640), bh = Math.min(H * .07, 46), x0 = (W - bw) / 2, y0 = H * .5 - 2 * (bh + 10);
       BELTS.forEach(([n, c], i) => { const q = out(span(T, 31.3 + i * .42, 32.1 + i * .42)), x = lerp(-bw, x0, q), y = y0 + i * (bh + 10) + (4 - i) * 0;
         ctx.save(); ctx.globalAlpha = k * q; ctx.fillStyle = c; ctx.strokeStyle = "rgba(238,242,247,.25)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, bw, bh, 6) : ctx.rect(x, y, bw, bh); ctx.fill(); ctx.stroke(); ctx.restore();
         text(n, x + 18, y + bh / 2, Math.max(14, bh * .42), { w: 650, al: "left", a: k * q, c: i === 0 || i === 1 ? "#0B1220" : "#F4F6F8" });
         text(String(i + 1), x + bw - 18, y + bh / 2, Math.max(13, bh * .38), { w: 500, al: "right", a: k * q * .7, c: i === 0 || i === 1 ? "#0B1220" : "#F4F6F8", f: MONO }); });
       text("LSS Academy", W / 2, y0 - u * .1, u * .085, { w: 700, a: k * clamp(span(T, 31.2, 32)), ls: -1.5 });
-      caption("Five belts. One path from White to Master Black.", T, 33.3, 36.4, Math.min(H * .88, y0 + 5 * (bh + 10) + u * .08)); }
+      caption("Four belts. One path from White to Black.", T, 33.3, 36.4, Math.min(H * .88, y0 + 4 * (bh + 10) + u * .08)); }
 
     /* ---------- scene 7: finale (36–43) ---------- */
     const FIN = Array.from({ length: innerWidth < 600 ? 160 : 320 }, () => ({ a: Math.random() * 6.283, r: .6 + Math.random() * .7, k: Math.random() }));
@@ -1845,7 +1845,7 @@ function amhMark(size = 32, cls = "") {
 
 <div class="drawer" id="drawer" aria-label="All sections">
   <div class="drawer-in">
-    <div class="dgroup"><h4>Learn</h4><a data-v="home" href="#home">Today</a><a data-v="road" href="#road">DMAIC road</a><a data-v="learn" href="#learn">Terms</a><a data-v="bb" href="#bb">LSS (White to Master Black Belt)</a><a data-v="tasks" href="#tasks">Real-life tasks</a></div>
+    <div class="dgroup"><h4>Learn</h4><a data-v="home" href="#home">Today</a><a data-v="road" href="#road">DMAIC road</a><a data-v="learn" href="#learn">Terms</a><a data-v="bb" href="#bb">LSS (White to Black Belt)</a><a data-v="tasks" href="#tasks">Real-life tasks</a></div>
     <div class="dgroup"><h4>Practise</h4><a data-v="labs" href="#labs">Labs</a><a data-v="calc" href="#calc">AMH Calculator</a><a data-v="mcq" href="#mcq">Question bank</a><a data-v="quiz" href="#quiz">Chapter challenges</a><a data-v="games" href="#games">Stat games</a><a data-v="board" href="#board">Whiteboard</a></div>
     <div class="dgroup"><h4>Explore</h4><a data-v="videos" href="#videos">Video library</a><a data-v="corner" href="#corner">Innovators Corner</a><a data-v="res" href="#res">Sources and books</a></div>
     <div class="dgroup"><h4>Organise</h4><a data-v="plan" href="#plan">Plan and focus timer</a><a data-v="quran" href="#quran">Quran library</a></div>
@@ -6893,7 +6893,7 @@ function coursePanel() { return `<section class="course"><div class="page-head">
 
 </script>
 <script>
-/* ===== LSS ACADEMY: White, Yellow, Green, Black and Master Black Belt =====
+/* ===== LSS ACADEMY: White, Yellow, Green and Black Belt =====
    Belt roles and typical training follow common practice described in Pyzdek & Keller, The Six Sigma Handbook (5th ed., 2018),
    Kubiak & Benbow, The Certified Six Sigma Black Belt Handbook (3rd ed., 2017) and the ASQ certification pages.
    Belts earned here are practice belts for learning. They are not an accredited certification. */
@@ -6924,7 +6924,7 @@ const AC_BELTS = [
       do: "Play Waste hunt in the Games tab and score at least 70.",
       ref: "Womack & Jones, Lean Thinking (1996); Ohno, Toyota Production System (1988)." },
     { n: "DMAIC and the belt system", goal: "Name the five DMAIC phases and the job of each belt.",
-      body: "DMAIC is the improvement road: Define the problem, Measure the current state, Analyze the root cause, Improve with a tested solution, Control so the gain holds. Belts describe roles, not grades of person: White and Yellow Belts support, Green Belts lead smaller projects, Black Belts lead complex projects full-time, Master Black Belts coach and run the programme, and a Champion sponsors each project.",
+      body: "DMAIC is the improvement road: Define the problem, Measure the current state, Analyze the root cause, Improve with a tested solution, Control so the gain holds. Belts describe roles, not grades of person: White and Yellow Belts support, Green Belts lead smaller projects, Black Belts lead complex projects full-time and coach Green Belts, and a Champion sponsors each project.",
       keys: ["Define, Measure, Analyze, Improve, Control", "A Champion owns the business result", "Projects are chosen for impact and data, not for a known solution"],
       terms: ["dmaic", "charter"], vid: "txOeJQCMT8s",
       do: "Play Who does it? in the Games tab.",
@@ -7048,57 +7048,7 @@ const AC_BELTS = [
    train: "Typically about 4 weeks of training spread over about 4 months, with a project between sessions.",
    proj: "Leads several projects a year with measurable financial results.",
    next: "Pass the Black Belt exam, then the CLSSBB-format mock exam (165 questions, 65% to pass) in the question bank.",
-   vids: ["Y7GyEUj88PI", "ysTUFl5S93w", "oOuu8IBd-yo", "EkAQAi3a4js", "Rsc5znwR5FA", "pJKxwFl3Wpg", "6A9Gxk6bJWc", "GrXkZYhkUS8", "0MFpOQRY0rw"], ch: [] },
-
- { k: "master", n: "Master Black Belt", c: "#7A1F2B", exam: 40, pass: 75,
-   role: "Runs the programme. Chooses projects with leaders, trains and certifies belts, and is the statistical expert of last resort.",
-   who: "Black Belts with several years of projects behind them.",
-   train: "Further training in deployment, coaching and advanced methods, plus years of practice.",
-   proj: "Owns a portfolio of projects and mentors many Black and Green Belts.",
-   next: "This is the top of the ladder. Keep teaching: that is how a Master Black Belt keeps learning.",
-   ch: [
-    { n: "Deployment strategy and hoshin kanri", goal: "Link improvement projects to the few goals that matter.",
-      body: "A Master Black Belt helps leaders turn strategy into projects. Hoshin kanri cascades a few breakthrough objectives down the organisation, with catchball between levels so targets and means are agreed. The X-matrix shows on one page how long-term goals, annual objectives, projects, measures and owners connect.",
-      keys: ["Few breakthrough objectives, not many", "Catchball: targets negotiated up and down", "Every project traces to a strategic goal"],
-      terms: ["dmaic"], vid: "sY7CB3BnJmY",
-      do: "Build a small X-matrix for your own year: 2 goals, 3 projects, 3 measures.",
-      ref: "Akao (ed.), Hoshin Kanri: Policy Deployment for Successful TQM (1991); Kubiak & Benbow, ch. 2." },
-    { n: "Project portfolio and benefits", goal: "Select and track projects as finance would.",
-      body: "Projects compete for scarce Belts. Rank candidates with a method such as the Pareto priority index (savings × probability of success divided by cost × time) and track hard savings with the finance team. Close projects that stop paying back.",
-      keys: ["PPI = (savings × probability) / (cost × years)", "Hard savings appear in the accounts; soft savings do not", "Finance signs off benefits, not the Belt"],
-      terms: ["charter"], vid: "XowbzfBnNqQ",
-      do: "Rank three possible projects at your university with the PPI.",
-      ref: "Pyzdek & Keller, ch. 4; Kubiak & Benbow, ch. 2." },
-    { n: "Coaching Belts and tollgate reviews", goal: "Review a project at each DMAIC tollgate.",
-      body: "At the end of each phase the Champion and Master Black Belt hold a tollgate review: is the phase complete, is the data sound, should the project continue? A good coach asks questions rather than giving answers, so the Belt learns to think.",
-      keys: ["One checklist per phase", "Ask: what data shows that?", "Stop or re-scope weak projects early"],
-      terms: ["dmaic", "charter"], vid: "qGUG89cXB7s",
-      do: "Write five tollgate questions for the Analyze phase.",
-      ref: "Kubiak & Benbow, ch. 3; George, Lean Six Sigma (2002)." },
-    { n: "Advanced experimentation and robust design", goal: "Plan a sequence of experiments, not a single one.",
-      body: "Experienced experimenters work sequentially: screen many factors with a fractional factorial, then study the few vital ones in detail, then find the optimum with response surface methods. Taguchi's robust design aims for a process that stays on target even when noise factors change.",
-      keys: ["Screen, characterise, optimise", "Resolution tells you which effects are confounded", "Robust design reduces sensitivity to noise"],
-      terms: ["doe", "fractional", "interaction", "factorial"], vid: "Y7GyEUj88PI",
-      do: "Use the DOE lab and explain one interaction in plain words.",
-      ref: "Box, Hunter & Hunter, Statistics for Experimenters (2nd ed., 2005); Montgomery, Design and Analysis of Experiments (9th ed.)." },
-    { n: "Design for Six Sigma", goal: "Know when to redesign instead of improve.",
-      body: "When a process cannot reach the goal however well it is improved, it must be redesigned. Design for Six Sigma uses road maps such as DMADV (Define, Measure, Analyze, Design, Verify) with tools like QFD to carry customer needs into the design, and reliability tools such as Weibull analysis.",
-      keys: ["DMAIC improves; DMADV designs", "QFD: house of quality", "Verify the design with a pilot and capability study"],
-      terms: ["qfd", "kano", "weibull"], vid: null,
-      do: "Draw a small house of quality for a phone charger.",
-      ref: "Yang & El-Haik, Design for Six Sigma (2nd ed., 2009); Akao, Quality Function Deployment (1990)." },
-    { n: "Leading change and building the culture", goal: "Make improvement last after the experts leave.",
-      body: "Most programmes fail from people, not statistics. Kotter's eight steps and Deming's System of Profound Knowledge (appreciation of a system, knowledge of variation, theory of knowledge, psychology) guide the Master Black Belt in building a culture where improvement is everyone's job.",
-      keys: ["Create urgency, build a coalition, win early, anchor the change", "Drive out fear (Deming)", "Train leaders first"],
-      terms: ["causes"], vid: "6nZYeZWBcbo",
-      do: "Pick one change you want at your university and write the first three Kotter steps.",
-      ref: "Kotter, Leading Change (1996); Deming, The New Economics (1993)." },
-    { n: "Designing training that works", goal: "Plan and evaluate a training course for Belts.",
-      body: "A Master Black Belt designs the curriculum and checks that it works. Kirkpatrick's four levels evaluate training by reaction, learning, behaviour on the job and business results. Real projects between training weeks turn knowledge into skill.",
-      keys: ["Teach with the trainee's own data", "Evaluate at all four Kirkpatrick levels", "Certify on results, not attendance"],
-      terms: [], vid: null,
-      do: "Design a one-hour White Belt session for your classmates using this academy.",
-      ref: "Kirkpatrick & Kirkpatrick, Evaluating Training Programs (3rd ed., 2006)." } ] }
+   vids: ["Y7GyEUj88PI", "ysTUFl5S93w", "oOuu8IBd-yo", "EkAQAi3a4js", "Rsc5znwR5FA", "pJKxwFl3Wpg", "6A9Gxk6bJWc", "GrXkZYhkUS8", "0MFpOQRY0rw"], ch: [] }
 ];
 const AC = Object.fromEntries(AC_BELTS.map(b => [b.k, b]));
 const acState = () => { ST.lss = ST.lss || { ch: {}, pass: {}, name: "" }; ST.lss.ch = ST.lss.ch || {}; ST.lss.pass = ST.lss.pass || {}; return ST.lss; };
@@ -7112,16 +7062,15 @@ function acPool(k) { return MCQ.map((q, i) => ({ ...q, id: i })).filter(q => ({
   white: q.lv === 1 && (q.d === "Lean" || q.d === "Six Sigma"),
   yellow: (q.lv === 1) || (q.d === "Lean" && q.lv === 2) || (q.lv === 2 && q.tags.some(t => ["bb4", "bb5"].includes(t)) && q.d !== "Statistics"),
   green: q.lv <= 2 && q.tags.some(t => ["bb4", "bb5", "bb6", "bb7", "bb8"].includes(t)),
-  black: q.lv >= 2 && q.tags.some(t => t.startsWith("bb")),
-  master: q.lv === 3 || (q.lv === 2 && q.tags.some(t => ["bb1", "bb2", "bb3", "bb9"].includes(t)))
+  black: q.lv >= 2 && q.tags.some(t => t.startsWith("bb"))
  })[k]); }
 
 const acTabs = cur => `<nav class="ac-tabs" aria-label="Academy sections">${[["", "Overview"], ["guide", "Road map"], ...AC_BELTS.map(b => [b.k, b.n]), ["games", "Games"]].map(([k, l]) => `<a href="#bb${k ? "/" + k : ""}" class="${cur === k ? "on" : ""}">${l}</a>`).join("")}</nav>`;
 const acLadder = cur => `<div class="ac-ladder">${AC_BELTS.map(b => { const p = acState().pass[b.k], n = acChapters(b).length;
   return `<a href="#bb/${b.k}" class="${cur === b.k ? "on" : ""}"><span class="sw" style="background:${b.c}"></span><b>${b.n}</b><small>${n} chapters, ${b.exam}-question exam</small><span class="st ${p ? "pass" : ""}">${p ? `Passed with ${p.pct}%` : `${acDoneCount(b)} of ${n} chapters done`}</span></a>`; }).join("")}</div>`;
 const acHead = cur => { const r = acRank(), x = xp();
-  return `<div class="page-head" style="max-width:none"><h2>LSS Academy</h2><p style="max-width:var(--measure)">Five belts from White to Master Black Belt. Each belt has chapters with videos and practice, then an exam. Pass it to earn the belt here and move up.</p></div>
-  <div class="ac-rank"><span>Your belt: <span class="big">${r ? r.n : "No belt yet"}</span></span><span class="muted">${x} practice points</span>${r && r.k !== "master" ? `<a class="btn sm primary" href="#bb/${AC_BELTS[AC_BELTS.indexOf(r) + 1].k}">Continue to ${AC_BELTS[AC_BELTS.indexOf(r) + 1].n}</a>` : r ? "" : `<a class="btn sm primary" href="#bb/white">Start White Belt</a>`}</div>
+  return `<div class="page-head" style="max-width:none"><h2>LSS Academy</h2><p style="max-width:var(--measure)">Four belts from White to Black Belt. Each belt has chapters with videos and practice, then an exam. Pass it to earn the belt here and move up.</p></div>
+  <div class="ac-rank"><span>Your belt: <span class="big">${r ? r.n : "No belt yet"}</span></span><span class="muted">${x} practice points</span>${r && AC_BELTS.indexOf(r) < AC_BELTS.length - 1 ? `<a class="btn sm primary" href="#bb/${AC_BELTS[AC_BELTS.indexOf(r) + 1].k}">Continue to ${AC_BELTS[AC_BELTS.indexOf(r) + 1].n}</a>` : r ? "" : `<a class="btn sm primary" href="#bb/white">Start White Belt</a>`}</div>
   ${acLadder(cur)}${acTabs(cur)}`; };
 
 function renderBB(arg) { acState(); arg = arg || "";
@@ -7139,26 +7088,26 @@ function acOverview() { const r = acRank(), nx = r ? AC_BELTS[AC_BELTS.indexOf(r
      <li><b>Pick your belt.</b> Start at White even if you are on a Black Belt course: it takes an hour and fills gaps.</li>
      <li><b>Study each chapter.</b> Read the lesson, watch the video, open the linked terms and labs, and do the practice task. Tick the chapter when you can explain it without notes.</li>
      <li><b>Play the games.</b> They drill the facts each belt needs: wastes, roles, DMAIC tools and sigma levels.</li>
-     <li><b>Pass the belt exam.</b> Questions come from the checked question bank, with a full explanation for each one. Pass mark 70% (75% for Master Black Belt).</li>
+     <li><b>Pass the belt exam.</b> Questions come from the checked question bank, with a full explanation for each one. Pass mark 70%.</li>
      <li><b>Print your practice certificate</b> and move up the ladder.</li></ol></div>
    <div class="card"><h3>${nx ? `Next for you: ${nx.n}` : "You hold every belt"}</h3>${nx ? `<p>${nx.role}</p><p class="small muted">${acDoneCount(nx)} of ${acChapters(nx).length} chapters done.</p><div class="row"><a class="btn primary sm" href="#bb/${nx.k}">Open ${nx.n}</a><a class="btn sm quiet" href="#bb/exam-${nx.k}">Take the exam</a></div>` : `<p>Keep the knowledge alive: play the games and coach someone through their White Belt.</p>`}
      <p class="small muted" style="margin-top:14px">Belts earned here are practice belts that show what you have learned on this site. They are not an accredited certification. For that, see the road map.</p></div></section>`; }
 
 function acGuide() {
-  el("view-bb").innerHTML = acHead("guide") + `<section><div class="page-head"><h2>The road from White to Master Black Belt</h2><p>What each belt does, how long training usually takes, and what you need before moving up. Training lengths are typical figures from the handbooks cited below; every provider sets its own.</p></div>
+  el("view-bb").innerHTML = acHead("guide") + `<section><div class="page-head"><h2>The road from White to Black Belt</h2><p>What each belt does, how long training usually takes, and what you need before moving up. Training lengths are typical figures from the handbooks cited below; every provider sets its own.</p></div>
    <div class="tblwrap"><table class="ac-road"><thead><tr><th>Belt</th><th>Role</th><th>Typical training</th><th>Project work</th><th>To move up</th></tr></thead><tbody>
    ${AC_BELTS.map(b => `<tr><td><span class="belt-swatch" style="display:inline-block;width:18px;height:8px;margin-right:6px;background:${b.c};border:1px solid var(--rule)"></span>${b.n}</td><td>${b.role}</td><td>${b.train}</td><td>${b.proj}</td><td>${b.next}</td></tr>`).join("")}</tbody></table></div></section>
   <section class="split"><div><h2 style="margin-bottom:12px">Getting a recognised certificate</h2>
     <p>Several bodies certify belts. Their rules change, so read the official page before you register.</p>
     <ul class="links-list">
-     <li><b>ASQ</b> (American Society for Quality) certifies Yellow, Green and Black Belts and Master Black Belts against a published Body of Knowledge. Green and Black Belt certification require work experience, and Black Belt also requires completed projects. <a href="https://www.asq.org/cert" target="_blank" rel="noopener">ASQ certifications</a></li>
+     <li><b>ASQ</b> (American Society for Quality) certifies Yellow, Green and Black Belts against a published Body of Knowledge. Green and Black Belt certification require work experience, and Black Belt also requires completed projects. <a href="https://www.asq.org/cert" target="_blank" rel="noopener">ASQ certifications</a></li>
      <li><b>IASSC</b> certifies Yellow, Green and Black Belts by exam, with no project requirement. <a href="https://www.iassc.org/" target="_blank" rel="noopener">IASSC</a></li>
      <li><b>Your own course</b>: the CLSSBB course from the Jordan Academy for Quality Management. Its syllabus is mapped item by item on the Black Belt page.</li></ul></div>
    <div><h2 style="margin-bottom:12px">A realistic timeline for an IE student</h2><ol class="steps">
      <li><b>Year 1:</b> White Belt here, then Yellow Belt. Play the games, do two real-life tasks.</li>
      <li><b>Year 2:</b> Green Belt chapters alongside your statistics course. Run one small project at home, at university or in a summer job.</li>
      <li><b>Year 3 to 4:</b> Black Belt chapters, a capstone or internship project with real savings, and an external Green or Black Belt exam.</li>
-     <li><b>After graduation:</b> lead projects for several years. Master Black Belt comes from experience and coaching others, not from a course alone.</li></ol></div></section>
+     <li><b>After graduation:</b> lead Black Belt projects with real savings and coach Green Belts. That is how a Black Belt keeps growing.</li></ol></div></section>
   <p class="cite">Sources: Pyzdek & Keller, The Six Sigma Handbook (5th ed., 2018), ch. 2–3; Kubiak & Benbow, The Certified Six Sigma Black Belt Handbook (3rd ed., 2017), ch. 1; ASQ and IASSC certification pages.</p>`; }
 
 function acChapter(b, c, i) { const done = acState().ch[b.k + i], v = c.vid && acVid(c.vid);
@@ -7251,16 +7200,13 @@ const AG_ROLE = [
  ["Leads smaller projects in their own area while keeping their normal job.", "Green Belt"],
  ["Supports a project team by collecting data and mapping the process.", "Yellow Belt"],
  ["Knows the basic ideas and spots waste in daily work, with no project role.", "White Belt"],
- ["Trains and certifies Belts and chooses the project portfolio with leaders.", "Master Black Belt"],
  ["Signs the project charter and agrees the goal.", "Champion"],
- ["Is the statistical expert other Black Belts call for a hard design of experiments.", "Master Black Belt"],
  ["Runs a hypothesis test to compare two shifts in their own department.", "Green Belt"],
  ["Uses response surface methods and multiple regression in a cross-site project.", "Black Belt"],
  ["Takes part in a 5S event on their own workstation.", "Yellow Belt"],
  ["Attends a two-hour awareness session on Lean Six Sigma.", "White Belt"],
- ["Holds tollgate reviews with the Champion at the end of each phase.", "Master Black Belt"],
  ["Decides to stop a project that no longer fits the business strategy.", "Champion"]];
-const AG_ROLES = ["White Belt", "Yellow Belt", "Green Belt", "Black Belt", "Master Black Belt", "Champion"];
+const AG_ROLES = ["White Belt", "Yellow Belt", "Green Belt", "Black Belt", "Champion"];
 const AG_TOOLS = [["Project charter", "Define"], ["SIPOC", "Define"], ["Voice of the customer", "Define"], ["CTQ tree", "Define"], ["Kano model", "Define"], ["Stakeholder analysis", "Define"],
  ["Gage R&R", "Measure"], ["Operational definition", "Measure"], ["Data collection plan", "Measure"], ["Process capability (Cpk)", "Measure"], ["Baseline sigma level", "Measure"], ["Value stream map (current state)", "Measure"],
  ["Fishbone diagram", "Analyze"], ["5 Whys", "Analyze"], ["Hypothesis test", "Analyze"], ["Regression", "Analyze"], ["Multi-vari chart", "Analyze"], ["ANOVA", "Analyze"],
@@ -9131,7 +9077,7 @@ function ckIndex() { if (CK_INDEX) return CK_INDEX; const I = [];
   TOOLS.forEach(t => I.push({ g: "Lab", t: t.name, h: "#labs/" + t.id }));
   AC_BELTS.forEach(b => { I.push({ g: "LSS Academy", t: b.n, h: "#bb/" + b.k, s: "Belt" }); I.push({ g: "LSS Academy", t: b.n + " exam", h: "#bb/exam-" + b.k, s: "Exam" });
     b.ch.forEach(c => I.push({ g: "LSS Academy", t: c.n, h: "#bb/" + b.k, s: b.n })); });
-  I.push({ g: "LSS Academy", t: "Road map: White to Master Black Belt", h: "#bb/guide" });
+  I.push({ g: "LSS Academy", t: "Road map: White to Black Belt", h: "#bb/guide" });
   BB.forEach(s => I.push({ g: "LSS Academy", t: s.n, h: "#bb/" + s.k, s: "Black Belt" }));
   AG_LIST.forEach(g => I.push({ g: "Game", t: g.n, h: "#bb/g-" + g.id, s: "Academy" }));
   GAMES.forEach(g => I.push({ g: "Game", t: g.name, h: "#games/" + g.id, s: "Stat games" }));
