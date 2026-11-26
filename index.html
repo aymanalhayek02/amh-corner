@@ -1153,6 +1153,17 @@ body.intro-on{overflow:hidden}
 #intro .big .s{filter:none!important}
 #intro.logo-on .in-logo svg{transform:none}
 
+/* lighter: nothing behind the intro is drawn while it plays */
+body.intro-on > *:not(#intro){visibility:hidden}
+/* light mode: still film grain, a little softer */
+#intro.lite::after{animation:none;opacity:.35}
+
+/* final title: animate only movement and opacity (handled by the graphics card), never weight or blur */
+#intro.words .in-word span span{animation:in-rise2 .9s cubic-bezier(.34,1.56,.64,1) forwards!important;animation-delay:calc(var(--d) * 70ms)!important;filter:none!important}
+#intro.words .in-word .w2 span{animation-delay:calc(260ms + var(--d) * 55ms)!important}
+.in-word span span{filter:none!important;will-change:transform,opacity}
+@keyframes in-rise2{0%{opacity:0;transform:translateY(.55em) scaleY(1.25)}55%{opacity:1}100%{opacity:1;transform:none}}
+
 </style>
 <style>
 /* ===== Plain type and calmer layout: system fonts only, no width-stretched display type, no coloured side rails ===== */
@@ -1747,8 +1758,11 @@ function amhMark(size = 32, cls = "") {
       if (reduced) { d.classList.add("logo-on", "words"); const wait = () => { if (done) return; if (T_end || (soundMode ? audio.currentTime > D - .3 : performance.now() - clock0 > D * 1000)) finish(); else setTimeout(wait, 400); }; wait(); return; }
       size(); addEventListener("resize", size); raf = requestAnimationFrame(frame); }
 
-    let QS = 1, goodFrames = 0;   /* dynamic resolution: drops when frames are slow, rises again when there is room */
-    function size() { BG = FG = null; dpr = Math.min(devicePixelRatio || 1, 1.25, Math.sqrt(1.6e6 / (innerWidth * innerHeight))) * QS; W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    /* light mode: phones and computers with few cores or little memory start with lighter settings */
+    const LITE = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 || /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
+    if (LITE) d.classList.add("lite");
+    let QS = LITE ? .8 : 1, goodFrames = 0, CAP30 = false, skipF = false;   /* dynamic resolution: drops when frames are slow, rises again when there is room */
+    function size() { BG = FG = null; dpr = Math.min(devicePixelRatio || 1, 1, Math.sqrt(1.2e6 / (innerWidth * innerHeight))) * QS; W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     function level() { if (!analyser) { const s = (performance.now() - clock0) / 1000; return .3 + .3 * Math.pow(Math.max(0, Math.sin(s * 3.6)), 6); } analyser.getByteFrequencyData(fbuf); let s = 0; for (let i = 1; i < 14; i++) s += fbuf[i]; return s / (13 * 255); }
     /* the timeline in design seconds (0–43), driven by the music when it plays */
     /* smooth master clock: browsers report the music position in uneven jumps, so the picture runs on the screen's own
@@ -1764,7 +1778,7 @@ function amhMark(size = 32, cls = "") {
       sc.t = t; sc.at = pnow; return Math.max(0, t) * DESIGN / D; }
 
     /* ================= HUD engine: cinematic analytics interface ================= */
-    let FX = 1, ftAvg = 16, lastF = 0;   /* FX 1 = full effects; drops to 0 automatically if a device struggles */
+    let FX = LITE ? 0 : 1, ftAvg = 16, lastF = 0;   /* FX 1 = full effects; drops to 0 automatically if a device struggles */
     const CY = "#46E3FF", MG = "#FF3D7F", AM = "#FFB547", WH = "#EAF6FF", small = () => W < 640, portrait = () => H > W * 1.05;
     const U = () => Math.min(W, H);
     function text(s, x, y, px, opt = {}) { ctx.save(); ctx.globalAlpha = opt.a ?? 1; ctx.fillStyle = opt.c || WH; ctx.font = `${opt.w || 700} ${px}px ${opt.f || FONT}`; ctx.textAlign = opt.al || "center"; ctx.textBaseline = "middle";
@@ -1792,7 +1806,7 @@ function amhMark(size = 32, cls = "") {
     /* glow without the costly blur filter: a wide faint stroke under a thin bright one */
     function glowLine(pts, col, wdt = 1.4, a = 1, blur = 10) { if (pts.length < 2) return; ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = col; ctx.lineJoin = ctx.lineCap = "round";
       ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
-      if (blur > 0 && FX > 0) { ctx.globalAlpha = a * .12; ctx.lineWidth = wdt + blur * .9; ctx.stroke(); ctx.globalAlpha = a * .28; ctx.lineWidth = wdt + blur * .3; ctx.stroke(); }
+      if (blur >= 6 && FX > 0) { ctx.globalAlpha = a * .2; ctx.lineWidth = wdt + blur * .55; ctx.stroke(); }
       ctx.globalAlpha = a; ctx.lineWidth = wdt; ctx.stroke(); ctx.restore(); }
     function node(x, y, r, col, a = 1) { ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.fillStyle = col; ctx.globalAlpha = a * .22; ctx.beginPath(); ctx.arc(x, y, r * 2.6, 0, 6.283); ctx.fill(); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); ctx.restore(); }
     /* glowing arc: same layered trick */
@@ -1811,7 +1825,7 @@ function amhMark(size = 32, cls = "") {
       return { x: x + 10, y: y + fs * 2 + 10, w: w - 20, h: h - fs * 2 - 18 }; }
 
     /* finishing: bokeh, grain, vignette, letterbox */
-    const BOKEH = Array.from({ length: 14 }, (_, i) => ({ x: Math.random(), y: Math.random(), r: .04 + Math.random() * .09, s: .2 + Math.random() * .5, c: i % 3 ? CY : MG }));
+    const BOKEH = Array.from({ length: LITE ? 0 : 8 }, (_, i) => ({ x: Math.random(), y: Math.random(), r: .04 + Math.random() * .09, s: .2 + Math.random() * .5, c: i % 3 ? CY : MG }));
     const grainURL = (() => { const g = document.createElement("canvas"); g.width = g.height = 160; const gx = g.getContext("2d"), id = gx.createImageData(160, 160); for (let i = 0; i < id.data.length; i += 4) { const v = Math.random() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 22; } gx.putImageData(id, 0, 0); return g.toDataURL(); })(); d.style.setProperty("--grain", `url(${grainURL})`);
     let LB = 0; const lbH = () => (portrait() ? H * .05 : H * .085) * LB;
     let BG = null, FG = null; const SPR = {};
@@ -1878,7 +1892,7 @@ function amhMark(size = 32, cls = "") {
       caption("Every process varies.", T, 5, 8.2); caption("Measure it. Understand it. Improve it.", T, 8.4, 12.2); }
 
     /* ---------- C. hyperspace tunnel (12–14.6) and collapse into the logo (37.2–38.4) ---------- */
-    const STREAKS = Array.from({ length: 260 }, () => ({ a: Math.random() * 6.283, z: Math.random(), s: .6 + Math.random() * .9, c: Math.random() < .2 ? MG : Math.random() < .5 ? CY : WH }));
+    const STREAKS = Array.from({ length: LITE ? 90 : 140 }, () => ({ a: Math.random() * 6.283, z: Math.random(), s: .6 + Math.random() * .9, c: Math.random() < .2 ? MG : Math.random() < .5 ? CY : WH }));
     function tunnel(T, t0, t1, reverse) { const p = span(T, t0, t1); if (p <= 0 || p >= 1) return; const k = Math.sin(p * Math.PI), dur = t1 - t0, phase = dur * (.3 * p + 1.45 * p * p) * .25, cx = W / 2, cy = H / 2, M = Math.hypot(W, H) / 2;
       ctx.save(); ctx.globalCompositeOperation = "lighter";
       STREAKS.forEach(s => { let z = (s.z + (phase + T * .05) * s.s) % 1; if (reverse) z = 1 - z; const r1 = Math.pow(z, 2.2) * M, r2 = r1 + (20 + 140 * p) * z * s.s;
@@ -1929,11 +1943,14 @@ function amhMark(size = 32, cls = "") {
     const NAMES = [["SHEWHART", 1924], ["DEMING", 1950], ["OHNO", 1978], ["JURAN", 1951], ["ISHIKAWA", 1968], ["TAGUCHI", 1986], ["FISHER", 1935], ["NIGHTINGALE", 1858], ["GOSSET", 1908], ["SHINGO", 1985], ["TUKEY", 1977], ["GILBRETH", 1914]].map((n, i) => ({ n: n[0], y: n[1], a: i * 2.39996, r: .5 + (i % 3) * .18, t: 28.3 + i * .36 }));
     function sNames(T) { if (T < 28.1 || T > 33.6) return; const a0 = clamp((T - 28.1) / .4) * (1 - span(T, 33, 33.6)), u = U();
       ctx.save(); ctx.globalAlpha = a0;
-      NAMES.forEach(o => { const q = span(T, o.t, o.t + 2.3); if (q <= 0 || q >= 1) return; const z = lerp(8, .9, Math.pow(q, 1.5)), f = 1 / z, x = W / 2 + Math.cos(o.a) * u * o.r * f * 1.15, y = H / 2 + Math.sin(o.a) * u * o.r * f * .8, al = Math.min(clamp(q * 4), clamp((1 - q) * 5)), px = u * .15 * f;
-        text(o.n, x, y, px, { w: 800, a: al, glow: q > .4 && q < .8 ? CY : null, ls: px * .04 }); mono(String(o.y), x, y + px * .8, Math.max(8, px * .32), MG, al, "center");
-        if (q > .42 && q < .82) { ctx.save(); ctx.font = `800 ${px}px ${FONT}`; const bw = ctx.measureText(o.n).width / 2 + px * .35, bh = px * .9, lk = ease(span(q, .42, .52)), g = lerp(1.6, 1, lk); ctx.restore();
-          const cs = px * .3; [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([sx, sy]) => glowLine([[x + sx * bw * g, y + sy * bh * g - sy * cs], [x + sx * bw * g, y + sy * bh * g], [x + sx * bw * g - sx * cs, y + sy * bh * g]], MG, 1.4, al, 8));
-          if (lk >= 1) mono("TARGET LOCK", x - bw, y - bh - Math.max(9, px * .25), Math.max(7, px * .2), MG, al, "left"); } });
+      /* names are drawn at one fixed size and scaled, so the font engine renders each name once and reuses it */
+      const B = u * .15; ctx.font = `800 ${B}px ${FONT}`;
+      NAMES.forEach(o => { const q = span(T, o.t, o.t + 2.3); if (q <= 0 || q >= 1) return; const z = lerp(8, .9, Math.pow(q, 1.5)), f = 1 / z, x = W / 2 + Math.cos(o.a) * u * o.r * f * 1.15, y = H / 2 + Math.sin(o.a) * u * o.r * f * .8, al = Math.min(clamp(q * 4), clamp((1 - q) * 5)), px = B * f;
+        if (o.w == null) { ctx.save(); ctx.font = `800 ${B}px ${FONT}`; o.w = ctx.measureText(o.n).width; ctx.restore(); }
+        ctx.save(); ctx.translate(x, y); ctx.scale(f, f); text(o.n, 0, 0, B, { w: 800, a: al, glow: q > .4 && q < .8 ? CY : null, ls: B * .04 }); mono(String(o.y), 0, B * .8, Math.max(8, B * .32), MG, al, "center"); ctx.restore();
+        if (q > .42 && q < .82) { const bw = o.w * f / 2 + px * .35, bh = px * .9, lk = ease(span(q, .42, .52)), g = lerp(1.6, 1, lk), cs = px * .3;
+          [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([sx, sy]) => glowLine([[x + sx * bw * g, y + sy * bh * g - sy * cs], [x + sx * bw * g, y + sy * bh * g], [x + sx * bw * g - sx * cs, y + sy * bh * g]], MG, 1.4, al, 8));
+          if (lk >= 1) mono("TARGET LOCK", x - bw, y - bh - Math.max(9, px * .25), Math.max(8, Math.round(px * .2)), MG, al, "left"); } });
       ctx.restore(); caption("Learn from the people who built the field.", T, 29.4, 33.4); }
 
     /* ---------- G. access levels (33.2–37.4) ---------- */
@@ -1951,13 +1968,19 @@ function amhMark(size = 32, cls = "") {
 
     /* ---------- H. finale (37.2–43) ---------- */
     function sFinale(T) { if (T < 38.2) return; if (T > 38.3) d.classList.add("logo-on"); if (T > 38.9) d.classList.add("words");
-      ctx.save(); ctx.globalCompositeOperation = "lighter"; for (let i = 0; i < 40; i++) { const x = ((i * 137.5) % W + T * 6 * (i % 3 + 1)) % W, y = (i * 91.7) % H + Math.sin(T * .6 + i) * 10, r = 2 + (i % 4) * 2;
+      ctx.save(); ctx.globalCompositeOperation = "lighter"; for (let i = 0, nP = LITE ? 14 : 26; i < nP; i++) { const x = ((i * 137.5) % W + T * 6 * (i % 3 + 1)) % W, y = (i * 91.7) % H + Math.sin(T * .6 + i) * 10, r = 2 + (i % 4) * 2;
         ctx.globalAlpha = .12 + energy * .2; ctx.fillStyle = i % 3 ? CY : MG; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); } ctx.restore(); }
 
     let lastSec = -1, beatTick = 0;
-    function frame(ts) { if (lastF) { const dt = ts - lastF; if (dt < 250) ftAvg = ftAvg * .9 + dt * .1;
-        if (ftAvg > 20) { goodFrames = 0; if (QS > .6) { QS = Math.max(.6, QS - .1); size(); ftAvg = 16.7; } else if (FX > 0) { FX = 0; ftAvg = 16.7; } }
-        else if (ftAvg < 15 && ++goodFrames > 180 && QS < 1) { QS = Math.min(1, QS + .1); size(); goodFrames = 0; } } lastF = ts;
+    function frame(ts) {
+      /* steady 30 fps on slow devices: draw every second screen refresh (an even 30 looks smoother than a frame rate that jumps around) */
+      if (CAP30 && (skipF = !skipF)) { raf = requestAnimationFrame(frame); return; }
+      if (lastF) { const dt = ts - lastF, budget = CAP30 ? 37 : 20, base = CAP30 ? 33.4 : 16.7; if (dt < 250) ftAvg = ftAvg * .9 + dt * .1;
+        if (ftAvg > budget) { goodFrames = 0;
+          if (QS > .5) { QS = Math.max(.5, QS - .1); size(); ftAvg = base; }
+          else if (FX > 0) { FX = 0; ftAvg = base; }
+          else if (!CAP30) { CAP30 = true; ftAvg = 33.4; } }
+        else if (!CAP30 && ftAvg < 15 && ++goodFrames > 180 && QS < 1) { QS = Math.min(1, QS + .1); size(); goodFrames = 0; } } lastF = ts;
       const T = now(), e = level(); energy = lerp(energy, e, .3); if (e - lastE > .08) beatHit = 1; lastE = e; beatHit *= .88;
       ctx.clearRect(0, 0, W, H); background(T);
       const kick = beatHit * 1.2; ctx.save(); const kz = 1 + kick * .008; ctx.translate(W / 2, H / 2); ctx.scale(kz, kz); ctx.translate(-W / 2, -H / 2);
