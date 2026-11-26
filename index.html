@@ -1141,6 +1141,18 @@ body.intro-on{overflow:hidden}
 .in-stage,.in-ctl,.in-sound,.in-prog{z-index:2}
 @media (prefers-reduced-motion:reduce){#intro::after{animation:none}}
 
+/* performance: static layers painted once by the browser, not redrawn every frame */
+#intro{background:
+  linear-gradient(rgba(70,227,255,.05) 1px,transparent 1px) 0 0/calc(min(100vw,100vh) / 14) calc(min(100vw,100vh) / 14),
+  linear-gradient(90deg,rgba(70,227,255,.05) 1px,transparent 1px) 0 0/calc(min(100vw,100vh) / 14) calc(min(100vw,100vh) / 14),
+  linear-gradient(135deg,#070A14 0%,#0A0E1E 55%,#140818 100%)!important}
+#intro::before{-webkit-mask-image:none!important;mask-image:none!important;opacity:1!important;animation:none!important;
+  background:radial-gradient(ellipse at 50% 50%,transparent 38%,rgba(0,0,0,.72) 100%),repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0 1px,transparent 1px 3px)!important;background-size:auto!important;z-index:1;pointer-events:none}
+.in-cv{z-index:0}
+.in-prog i{width:100%!important;transform-origin:0 50%;transform:scaleX(0);will-change:transform}
+#intro .big .s{filter:none!important}
+#intro.logo-on .in-logo svg{transform:none}
+
 </style>
 <style>
 /* ===== Plain type and calmer layout: system fonts only, no width-stretched display type, no coloured side rails ===== */
@@ -1735,7 +1747,8 @@ function amhMark(size = 32, cls = "") {
       if (reduced) { d.classList.add("logo-on", "words"); const wait = () => { if (done) return; if (T_end || (soundMode ? audio.currentTime > D - .3 : performance.now() - clock0 > D * 1000)) finish(); else setTimeout(wait, 400); }; wait(); return; }
       size(); addEventListener("resize", size); raf = requestAnimationFrame(frame); }
 
-    function size() { BG = FG = null; dpr = Math.min(devicePixelRatio || 1, 1.25); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    let QS = 1, goodFrames = 0;   /* dynamic resolution: drops when frames are slow, rises again when there is room */
+    function size() { BG = FG = null; dpr = Math.min(devicePixelRatio || 1, 1.25, Math.sqrt(1.6e6 / (innerWidth * innerHeight))) * QS; W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     function level() { if (!analyser) { const s = (performance.now() - clock0) / 1000; return .3 + .3 * Math.pow(Math.max(0, Math.sin(s * 3.6)), 6); } analyser.getByteFrequencyData(fbuf); let s = 0; for (let i = 1; i < 14; i++) s += fbuf[i]; return s / (13 * 255); }
     /* the timeline in design seconds (0–43), driven by the music when it plays */
     function now() { const sec = soundMode ? (audio.ended ? D : audio.currentTime) : (performance.now() - clock0) / 1000; return sec * DESIGN / D; }
@@ -1750,13 +1763,14 @@ function amhMark(size = 32, cls = "") {
       if (opt.glow && FX > 0) { const a = ctx.globalAlpha; ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = a * .25; ctx.lineWidth = px * .1; ctx.strokeStyle = opt.glow; ctx.lineJoin = "round"; ctx.strokeText(s, x, y); ctx.globalAlpha = a; ctx.globalCompositeOperation = "source-over"; }
       ctx.fillText(s, x, y); ctx.restore(); }
     const mono = (s, x, y, px, c = CY, a = 1, al = "left", reveal) => text(s, x, y, px, { f: MONO, w: 500, c, a, al, reveal, ls: px * .08 });
+    const wq = w => Math.min(900, Math.max(100, Math.round(w / 100) * 100));   /* weights in steps of 100: rendered letters are cached and reused */
     const spring = (t, w = 13, z = .45) => { if (t <= 0) return 0; const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + z * w / wd * Math.sin(wd * t)); };
     function kinetic(str, cx, cy, px, t0, T, o = {}) { const chars = [...str], st = o.stagger ?? .03, wt = o.w ?? 800, outAt = o.out ?? Infinity; if (T < t0 || T > outAt + .6 + chars.length * st) return;
       ctx.save(); ctx.textBaseline = "middle"; ctx.font = `${wt} ${px}px ${o.f || FONT}`; if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
       const track = (o.track ?? -.02) * px, ws = chars.map(c => ctx.measureText(c).width), total = ws.reduce((a, b) => a + b, 0) + track * (chars.length - 1);
       let x = o.al === "left" ? cx : cx - total / 2;
       chars.forEach((c, i) => { const t = T - t0 - i * st, sp = spring(t, o.k ?? 13, o.z ?? .45), a = clamp(t * 7), lo = clamp((T - outAt - i * st * .6) / .35);
-        const lift = (1 - sp) * px * .7 - lo * px * .5, sc = lerp(.55, 1, Math.min(1.2, sp)), rot = (1 - Math.min(1, sp)) * (o.rot ?? .12), w2 = Math.round(lerp(o.from ?? 140, wt, clamp(sp)));
+        const lift = (1 - sp) * px * .7 - lo * px * .5, sc = lerp(.55, 1, Math.min(1.2, sp)), rot = (1 - Math.min(1, sp)) * (o.rot ?? .12), w2 = wq(lerp(o.from ?? 140, wt, clamp(sp)));
         ctx.save(); ctx.globalAlpha = (o.a ?? 1) * a * (1 - lo); ctx.fillStyle = o.c || WH; ctx.font = `${w2} ${px}px ${o.f || FONT}`;
         ctx.translate(x + ws[i] / 2, cy + lift); ctx.rotate(rot); ctx.scale(sc, sc); 
         ctx.textAlign = "center"; ctx.fillText(c, 0, 0); ctx.restore(); x += ws[i] + track; });
@@ -1798,9 +1812,9 @@ function amhMark(size = 32, cls = "") {
       g.globalAlpha = .05; g.strokeStyle = CY; g.lineWidth = 1; const st = U() / 14; g.beginPath(); for (let x = 0; x < W; x += st) { g.moveTo(x, 0); g.lineTo(x, H); } for (let y = 0; y < H; y += st) { g.moveTo(0, y); g.lineTo(W, y); } g.stroke();
       [FG, g] = mk(); const v = g.createRadialGradient(W / 2, H / 2, U() * .3, W / 2, H / 2, Math.max(W, H) * .78); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,.72)"); g.fillStyle = v; g.fillRect(0, 0, W, H);
       g.globalAlpha = .06; g.fillStyle = "#000"; for (let y = 0; y < H; y += 3) g.fillRect(0, y, W, 1); }
-    function background(T) { if (!BG) buildLayers(); ctx.drawImage(BG, 0, 0, W, H);
+    function background(T) {
       if (FX > 0) { ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = .7 + energy * .6; BOKEH.forEach(b => { const x = ((b.x + T * .004 * b.s) % 1) * W, y = (b.y + Math.sin(T * .3 * b.s + b.x * 9) * .02) * H, r = b.r * U(); ctx.drawImage(sprite(b.c), x - r, y - r, r * 2, r * 2); }); ctx.restore(); } }
-    function finishing(T) { ctx.drawImage(FG, 0, 0, W, H);
+    function finishing(T) {
       LB = ease(span(T, 0, .9)); const h = lbH(); ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, h); ctx.fillRect(0, H - h, W, h);
       if (LB > .9) { mono("AMH CORNER", 16, h / 2, Math.max(8, U() * .015), "rgba(234,246,255,.5)", 1); mono(`\u25CF REC ${String(Math.floor(T)).padStart(2, "0")}:${String(Math.floor((T % 1) * 24)).padStart(2, "0")}`, W / 2, h / 2, Math.max(8, U() * .015), "rgba(255,61,127,.8)", 1, "center"); } }
 
@@ -1826,7 +1840,7 @@ function amhMark(size = 32, cls = "") {
       ctx.save(); ctx.globalCompositeOperation = "lighter"; const sw = T * 2.2; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R * .98 * grow, sw, sw + .55); ctx.closePath(); ctx.fillStyle = "rgba(70,227,255,.13)"; ctx.fill(); ctx.restore();
       /* loading progress arc and counter */
       const prog = ease(span(T, 3.6, 11.4)); if (prog > 0) glowArc(cx, cy, R * .92, -Math.PI / 2, -Math.PI / 2 + 6.283 * prog, CY, Math.max(3, R * .035), 1);
-      const pct = Math.floor(prog * 100), ns = String(pct).padStart(2, "0"), nw = Math.round(lerp(200, 800, prog)); ctx.save(); ctx.font = `${nw} ${R * .52}px ${FONT}`; if ("letterSpacing" in ctx) ctx.letterSpacing = (-R * .02) + "px"; const tw = ctx.measureText(ns).width, pw = R * .12; ctx.restore();
+      const pct = Math.floor(prog * 100), ns = String(pct).padStart(2, "0"), nw = wq(lerp(200, 800, prog)); ctx.save(); ctx.font = `${nw} ${R * .52}px ${FONT}`; if ("letterSpacing" in ctx) ctx.letterSpacing = (-R * .02) + "px"; const tw = ctx.measureText(ns).width, pw = R * .12; ctx.restore();
       text(ns, cx - pw / 2, cy - R * .02, R * .52, { w: nw, c: WH, glow: CY, ls: -R * .02 }); text("%", cx - pw / 2 + tw / 2 + pw * .65, cy - R * .12, R * .16, { w: 500, c: CY });
       mono(pct < 100 ? "LOADING DATA" : "SYSTEM READY", cx, cy + R * .42, Math.max(9, R * .075), pct < 100 ? CY : AM, 1, "center");
       /* panels and connectors */
@@ -1882,7 +1896,7 @@ function amhMark(size = 32, cls = "") {
       tags.forEach(([n, l, bi], i) => { const t0 = 15.4 + i * 1.25, p = span(T, t0, t0 + .9); if (p <= 0 || !tops[bi]) return; const [bx, by] = tops[bi], up = portrait() ? H * .14 : H * .16, side = i < 2 ? -1 : 1, lx = bx + side * W * .06, ly = Math.max(lbH() + 60, by - up - (i % 2) * H * .06);
         const al = a0 * clamp(p * 3); glowLine(part([[bx, by], [lx, ly], [lx + side * W * .05, ly]], ease(p)), i % 2 ? MG : CY, 1.2, al, 6); node(bx, by, 3, WH, al);
         if (p > .45) { const q = clamp((p - .45) * 2.5), tx = lx + side * W * .055; mono(l, tx, ly - U() * .03, Math.max(9, U() * .018), i % 2 ? MG : CY, al, side < 0 ? "right" : "left", q * 1.5);
-          text(Math.round(n * ease(q)).toLocaleString("en"), tx, ly + U() * .015, Math.max(18, U() * .055), { w: Math.round(lerp(200, 850, q)), al: side < 0 ? "right" : "left", a: al, glow: i % 2 ? MG : CY }); } });
+          text(Math.round(n * ease(q)).toLocaleString("en"), tx, ly + U() * .015, Math.max(18, U() * .055), { w: wq(lerp(200, 850, q)), al: side < 0 ? "right" : "left", a: al, glow: i % 2 ? MG : CY }); } });
       caption("Built on real statistics.", T, 20.4, 22.4); }
 
     /* ---------- E. DMAIC track (22.2–28.4) ---------- */
@@ -1896,7 +1910,7 @@ function amhMark(size = 32, cls = "") {
         ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = on ? (i === 4 ? MG : CY) : "rgba(70,227,255,.35)"; ctx.lineWidth = on ? 2.2 : 1; 
         ctx.beginPath(); for (let k = 0; k < 6; k++) { const an = Math.PI / 6 + k * Math.PI / 3, rr = r * (on ? Math.min(1.15, .7 + .3 * sp + .15) : .85); k ? ctx.lineTo(x + Math.cos(an) * rr, y + Math.sin(an) * rr) : ctx.moveTo(x + Math.cos(an) * rr, y + Math.sin(an) * rr); } ctx.closePath(); ctx.stroke(); ctx.restore();
         if (on && t > 0 && t < .8) { const q = t / .8; ctx.save(); ctx.globalAlpha = 1 - q; ctx.strokeStyle = WH; ctx.beginPath(); ctx.arc(x, y, r * (1 + q * 1.8), 0, 6.283); ctx.stroke(); ctx.restore(); }
-        text(L, x, y, r * .95, { w: on ? Math.round(lerp(200, 900, clamp(sp))) : 300, c: on ? WH : "rgba(234,246,255,.35)", glow: on ? CY : null });
+        text(L, x, y, r * .95, { w: on ? wq(lerp(200, 900, clamp(sp))) : 300, c: on ? WH : "rgba(234,246,255,.35)", glow: on ? CY : null });
         mono("PHASE 0" + (i + 1), x, y - r * 1.75, Math.max(8, U() * .014), on ? CY : "rgba(70,227,255,.35)", 1, "center");
         if (on) mono(word, x, y + r * 1.8, Math.max(9, U() * (P ? .02 : .018)), i === 4 ? MG : WH, clamp(t * 3), "center", t * 2); });
       ctx.restore(); caption("One road from problem to proof.", T, 26.4, 28.4); }
@@ -1930,7 +1944,10 @@ function amhMark(size = 32, cls = "") {
       ctx.save(); ctx.globalCompositeOperation = "lighter"; for (let i = 0; i < 40; i++) { const x = ((i * 137.5) % W + T * 6 * (i % 3 + 1)) % W, y = (i * 91.7) % H + Math.sin(T * .6 + i) * 10, r = 2 + (i % 4) * 2;
         ctx.globalAlpha = .12 + energy * .2; ctx.fillStyle = i % 3 ? CY : MG; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); } ctx.restore(); }
 
-    function frame(ts) { if (lastF) { ftAvg = ftAvg * .92 + (ts - lastF) * .08; if (ftAvg > 26 && FX > 0) FX = 0; } lastF = ts;
+    let lastSec = -1, beatTick = 0;
+    function frame(ts) { if (lastF) { const dt = ts - lastF; if (dt < 250) ftAvg = ftAvg * .9 + dt * .1;
+        if (ftAvg > 20) { goodFrames = 0; if (QS > .6) { QS = Math.max(.6, QS - .1); size(); ftAvg = 16.7; } else if (FX > 0) { FX = 0; ftAvg = 16.7; } }
+        else if (ftAvg < 15 && ++goodFrames > 180 && QS < 1) { QS = Math.min(1, QS + .1); size(); goodFrames = 0; } } lastF = ts;
       const T = now(), e = level(); energy = lerp(energy, e, .3); if (e - lastE > .08) beatHit = 1; lastE = e; beatHit *= .88;
       ctx.clearRect(0, 0, W, H); background(T);
       const kick = beatHit * 3; ctx.save(); ctx.translate((Math.random() - .5) * kick, (Math.random() - .5) * kick);
@@ -1938,8 +1955,8 @@ function amhMark(size = 32, cls = "") {
       [() => sBoot(T), () => sHud(T), () => tunnel(T, 12, 14.6, false), () => sBars(T), () => sDmaic(T), () => sNames(T), () => sBelts(T), () => tunnel(T, 37.1, 38.5, true), () => sFinale(T)]
         .forEach(f => { ctx.save(); try { f(); } catch (err) { if (!window.__amhIntroErr) { window.__amhIntroErr = 1; console.warn("intro scene", err); } } ctx.restore(); });
       ctx.restore(); try { finishing(T); } catch (e) {}
-      const frac = clamp(T / DESIGN); bar.style.width = (frac * 100).toFixed(2) + "%"; const left = Math.max(0, Math.round(D - T * D / DESIGN)); tlab.textContent = ended ? "Ready" : `0:${String(left).padStart(2, "0")}`;
-      d.style.setProperty("--beat", energy.toFixed(3));
+      const frac = clamp(T / DESIGN); bar.style.transform = `scaleX(${frac.toFixed(4)})`; const left = Math.max(0, Math.round(D - T * D / DESIGN)), lab = ended ? "Ready" : `0:${String(left).padStart(2, "0")}`; if (lab !== lastSec) { tlab.textContent = lab; lastSec = lab; }
+      if (T > 38 && ++beatTick % 3 === 0) d.style.setProperty("--beat", energy.toFixed(2));   /* the CSS beat is only needed for the final logo */
       if (T >= DESIGN - .3 || T_end) finish();
       if (!done) raf = requestAnimationFrame(frame); }
     start();   /* start only after every part of the film is set up */
