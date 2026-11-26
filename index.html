@@ -1034,7 +1034,7 @@ body.intro-on{overflow:hidden}
 
 /* the gate: one tap starts sound and motion */
 .in-gate{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .5s ease,transform .6s ease;cursor:pointer}
-#intro.go .in-gate{opacity:0;transform:scale(.96);pointer-events:none}
+#intro.go .in-gate{opacity:0;transform:scale(.96);pointer-events:none;visibility:hidden;transition:opacity .5s ease,transform .6s ease,visibility 0s linear .6s}
 .in-gate-logo{width:96px;height:96px;animation:gate-breathe 3.2s ease-in-out infinite}
 #intro .gate .t{fill:none;stroke:rgba(255,255,255,.28);stroke-width:1}
 #intro .gate .g{fill:none;stroke:#EEF2F5;stroke-width:1.2;stroke-dasharray:110;stroke-dashoffset:110;animation:gate-draw 1.6s cubic-bezier(.6,0,.2,1) .2s forwards}
@@ -1086,6 +1086,18 @@ body.intro-on{overflow:hidden}
   .in-gate-logo,.in-tap-ring{animation:none}#intro .gate .g{stroke-dashoffset:0;animation:none}#intro .gate .s{opacity:1;animation:none}
   #intro.go .in-logo svg,#intro.go .in-word span span,#intro.go .in-name,#intro.go .in-tag,#intro.go .in-go{opacity:1;transform:none;filter:none;animation:none}
 }
+
+
+/* promo intro: progress, locked enter, final reveal */
+.in-prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.08);opacity:0;transition:opacity .4s}
+#intro.go .in-prog{opacity:1}
+.in-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FF5A5F,#F2F5F9)}
+.in-time{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:12px;font:500 .78rem "Geist Mono",ui-monospace,Consolas,monospace;color:#8FA0B4;letter-spacing:-.01em}
+#intro.ready .in-time{color:#F2F5F9}
+.in-go[disabled]{cursor:default;background:rgba(242,245,249,.12);color:rgba(242,245,249,.55);box-shadow:inset 0 0 0 1px rgba(242,245,249,.2)}
+#intro.ready .in-go{opacity:1;transform:none;animation:in-ready 1.6s ease-in-out infinite}
+@keyframes in-ready{50%{box-shadow:0 0 0 8px rgba(242,245,249,.12)}}
+#intro.go .in-stage{pointer-events:none}#intro.ready .in-stage{pointer-events:auto}
 
 .credit{display:block;margin-top:6px;color:var(--ink-2)}
 .credit b{font-family:var(--head);color:var(--ink)}
@@ -1610,123 +1622,191 @@ body.fo-zen-on .qbar{z-index:62}
 <body>
 <noscript><div style="position:fixed;inset:0;z-index:2000;background:#F7F8FA;color:#0B1220;font:16px/1.55 system-ui,Segoe UI,Arial,sans-serif;padding:28px 20px;overflow:auto"><div style="max-width:520px;margin:0 auto"><h1 style="font-size:1.5rem;margin:0 0 10px">Open AMH Corner in your browser</h1><p>This page was opened in a preview viewer (for example from WhatsApp, Telegram, email or the Files app). Previews switch off the code the site needs, so the sections cannot open.</p><p><b>To fix it:</b> use the share or "Open in" button and choose <b>Chrome</b> or <b>Safari</b>, or open the online link you were sent.</p></div></div></noscript>
 <script>
-/* ===== AMH Corner: opening intro with sound =====
-   Browsers only allow sound after the visitor taps, so the intro opens on a "Tap to enter" gate.
-   The tap starts the music and a 3D scene drawn on canvas:
-   1. two beams draw a huge right angle (the corner) from the tap point, and a graph-paper floor unfolds in perspective;
-   2. data points stream in and build a 3D bell-curve histogram whose bars pulse with the music (live audio analysis);
-   3. the camera swings, the axes fold into the logo's L and the bars collapse into its square;
-   4. the name reveals letter by letter, then Enter. Leaving closes the screen like an aperture and fades the music.
-   Plays once per browser session. Skip and mute are always available. Respects prefers-reduced-motion. */
+/* ===== AMH Corner: 43-second promo intro, synced to the music =====
+   The music is the master clock: every scene reads audio.currentTime, so picture and sound never drift.
+   Browsers only allow sound after a tap, so the intro opens on a "Tap to enter" gate.
+   Scenes (seconds on the 43-second track; scaled if the track length differs):
+     0–9   the corner, a 3D floor and a bell-curve histogram built from streaming data
+     9–13  a control chart draws on the beat; one point breaks the upper limit
+     13–19 counters: terms, videos, questions, innovators (read live from the site)
+     19–25 D M A I C, letter by letter
+     25–31 innovators fly out of the screen in 3D
+     31–36 the five belts of the LSS Academy
+     36–43 everything converges into the logo; the name reveals; Enter appears when the music ends
+   First-time visitors watch to the end. Someone who has watched it fully once on this device gets a Skip button.
+   The music analyser makes the scene pulse with the beat. Respects prefers-reduced-motion (a calm version). */
 const AMH_L = "M12 10h6v22h18v6H12z";
 function amhMark(size = 32, cls = "") {
   return `<svg class="amh-logo ${cls}" width="${size}" height="${size}" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="t" x=".5" y=".5" width="47" height="47" rx="11.5"/><path class="g" d="${AMH_L}"/><rect class="s" x="20.5" y="22.5" width="7" height="7" rx="1"/></svg>`; }
 
 (function () {
-  const clamp = t => t < 0 ? 0 : t > 1 ? 1 : t, ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, out = t => 1 - Math.pow(1 - t, 3), lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = t => t < 0 ? 0 : t > 1 ? 1 : t, ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, out = t => 1 - Math.pow(1 - t, 3), back = t => 1 + 2.2 * Math.pow(t - 1, 3) + 1.2 * Math.pow(t - 1, 2), lerp = (a, b, t) => a + (b - a) * t;
+  const span = (T, a, b) => clamp((T - a) / (b - a)), inout = (p, i = .12, o = .12) => Math.min(clamp(p / i), clamp((1 - p) / o));
   const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
-  const SRC = "assets/intro.mp3";
+  const SRC = "assets/intro.mp3", DESIGN = 43, FONT = '"Geist","Segoe UI",system-ui,sans-serif', MONO = '"Geist Mono",ui-monospace,Consolas,monospace';
+  const RED = "#FF5A5F", INK = "#EEF2F7";
+  let seenFull = false; try { seenFull = localStorage.getItem("amh-intro-full") === "1"; } catch (e) {}
 
   function build() {
     if (document.getElementById("intro")) return;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const d = document.createElement("div"); d.id = "intro"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-label", "Welcome to AMH Corner by Ayman Al-Hayek");
+    const d = document.createElement("div"); d.id = "intro"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-label", "AMH Corner by Ayman Al-Hayek, introduction");
     d.innerHTML = `<canvas class="in-cv" aria-hidden="true"></canvas>
       <div class="in-gate"><div class="in-gate-logo">${amhMark(96, "gate")}</div><p class="in-gate-name">AMH Corner</p>
-        <button class="in-tap" type="button"><span class="in-tap-ring" aria-hidden="true"></span>Tap to enter</button><p class="in-gate-hint">Sound on for the full intro</p></div>
-      <div class="in-stage" aria-live="polite"><div class="in-logo">${amhMark(124, "big")}</div>
+        <button class="in-tap" type="button"><span class="in-tap-ring" aria-hidden="true"></span>Tap to start</button><p class="in-gate-hint">Turn your sound on. The introduction lasts about 40 seconds.</p></div>
+      <div class="in-stage"><div class="in-logo">${amhMark(124, "big")}</div>
         <h1 class="in-word" aria-label="AMH Corner"><span class="w1">${[..."AMH"].map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span><span class="w2">${[..."Corner"].map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span></h1>
         <p class="in-name"><span>by</span> Ayman Al-Hayek</p><p class="in-tag">Applied statistics, Lean Six Sigma and industrial engineering</p>
-        <button class="in-go" type="button">Enter AMH Corner</button></div>
-      <div class="in-ctl"><button class="in-mute" type="button" aria-pressed="false" aria-label="Mute music"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="w" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="x" d="m16 9 6 6m0-6-6 6"/></svg></button><button class="in-skip" type="button">Skip</button></div>`;
+        <button class="in-go" type="button" disabled>Enter AMH Corner</button></div>
+      <div class="in-ctl"><button class="in-mute" type="button" aria-pressed="false" aria-label="Mute music"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="w" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="x" d="m16 9 6 6m0-6-6 6"/></svg></button>${seenFull ? `<button class="in-skip" type="button">Skip</button>` : ""}</div>
+      <div class="in-prog" aria-hidden="true"><i></i><span class="in-time">0:00</span></div>`;
     document.body.appendChild(d); document.body.classList.add("intro-on");
-    const cv = d.querySelector(".in-cv"), ctx = cv.getContext("2d"), logo = d.querySelector(".in-logo svg"), audio = new Audio(SRC);
-    audio.preload = "auto"; audio.volume = .9;
-    let W, H, dpr, raf, t0 = 0, done = false, started = false, analyser = null, fbuf = null, energy = 0, ox = 0, oy = 0;
+    const cv = d.querySelector(".in-cv"), ctx = cv.getContext("2d"), logo = d.querySelector(".in-logo svg"), go = d.querySelector(".in-go"), bar = d.querySelector(".in-prog i"), tlab = d.querySelector(".in-time");
+    const audio = new Audio(SRC); audio.preload = "auto";
+    let W = 0, H = 0, dpr = 1, raf = 0, started = false, done = false, ended = false, analyser = null, fbuf = null, energy = 0, beatHit = 0, lastE = 0, ox = 0, oy = 0, clock0 = 0, D = DESIGN;
+    audio.addEventListener("loadedmetadata", () => { if (isFinite(audio.duration) && audio.duration > 10) D = audio.duration; });
 
-    const fadeAudio = () => { const v0 = audio.volume, s = performance.now(); const step = () => { const k = (performance.now() - s) / 1400; audio.volume = Math.max(0, v0 * (1 - k)); if (k < 1) requestAnimationFrame(step); else audio.pause(); }; if (!audio.paused) step(); };
+    const fadeAudio = () => { const v0 = audio.volume, s = performance.now(); const step = () => { const k = (performance.now() - s) / 1200; audio.volume = Math.max(0, v0 * (1 - k)); if (k < 1) requestAnimationFrame(step); else audio.pause(); }; if (!audio.paused) step(); };
     const close = () => { if (done) return; done = true; try { sessionStorage.setItem("amh-intro", "1"); } catch (e) {}
       fadeAudio(); d.classList.add("out"); document.body.classList.remove("intro-on"); removeEventListener("keydown", onKey); removeEventListener("resize", size);
       setTimeout(() => { cancelAnimationFrame(raf); d.remove(); const m = document.getElementById("main"); if (m) m.focus({ preventScroll: true }); }, 1000); };
-    const onKey = e => { if (e.key === "Escape") { e.preventDefault(); close(); } else if (!started && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); start(innerWidth / 2, innerHeight / 2); } };
+    const finish = () => { if (ended) return; ended = true; try { localStorage.setItem("amh-intro-full", "1"); } catch (e) {} go.disabled = false; d.classList.add("ready"); setTimeout(() => go.focus({ preventScroll: true }), 50); };
+    const onKey = e => { if (!started && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); start(innerWidth / 2, innerHeight / 2); } else if (ended && e.key === "Enter") { e.preventDefault(); close(); } };
     addEventListener("keydown", onKey);
-    d.querySelector(".in-skip").onclick = e => { e.stopPropagation(); close(); };
-    d.querySelector(".in-go").onclick = e => { e.stopPropagation(); close(); };
+    go.onclick = e => { e.stopPropagation(); if (ended) close(); };
+    const skip = d.querySelector(".in-skip"); if (skip) skip.onclick = e => { e.stopPropagation(); close(); };
     const mute = d.querySelector(".in-mute"); mute.onclick = e => { e.stopPropagation(); audio.muted = !audio.muted; mute.setAttribute("aria-pressed", audio.muted); mute.setAttribute("aria-label", audio.muted ? "Unmute music" : "Mute music"); };
     d.querySelector(".in-tap").onclick = e => { e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); start(r.left + r.width / 2, r.top + r.height / 2); };
     d.addEventListener("click", e => { if (!started) start(e.clientX, e.clientY); });
     setTimeout(() => d.querySelector(".in-tap").focus({ preventScroll: true }), 80);
+    audio.addEventListener("ended", () => { T_end = true; });
+    let T_end = false;
 
     function start(x, y) { if (started) return; started = true; ox = x; oy = y; d.classList.add("go");
-      audio.play().catch(() => {});
-      if (/^https?:/.test(location.protocol)) { try { const A = new (window.AudioContext || window.webkitAudioContext)(); const src = A.createMediaElementSource(audio); analyser = A.createAnalyser(); analyser.fftSize = 256; analyser.smoothingTimeConstant = .7; src.connect(analyser); analyser.connect(A.destination); fbuf = new Uint8Array(analyser.frequencyBinCount); A.resume(); } catch (e) { analyser = null; } }
-      if (reduced) { d.classList.add("logo-on", "words"); setTimeout(() => d.querySelector(".in-go").focus({ preventScroll: true }), 300); return; }
-      size(); addEventListener("resize", size); raf = requestAnimationFrame(frame);
-      setTimeout(() => !done && d.querySelector(".in-go").focus({ preventScroll: true }), 5600);
-      setTimeout(() => !done && close(), 16000); }
+      audio.play().catch(() => {}); clock0 = performance.now();
+      if (/^https?:/.test(location.protocol)) { try { const A = new (window.AudioContext || window.webkitAudioContext)(); const src = A.createMediaElementSource(audio); analyser = A.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = .6; src.connect(analyser); analyser.connect(A.destination); fbuf = new Uint8Array(analyser.frequencyBinCount); A.resume(); } catch (e) { analyser = null; } }
+      if (document.fonts && document.fonts.load) { document.fonts.load(`700 40px ${FONT}`).catch(() => {}); document.fonts.load(`500 20px ${MONO}`).catch(() => {}); }
+      if (reduced) { d.classList.add("logo-on", "words"); const wait = () => { if (done) return; if ((audio.ended || audio.currentTime > D - .5) || performance.now() - clock0 > (D + 1) * 1000) finish(); else setTimeout(wait, 400); }; wait(); return; }
+      size(); addEventListener("resize", size); raf = requestAnimationFrame(frame); }
 
-    /* ---------- the 3D scene ---------- */
-    const BINS = 17, bars = []; { const cnt = new Array(BINS).fill(0); for (let i = 0; i < 900; i++) { const b = Math.round(gauss() * 3.1 + (BINS - 1) / 2); if (b >= 0 && b < BINS) cnt[b]++; } const mx = Math.max(...cnt); cnt.forEach((c, i) => bars.push({ h: c / mx, d: Math.abs(i - (BINS - 1) / 2) * .05 })); }
-    const P = Array.from({ length: innerWidth < 600 ? 260 : 520 }, () => ({ a: Math.random() * 6.283, r: .9 + Math.random() * .6, s: .6 + Math.random() * .8, b: Math.floor(Math.random() * BINS), k: Math.random() }));
     function size() { dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
-    /* camera: world x (right), y (up), z (depth); yaw rotates around y */
-    function proj(x, y, z, cam) { const cy = Math.cos(cam.yaw), sy = Math.sin(cam.yaw), cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
-      let X = x * cy - z * sy, Z = x * sy + z * cy; let Y = y * cp - Z * sp; Z = y * sp + Z * cp; Z += cam.dist;
-      const f = cam.fov / Z; return [cam.cx + X * f, cam.cy - Y * f, Z]; }
-    function level() { if (!analyser) return .35 + .25 * Math.sin(performance.now() / 260) ** 2; analyser.getByteFrequencyData(fbuf); let s = 0; for (let i = 1; i < 18; i++) s += fbuf[i]; return s / (17 * 255); }
+    function level() { if (!analyser) { const s = (performance.now() - clock0) / 1000; return .3 + .3 * Math.pow(Math.max(0, Math.sin(s * 3.6)), 6); } analyser.getByteFrequencyData(fbuf); let s = 0; for (let i = 1; i < 14; i++) s += fbuf[i]; return s / (13 * 255); }
+    /* the timeline in design seconds (0–43), driven by the music when it plays */
+    function now() { const sec = (!audio.paused && audio.currentTime > 0) || audio.ended ? audio.currentTime : (performance.now() - clock0) / 1000; return sec * DESIGN / D; }
 
-    function frame(now) { if (!t0) t0 = now; const t = (now - t0) / 1000; ctx.clearRect(0, 0, W, H);
-      energy = lerp(energy, level(), .25);
-      const r = logo.getBoundingClientRect(), lx = r.left + r.width * .3, ly = r.top + r.height * .75;     // logo's corner, where the L turns
-      const morph = ease(clamp((t - 3.0) / 1.1));                                                             // 3D scene -> logo
-      const unit = Math.min(W, H) * .052;
-      const cam = { yaw: lerp(-.62, -.05, ease(clamp((t - .6) / 2.6))) + Math.sin(t * .4) * .04 * (1 - morph), pitch: lerp(.18, .42, ease(clamp(t / 2.4))), dist: W < 600 ? 30 : 22, fov: Math.min(W, H) * 1.25,
-        cx: lerp(W / 2, lx, morph), cy: lerp(H * .62, ly, morph) };
-      const sc = lerp(1, .09, morph); const pr = (x, y, z) => { const p = proj(x * sc, y * sc, z * sc, cam); return p; };
-      const fade = 1 - clamp((t - 3.9) / .5);
+    /* ---------- drawing helpers ---------- */
+    const U = () => Math.min(W, H);
+    function text(s, x, y, px, opt = {}) { ctx.save(); ctx.globalAlpha = opt.a ?? 1; ctx.fillStyle = opt.c || INK; ctx.font = `${opt.w || 700} ${px}px ${opt.f || FONT}`; ctx.textAlign = opt.al || "center"; ctx.textBaseline = "middle";
+      if (opt.blur) ctx.filter = `blur(${opt.blur}px)`; if (opt.ls != null && "letterSpacing" in ctx) ctx.letterSpacing = opt.ls + "px";
+      if (opt.reveal != null) { const n = Math.ceil([...s].length * opt.reveal); s = [...s].slice(0, n).join(""); } ctx.fillText(s, x, y); ctx.restore(); }
+    function caption(s, T, a, b, y) { const p = span(T, a, b); if (p <= 0 || p >= 1) return; const k = inout(p, .18, .18), px = Math.max(16, U() * .042);
+      text(s, W / 2, y ?? H * .86, px, { w: 500, a: k, c: "#C9D4E2", blur: (1 - k) * 6, ls: -.3 }); }
+    function sweep(T, at) { const p = span(T, at - .15, at + .45); if (p <= 0 || p >= 1) return; const x = lerp(-W * .4, W * 1.4, ease(p));
+      const g = ctx.createLinearGradient(x - W * .25, 0, x + W * .25, H); g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(.5, `rgba(255,255,255,${.16 * Math.sin(p * Math.PI)})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+    function backdrop(T) { const s = U() / 18, off = (T * 6) % s; ctx.save(); ctx.strokeStyle = `rgba(150,175,215,${.05 + energy * .07})`; ctx.lineWidth = 1;
+      for (let x = -off; x < W; x += s) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); } for (let y = -off; y < H; y += s) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      const g = ctx.createRadialGradient(W / 2, H / 2, U() * .1, W / 2, H / 2, Math.max(W, H) * .75); g.addColorStop(0, `rgba(255,90,95,${beatHit * .07})`); g.addColorStop(.45, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(2,5,9,.78)"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore(); }
 
-      /* 1. the corner beams from the tap point */
-      const beam = out(clamp(t / .7));
-      if (fade > 0) { const [vx, vy] = pr(-8.5, 0, 0); const bx = lerp(ox, vx, ease(clamp((t - .35) / .7))), by = lerp(oy, vy, ease(clamp((t - .35) / .7)));
-        ctx.save(); ctx.globalAlpha = fade; ctx.lineCap = "round";
-        const g = .55 + energy * .9; ctx.shadowColor = "rgba(255,90,95,.9)"; ctx.shadowBlur = 18 * g;
-        ctx.strokeStyle = "#F4F6FA"; ctx.lineWidth = 2.2;
-        const [ax, ay] = pr(-8.5, 9 * beam, 0), [cx2, cy2] = pr(-8.5 + 17.5 * beam, 0, 0);
-        if (t < .35) { ctx.beginPath(); ctx.moveTo(ox, oy - H * beam); ctx.lineTo(ox, oy); ctx.lineTo(ox + W * beam, oy); ctx.stroke(); }
-        else { ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.lineTo(cx2, cy2); ctx.stroke(); }
-        ctx.shadowBlur = 0; ctx.fillStyle = "#FF5A5F"; ctx.beginPath(); ctx.arc(t < .35 ? ox : bx, t < .35 ? oy : by, 4 + energy * 6, 0, 6.283); ctx.fill(); ctx.restore(); }
+    /* ---------- scene 1: corner, floor and 3D histogram (0–9) ---------- */
+    const BINS = 17, bars = []; { const cnt = new Array(BINS).fill(0); for (let i = 0; i < 1200; i++) { const b = Math.round(gauss() * 3.1 + (BINS - 1) / 2); if (b >= 0 && b < BINS) cnt[b]++; } const mx = Math.max(...cnt); cnt.forEach((c, i) => bars.push({ h: c / mx, d: Math.abs(i - (BINS - 1) / 2) * .05 })); }
+    const PTS = Array.from({ length: innerWidth < 600 ? 240 : 480 }, () => ({ a: Math.random() * 6.283, r: .9 + Math.random() * .6, s: .6 + Math.random() * .8, b: Math.floor(Math.random() * BINS), k: Math.random() }));
+    function proj(x, y, z, c) { const cy = Math.cos(c.yaw), sy = Math.sin(c.yaw), cp = Math.cos(c.pitch), sp = Math.sin(c.pitch);
+      let X = x * cy - z * sy, Z = x * sy + z * cy; let Y = y * cp - Z * sp; Z = y * sp + Z * cp; Z += c.dist; const f = c.fov / Z; return [c.cx + X * f, c.cy - Y * f]; }
+    function scene1(T) { const exit = span(T, 8.3, 9.1), fade = 1 - exit, zoom = 1 + ease(exit) * 1.8;
+      const cam = { yaw: lerp(-.7, .35, ease(span(T, .6, 8.6))), pitch: lerp(.16, .46, ease(span(T, 0, 4))), dist: W < 600 ? 30 : 22, fov: U() * 1.25 * zoom, cx: W / 2, cy: H * .62 };
+      const pr = (x, y, z) => proj(x, y, z, cam);
+      ctx.save(); ctx.globalAlpha = fade;
+      const beam = out(span(T, 0, .7)), [vx, vy] = pr(-8.5, 0, 0), bt = ease(span(T, .35, 1.05)), bx = lerp(ox, vx, bt), by = lerp(oy, vy, bt);
+      ctx.lineCap = "round"; ctx.shadowColor = "rgba(255,90,95,.9)"; ctx.shadowBlur = 14 + energy * 22; ctx.strokeStyle = INK; ctx.lineWidth = 2.2;
+      if (T < .35) { ctx.beginPath(); ctx.moveTo(ox, oy - H * beam); ctx.lineTo(ox, oy); ctx.lineTo(ox + W * beam, oy); ctx.stroke(); }
+      else { const [ax, ay] = pr(-8.5, 9, 0), [cx2, cy2] = pr(9.5, 0, 0); ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.lineTo(cx2, cy2); ctx.stroke(); }
+      ctx.shadowBlur = 0; ctx.fillStyle = RED; ctx.beginPath(); ctx.arc(T < .35 ? ox : bx, T < .35 ? oy : by, 4 + energy * 7, 0, 6.283); ctx.fill();
+      const floor = ease(span(T, .5, 1.7)); ctx.strokeStyle = "rgba(140,170,220,.28)"; ctx.lineWidth = 1;
+      for (let i = 0; i <= 18; i++) { const [a1, b1] = pr(-8.5 + i, 0, 0), [a2, b2] = pr(-8.5 + i, 0, 10 * floor); ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke(); }
+      for (let j = 0; j <= 10 * floor; j++) { const [a1, b1] = pr(-8.5, 0, j), [a2, b2] = pr(9.5, 0, j); ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke(); }
+      const grow = T - 1.4;
+      PTS.forEach(p => { const tt = clamp((grow + .6 - p.k * 1.6) / 1.2); if (tt <= 0 || tt >= 1) return; const [tx, ty] = pr(-7.5 + p.b, bars[p.b].h * 6 * tt, 2), e = out(tt), sx = W / 2 + Math.cos(p.a) * W * p.r, sy = H / 2 + Math.sin(p.a) * H * p.r;
+        ctx.fillStyle = `rgba(230,238,248,${.85 * (1 - e) + .15})`; ctx.beginPath(); ctx.arc(lerp(sx, tx, e), lerp(sy, ty, e), 1.1 + p.s, 0, 6.283); ctx.fill(); });
+      const order = bars.map((b, i) => i).sort((a, b) => Math.sin(cam.yaw) > 0 ? a - b : b - a);
+      order.forEach(i => { const b = bars[i], g = ease(clamp((grow - b.d) / 1.4)); if (g <= 0) return;
+        const h = b.h * 6 * g * (1 + energy * .6), x0 = -7.9 + i, x1 = x0 + .8, z0 = 1.6, z1 = 2.4;
+        const v = [[x0, 0, z0], [x1, 0, z0], [x1, h, z0], [x0, h, z0], [x0, 0, z1], [x1, 0, z1], [x1, h, z1], [x0, h, z1]].map(q => pr(...q));
+        const face = (idx, fill) => { ctx.fillStyle = fill; ctx.beginPath(); idx.forEach((k, n) => n ? ctx.lineTo(v[k][0], v[k][1]) : ctx.moveTo(v[k][0], v[k][1])); ctx.closePath(); ctx.fill(); };
+        const hot = Math.abs(i - (BINS - 1) / 2) < 1.5;
+        face([0, 1, 2, 3], hot ? "rgba(229,72,77,.92)" : "rgba(226,234,244,.88)"); face([3, 2, 6, 7], hot ? "rgba(255,150,150,.96)" : "rgba(255,255,255,.96)");
+        face(Math.sin(cam.yaw) > 0 ? [0, 4, 7, 3] : [1, 5, 6, 2], hot ? "rgba(170,40,46,.9)" : "rgba(150,165,185,.85)"); });
+      ctx.restore();
+      caption("Every process varies.", T, 2.2, 5.2); caption("Statistics shows you how.", T, 5.4, 8.6); }
 
-      /* 2. the graph-paper floor unfolding from the corner */
-      const floor = ease(clamp((t - .5) / 1.1));
-      if (floor > 0 && fade > 0) { ctx.save(); ctx.globalAlpha = .55 * fade; ctx.strokeStyle = "rgba(140,170,220,.35)"; ctx.lineWidth = 1;
-        for (let i = 0; i <= 18; i++) { const x = -8.5 + i, zz = 10 * floor; const [a1, b1] = pr(x, 0, 0), [a2, b2] = pr(x, 0, zz); ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke(); }
-        for (let j = 0; j <= 10 * floor; j++) { const [a1, b1] = pr(-8.5, 0, j), [a2, b2] = pr(9.5, 0, j); ctx.beginPath(); ctx.moveTo(a1, b1); ctx.lineTo(a2, b2); ctx.stroke(); }
-        ctx.restore(); }
+    /* ---------- scene 2: control chart (9–13) ---------- */
+    const CC = Array.from({ length: 28 }, (_, i) => i === 21 ? 1.32 : Math.max(-.9, Math.min(.9, gauss() * .32)));
+    function scene2(T) { const p = span(T, 9, 13.2); if (p <= 0 || p >= 1) return; const k = inout(p, .08, .1), x0 = W * .08, x1 = W * .92, cy = H * .48, lim = H * .17, draw = ease(span(T, 9.3, 12.2));
+      ctx.save(); ctx.globalAlpha = k; ctx.lineWidth = 1.5;
+      [[-1, "UCL"], [0, "CL"], [1, "LCL"]].forEach(([s, l]) => { ctx.strokeStyle = s ? "rgba(255,107,114,.85)" : "rgba(76,192,143,.9)"; ctx.setLineDash(s ? [8, 7] : []); ctx.beginPath(); ctx.moveTo(x0, cy + s * lim); ctx.lineTo(x0 + (x1 - x0) * ease(span(T, 9, 9.7)), cy + s * lim); ctx.stroke();
+        text(l, x1 + 6, cy + s * lim, Math.max(10, U() * .022), { w: 600, al: "left", c: "#8FA0B4", f: MONO }); });
+      ctx.setLineDash([]); const n = CC.length, shown = draw * (n - 1); ctx.strokeStyle = INK; ctx.lineWidth = 2.4; ctx.beginPath();
+      for (let i = 0; i <= Math.floor(shown); i++) { const X = lerp(x0, x1, i / (n - 1)), Y = cy - CC[i] * lim; i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); }
+      const fi = Math.floor(shown), fr = shown - fi; if (fi < n - 1) ctx.lineTo(lerp(lerp(x0, x1, fi / (n - 1)), lerp(x0, x1, (fi + 1) / (n - 1)), fr), lerp(cy - CC[fi] * lim, cy - CC[fi + 1] * lim, fr)); ctx.stroke();
+      for (let i = 0; i <= fi; i++) { const X = lerp(x0, x1, i / (n - 1)), Y = cy - CC[i] * lim, sig = i === 21; ctx.fillStyle = sig ? RED : INK; ctx.beginPath(); ctx.arc(X, Y, sig ? 7 + energy * 6 : 3.4, 0, 6.283); ctx.fill();
+        if (sig) { const q = clamp((shown - 21) / 4); ctx.strokeStyle = `rgba(255,90,95,${1 - q})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X, Y, 8 + q * U() * .2, 0, 6.283); ctx.stroke(); } }
+      ctx.restore(); caption("Find the signal in the noise.", T, 10.6, 13.2); }
 
-      /* 3. data streams in and builds a 3D bell-curve histogram that pulses with the music */
-      const grow = t - 1.1;
-      if (grow > -.6 && fade > 0) {
-        P.forEach(p => { const tt = clamp((grow + .6 - p.k * .9) / 1.1); if (tt <= 0 || tt >= 1) return; const bx = -7.5 + p.b, [tx, ty] = pr(bx, bars[p.b].h * 6 * tt, 2), e = out(tt);
-          const sx = W / 2 + Math.cos(p.a) * W * p.r, sy = H / 2 + Math.sin(p.a) * H * p.r; ctx.fillStyle = `rgba(230,238,248,${.8 * (1 - e) + .2})`;
-          ctx.beginPath(); ctx.arc(lerp(sx, tx, e), lerp(sy, ty, e), 1.2 + p.s, 0, 6.283); ctx.fill(); });
-        const order = bars.map((b, i) => i).sort((a, b) => b - a);
-        order.forEach(i => { const b = bars[i], g = ease(clamp((grow - b.d) / 1.3)); if (g <= 0) return;
-          const h = b.h * 6 * g * (1 + energy * .55 * (1 - morph)), x0 = -7.9 + i, x1 = x0 + .8, z0 = 1.6, z1 = 2.4;
-          const v = [[x0, 0, z0], [x1, 0, z0], [x1, h, z0], [x0, h, z0], [x0, 0, z1], [x1, 0, z1], [x1, h, z1], [x0, h, z1]].map(q => pr(...q));
-          const face = (idx, fill) => { ctx.fillStyle = fill; ctx.beginPath(); idx.forEach((k, n) => n ? ctx.lineTo(v[k][0], v[k][1]) : ctx.moveTo(v[k][0], v[k][1])); ctx.closePath(); ctx.fill(); };
-          const hot = Math.abs(i - (BINS - 1) / 2) < 1.5, a = fade;
-          face([0, 1, 2, 3], hot ? `rgba(229,72,77,${.92 * a})` : `rgba(226,234,244,${.88 * a})`);
-          face([3, 2, 6, 7], hot ? `rgba(255,140,140,${.95 * a})` : `rgba(255,255,255,${.95 * a})`);
-          face([1, 5, 6, 2], hot ? `rgba(170,40,46,${.9 * a})` : `rgba(150,165,185,${.85 * a})`); });
-      }
+    /* ---------- scene 3: counters (13–19) ---------- */
+    const count = (f, fb) => { try { return f().length || fb; } catch (e) { return fb; } };
+    function scene3(T) { if (T < 13 || T > 19.2) return;
+      const items = [[count(() => TERMS, 127), "statistics and Six Sigma terms"], [count(() => VIDEOS, 1000), "hand-checked videos"], [count(() => MCQ, 610), "exam questions with full answers"], [count(() => HEROES, 30), "innovators who built the field"]];
+      items.forEach(([n, l], i) => { const a = 13 + i * 1.5, p = span(T, a, a + 1.55); if (p <= 0 || p >= 1) return; const enter = back(clamp(p / .28)), leave = span(p, .78, 1), sc = lerp(1.7, 1, clamp(enter)) * lerp(1, .82, leave), al = Math.min(clamp(p / .15), 1 - leave);
+        const val = Math.round(n * ease(clamp(p / .5))), big = U() * .2 * sc;
+        ctx.save(); ctx.globalAlpha = al; ctx.strokeStyle = `rgba(255,90,95,${.35 + energy * .4})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(W / 2, H * .44, big * 1.05 + energy * 20, -Math.PI / 2, -Math.PI / 2 + 6.283 * ease(clamp(p / .6))); ctx.stroke(); ctx.restore();
+        text(val.toLocaleString("en"), W / 2, H * .44, big * .62, { w: 700, a: al, blur: (1 - clamp(enter)) * 10 + leave * 8, ls: -big * .03 });
+        text(l, W / 2, H * .44 + big * .78, Math.max(15, U() * .04), { w: 500, a: al, c: "#B6C3D1" }); }); }
 
-      /* 4. hand-over to the real logo, then the words */
-      if (t > 3.75) d.classList.add("logo-on");
-      if (t > 4.1) d.classList.add("words");
-      if (t > 3.8 && t < 4.4) { const k = (t - 3.8) / .6; ctx.fillStyle = `rgba(255,90,95,${.35 * (1 - k)})`; ctx.beginPath(); ctx.arc(lx, ly, k * Math.max(W, H) * .6, 0, 6.283); ctx.fill(); }
-      /* afterglow: a quiet field of points that breathes with the music */
-      if (t > 4) { const a = clamp((t - 4) / 1); ctx.fillStyle = `rgba(200,215,235,${.25 * a})`; for (let i = 0; i < 70; i++) { const px = (i * 97.3 + t * 8) % W, py = (i * 53.7 + Math.sin(t * .7 + i) * 12) % H; ctx.beginPath(); ctx.arc(px, py, .8 + energy * 1.8 * ((i % 5) / 4), 0, 6.283); ctx.fill(); } }
+    /* ---------- scene 4: DMAIC (19–25) ---------- */
+    const DM = [["D", "Define"], ["M", "Measure"], ["A", "Analyze"], ["I", "Improve"], ["C", "Control"]];
+    function scene4(T) { const p = span(T, 19, 25.3); if (p <= 0 || p >= 1) return; const k = inout(p, .04, .07), row = ease(span(T, 24.1, 24.8)), u = U(), gap = Math.min(W * .17, u * .3);
+      DM.forEach(([L, word], i) => { const a = 19.2 + i * .95, q = span(T, a, a + .5); if (q <= 0) return; const solo = span(T, a, a + .95), isNow = T < a + .95 && T < 24.1;
+        const fx = W / 2 + (i - 2) * gap, fy = H * .46, tx = W / 2 + (i - 2) * u * .085, ty = H * .17;
+        if (isNow) { text(L, W / 2, H * .44, u * .38 * lerp(1.3, 1, out(q)), { w: 700, a: k * clamp(q * 2), blur: (1 - out(q)) * 12 });
+          text(word, W / 2, H * .44 + u * .26, Math.max(18, u * .055), { w: 500, a: k * clamp((solo - .1) * 4) * (1 - clamp((solo - .85) * 7)), c: "#B6C3D1", ls: 2 }); return; }
+        const settle = out(span(T, a + .95, a + 1.3));
+        const x = lerp(tx, fx, row), y = lerp(ty, fy, row), size = lerp(u * .065, u * .16, row);
+        text(L, x, y, size, { w: 700, a: k * lerp(.55 * settle, 1, row), c: i === 4 && row > .5 ? RED : INK }); });
+      if (row > 0) { ctx.save(); ctx.globalAlpha = k * row; ctx.strokeStyle = "rgba(255,90,95,.8)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W / 2 - 2 * gap, H * .46 + U() * .12); ctx.lineTo(W / 2 - 2 * gap + 4 * gap * row, H * .46 + U() * .12); ctx.stroke(); ctx.restore();
+        caption("One road from problem to proof.", T, 24.2, 25.3, H * .8); } }
+
+    /* ---------- scene 5: innovators tunnel (25–31) ---------- */
+    const NAMES = [["Walter Shewhart", 1924], ["W. Edwards Deming", 1950], ["Taiichi Ohno", 1978], ["Joseph Juran", 1951], ["Kaoru Ishikawa", 1968], ["Genichi Taguchi", 1986], ["Ronald Fisher", 1935], ["Florence Nightingale", 1858], ["William Gosset", 1908], ["Shigeo Shingo", 1985], ["John Tukey", 1977], ["Lillian Gilbreth", 1914], ["Henry Gantt", 1910], ["George Box", 1978]].map((n, i) => ({ n: n[0], y: n[1], a: i * 2.39996, r: .55 + (i % 3) * .2, t: 25.1 + i * .38 }));
+    function scene5(T) { const p = span(T, 25, 31.3); if (p <= 0 || p >= 1) return; const k = inout(p, .05, .08), u = U();
+      ctx.save(); ctx.globalAlpha = k * .5; for (let i = 0; i < 90; i++) { const z = ((i * .137 + T * .35) % 1), f = 1 / (1.05 - z), x = W / 2 + Math.cos(i * 2.1) * u * .08 * f, y = H / 2 + Math.sin(i * 2.1) * u * .08 * f; ctx.fillStyle = INK; ctx.fillRect(x, y, 1.4 * f * .4, 1.4 * f * .4); } ctx.restore();
+      NAMES.slice().sort((a, b) => a.t - b.t).forEach(o => { const q = span(T, o.t, o.t + 2.4); if (q <= 0 || q >= 1) return; const z = lerp(8, .9, Math.pow(q, 1.6)), f = 1 / z, x = W / 2 + Math.cos(o.a) * u * o.r * f * 1.1, y = H / 2 + Math.sin(o.a) * u * o.r * f * .8, al = Math.min(clamp(q * 4), clamp((1 - q) * 5)) * k;
+        text(o.n, x, y, u * .16 * f, { w: 650, a: al, ls: -1 }); text(String(o.y), x, y + u * .12 * f, u * .07 * f, { w: 500, a: al * .8, c: RED, f: MONO }); });
+      caption("Learn from the people who built the field.", T, 26, 31.2, H * .9); }
+
+    /* ---------- scene 6: belts (31–36) ---------- */
+    const BELTS = [["White Belt", "#F4F6F8"], ["Yellow Belt", "#E5BE3C"], ["Green Belt", "#2E8B57"], ["Black Belt", "#1A2430"], ["Master Black Belt", "#7A1F2B"]];
+    function scene6(T) { const p = span(T, 31, 36.4); if (p <= 0 || p >= 1) return; const k = inout(p, .05, .1), u = U(), bw = Math.min(W * .78, 640), bh = Math.min(H * .07, 46), x0 = (W - bw) / 2, y0 = H * .5 - 2.5 * (bh + 10);
+      BELTS.forEach(([n, c], i) => { const q = out(span(T, 31.3 + i * .42, 32.1 + i * .42)), x = lerp(-bw, x0, q), y = y0 + i * (bh + 10) + (4 - i) * 0;
+        ctx.save(); ctx.globalAlpha = k * q; ctx.fillStyle = c; ctx.strokeStyle = "rgba(238,242,247,.25)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, bw, bh, 6) : ctx.rect(x, y, bw, bh); ctx.fill(); ctx.stroke(); ctx.restore();
+        text(n, x + 18, y + bh / 2, Math.max(14, bh * .42), { w: 650, al: "left", a: k * q, c: i === 0 || i === 1 ? "#0B1220" : "#F4F6F8" });
+        text(String(i + 1), x + bw - 18, y + bh / 2, Math.max(13, bh * .38), { w: 500, al: "right", a: k * q * .7, c: i === 0 || i === 1 ? "#0B1220" : "#F4F6F8", f: MONO }); });
+      text("LSS Academy", W / 2, y0 - u * .1, u * .085, { w: 700, a: k * clamp(span(T, 31.2, 32)), ls: -1.5 });
+      caption("Five belts. One path from White to Master Black.", T, 33.3, 36.4, Math.min(H * .88, y0 + 5 * (bh + 10) + u * .08)); }
+
+    /* ---------- scene 7: finale (36–43) ---------- */
+    const FIN = Array.from({ length: innerWidth < 600 ? 160 : 320 }, () => ({ a: Math.random() * 6.283, r: .6 + Math.random() * .7, k: Math.random() }));
+    function scene7(T) { if (T < 36) return; const r = logo.getBoundingClientRect(), lx = r.left + r.width / 2, ly = r.top + r.height / 2, c = ease(span(T, 36.2, 38.2));
+      if (c < 1) FIN.forEach(p => { const e = clamp((c - p.k * .3) / .7), x = lerp(W / 2 + Math.cos(p.a) * W * p.r, lx, ease(e)), y = lerp(H / 2 + Math.sin(p.a) * H * p.r, ly, ease(e));
+        ctx.fillStyle = `rgba(238,242,247,${.9 * (1 - e * .7)})`; ctx.beginPath(); ctx.arc(x, y, 1.6, 0, 6.283); ctx.fill(); });
+      if (T > 38) { const q = span(T, 38, 38.9); if (q < 1) { ctx.fillStyle = `rgba(255,90,95,${.4 * (1 - q)})`; ctx.beginPath(); ctx.arc(lx, ly, q * Math.max(W, H) * .7, 0, 6.283); ctx.fill(); } }
+      if (T > 38.1) d.classList.add("logo-on"); if (T > 38.7) d.classList.add("words"); }
+
+    function frame() { const T = now(), e = level(); energy = lerp(energy, e, .3); if (e - lastE > .08) beatHit = 1; lastE = e; beatHit *= .9;
+      ctx.clearRect(0, 0, W, H); backdrop(T);
+      scene1(T); scene2(T); scene3(T); scene4(T); scene5(T); scene6(T); scene7(T);
+      [9, 13, 19, 25, 31, 36].forEach(a => sweep(T, a));
+      const frac = clamp(T / DESIGN); bar.style.width = (frac * 100).toFixed(2) + "%"; const s = Math.round(T * D / DESIGN), left = Math.max(0, Math.round(D - s)); tlab.textContent = ended ? "Ready" : `0:${String(left).padStart(2, "0")}`;
       d.style.setProperty("--beat", energy.toFixed(3));
+      if (T >= DESIGN - .3 || T_end) finish();
       if (!done) raf = requestAnimationFrame(frame); }
   }
 
