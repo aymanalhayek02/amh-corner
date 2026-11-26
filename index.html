@@ -1135,6 +1135,12 @@ body.intro-on{overflow:hidden}
 .in-prog i{background:linear-gradient(90deg,#FF3D7F,#46E3FF)!important}
 .in-go:not([disabled]){background:#EAF6FF!important}
 
+/* film grain on the graphics card instead of the canvas */
+#intro::after{content:"";position:absolute;inset:-50%;background-image:var(--grain);background-size:160px 160px;opacity:.55;pointer-events:none;z-index:1;animation:in-grain .5s steps(4) infinite;will-change:transform}
+@keyframes in-grain{0%{transform:translate(0,0)}25%{transform:translate(-37px,21px)}50%{transform:translate(19px,-44px)}75%{transform:translate(-11px,33px)}100%{transform:translate(0,0)}}
+.in-stage,.in-ctl,.in-sound,.in-prog{z-index:2}
+@media (prefers-reduced-motion:reduce){#intro::after{animation:none}}
+
 </style>
 <style>
 /* ===== Plain type and calmer layout: system fonts only, no width-stretched display type, no coloured side rails ===== */
@@ -1728,19 +1734,21 @@ function amhMark(size = 32, cls = "") {
         .catch(() => { soundMode = false; snd.hidden = false; });
       if (reduced) { d.classList.add("logo-on", "words"); const wait = () => { if (done) return; if (T_end || (soundMode ? audio.currentTime > D - .3 : performance.now() - clock0 > D * 1000)) finish(); else setTimeout(wait, 400); }; wait(); return; }
       size(); addEventListener("resize", size); raf = requestAnimationFrame(frame); }
-    start();
 
-    function size() { dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function size() { BG = FG = null; dpr = Math.min(devicePixelRatio || 1, 1.25); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     function level() { if (!analyser) { const s = (performance.now() - clock0) / 1000; return .3 + .3 * Math.pow(Math.max(0, Math.sin(s * 3.6)), 6); } analyser.getByteFrequencyData(fbuf); let s = 0; for (let i = 1; i < 14; i++) s += fbuf[i]; return s / (13 * 255); }
     /* the timeline in design seconds (0–43), driven by the music when it plays */
     function now() { const sec = soundMode ? (audio.ended ? D : audio.currentTime) : (performance.now() - clock0) / 1000; return sec * DESIGN / D; }
 
     /* ================= HUD engine: cinematic analytics interface ================= */
+    let FX = 1, ftAvg = 16, lastF = 0;   /* FX 1 = full effects; drops to 0 automatically if a device struggles */
     const CY = "#46E3FF", MG = "#FF3D7F", AM = "#FFB547", WH = "#EAF6FF", small = () => W < 640, portrait = () => H > W * 1.05;
     const U = () => Math.min(W, H);
     function text(s, x, y, px, opt = {}) { ctx.save(); ctx.globalAlpha = opt.a ?? 1; ctx.fillStyle = opt.c || WH; ctx.font = `${opt.w || 700} ${px}px ${opt.f || FONT}`; ctx.textAlign = opt.al || "center"; ctx.textBaseline = "middle";
-      if (opt.glow) { ctx.shadowColor = opt.glow; ctx.shadowBlur = small() ? 6 : 14; } if (opt.ls != null && "letterSpacing" in ctx) ctx.letterSpacing = opt.ls + "px";
-      if (opt.reveal != null) { const n = Math.ceil([...s].length * clamp(opt.reveal)); s = [...s].slice(0, n).join(""); } ctx.fillText(s, x, y); ctx.restore(); }
+      if (opt.ls != null && "letterSpacing" in ctx) ctx.letterSpacing = opt.ls + "px";
+      if (opt.reveal != null) { const n = Math.ceil([...s].length * clamp(opt.reveal)); s = [...s].slice(0, n).join(""); }
+      if (opt.glow && FX > 0) { const a = ctx.globalAlpha; ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = a * .25; ctx.lineWidth = px * .1; ctx.strokeStyle = opt.glow; ctx.lineJoin = "round"; ctx.strokeText(s, x, y); ctx.globalAlpha = a; ctx.globalCompositeOperation = "source-over"; }
+      ctx.fillText(s, x, y); ctx.restore(); }
     const mono = (s, x, y, px, c = CY, a = 1, al = "left", reveal) => text(s, x, y, px, { f: MONO, w: 500, c, a, al, reveal, ls: px * .08 });
     const spring = (t, w = 13, z = .45) => { if (t <= 0) return 0; const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + z * w / wd * Math.sin(wd * t)); };
     function kinetic(str, cx, cy, px, t0, T, o = {}) { const chars = [...str], st = o.stagger ?? .03, wt = o.w ?? 800, outAt = o.out ?? Infinity; if (T < t0 || T > outAt + .6 + chars.length * st) return;
@@ -1750,17 +1758,22 @@ function amhMark(size = 32, cls = "") {
       chars.forEach((c, i) => { const t = T - t0 - i * st, sp = spring(t, o.k ?? 13, o.z ?? .45), a = clamp(t * 7), lo = clamp((T - outAt - i * st * .6) / .35);
         const lift = (1 - sp) * px * .7 - lo * px * .5, sc = lerp(.55, 1, Math.min(1.2, sp)), rot = (1 - Math.min(1, sp)) * (o.rot ?? .12), w2 = Math.round(lerp(o.from ?? 140, wt, clamp(sp)));
         ctx.save(); ctx.globalAlpha = (o.a ?? 1) * a * (1 - lo); ctx.fillStyle = o.c || WH; ctx.font = `${w2} ${px}px ${o.f || FONT}`;
-        if (o.glow) { ctx.shadowColor = o.glow; ctx.shadowBlur = small() ? 6 : 16; }
-        ctx.translate(x + ws[i] / 2, cy + lift); ctx.rotate(rot); ctx.scale(sc, sc); if (lo > 0 || a < 1) ctx.filter = `blur(${(lo + (1 - a)) * 5}px)`;
+        ctx.translate(x + ws[i] / 2, cy + lift); ctx.rotate(rot); ctx.scale(sc, sc); 
         ctx.textAlign = "center"; ctx.fillText(c, 0, 0); ctx.restore(); x += ws[i] + track; });
       ctx.restore(); }
     const capY = () => H - lbH() - Math.max(34, U() * .07);
     function caption(s, T, a, b) { if (T < a || T > b) return; kinetic(s, W / 2, capY(), Math.max(16, U() * .04), a, T, { w: 520, from: 200, stagger: .016, out: b - .5, c: "#DCE8F5", rot: .05, track: -.01 }); }
 
     /* glow layer: light adds to light, like a real screen */
-    function glowLine(pts, col, wdt = 1.4, a = 1, blur = 10) { if (pts.length < 2) return; ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = wdt; ctx.lineJoin = ctx.lineCap = "round";
-      ctx.shadowColor = col; ctx.shadowBlur = small() ? blur * .5 : blur; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); ctx.restore(); }
-    function node(x, y, r, col, a = 1) { ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = a; ctx.fillStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 12; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); ctx.restore(); }
+    /* glow without the costly blur filter: a wide faint stroke under a thin bright one */
+    function glowLine(pts, col, wdt = 1.4, a = 1, blur = 10) { if (pts.length < 2) return; ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = col; ctx.lineJoin = ctx.lineCap = "round";
+      ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+      if (blur > 0 && FX > 0) { ctx.globalAlpha = a * .12; ctx.lineWidth = wdt + blur * .9; ctx.stroke(); ctx.globalAlpha = a * .28; ctx.lineWidth = wdt + blur * .3; ctx.stroke(); }
+      ctx.globalAlpha = a; ctx.lineWidth = wdt; ctx.stroke(); ctx.restore(); }
+    function node(x, y, r, col, a = 1) { ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.fillStyle = col; ctx.globalAlpha = a * .22; ctx.beginPath(); ctx.arc(x, y, r * 2.6, 0, 6.283); ctx.fill(); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); ctx.restore(); }
+    /* glowing arc: same layered trick */
+    function glowArc(x, y, r, a0, a1, col, wdt, a = 1, dash, off) { if (r <= 0) return; ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = col; ctx.lineCap = "round"; if (dash) { ctx.setLineDash(dash); ctx.lineDashOffset = off || 0; }
+      ctx.beginPath(); ctx.arc(x, y, r, a0, a1); if (FX > 0) { ctx.globalAlpha = a * .14; ctx.lineWidth = wdt * 5; ctx.stroke(); } ctx.globalAlpha = a; ctx.lineWidth = wdt; ctx.stroke(); ctx.restore(); }
     /* partial polyline: draw the first fraction p of a path (for lines that "write" themselves) */
     function part(pts, p) { if (p >= 1) return pts; const L = []; let tot = 0; for (let i = 1; i < pts.length; i++) tot += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
       let need = tot * clamp(p), out = [pts[0]]; for (let i = 1; i < pts.length && need > 0; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); if (d <= need) { out.push(pts[i]); need -= d; } else { const k = need / d; out.push([lerp(pts[i - 1][0], pts[i][0], k), lerp(pts[i - 1][1], pts[i][1], k)]); need = 0; } } return out; }
@@ -1775,17 +1788,21 @@ function amhMark(size = 32, cls = "") {
 
     /* finishing: bokeh, grain, vignette, letterbox */
     const BOKEH = Array.from({ length: 14 }, (_, i) => ({ x: Math.random(), y: Math.random(), r: .04 + Math.random() * .09, s: .2 + Math.random() * .5, c: i % 3 ? CY : MG }));
-    const grain = (() => { const g = document.createElement("canvas"); g.width = g.height = 160; const gx = g.getContext("2d"), id = gx.createImageData(160, 160); for (let i = 0; i < id.data.length; i += 4) { const v = Math.random() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 22; } gx.putImageData(id, 0, 0); return g; })();
+    const grainURL = (() => { const g = document.createElement("canvas"); g.width = g.height = 160; const gx = g.getContext("2d"), id = gx.createImageData(160, 160); for (let i = 0; i < id.data.length; i += 4) { const v = Math.random() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 22; } gx.putImageData(id, 0, 0); return g.toDataURL(); })(); d.style.setProperty("--grain", `url(${grainURL})`);
     let LB = 0; const lbH = () => (portrait() ? H * .05 : H * .085) * LB;
-    function background(T) { const g = ctx.createLinearGradient(0, 0, W, H); g.addColorStop(0, "#070A14"); g.addColorStop(.55, "#0A0E1E"); g.addColorStop(1, "#140818"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      ctx.save(); ctx.globalCompositeOperation = "lighter"; BOKEH.forEach(b => { const x = ((b.x + T * .004 * b.s) % 1) * W, y = (b.y + Math.sin(T * .3 * b.s + b.x * 9) * .02) * H, r = b.r * U();
-        const rg = ctx.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, b.c === CY ? `rgba(70,227,255,${.05 + energy * .05})` : `rgba(255,61,127,${.05 + energy * .05})`); rg.addColorStop(1, "rgba(0,0,0,0)"); ctx.fillStyle = rg; ctx.fillRect(x - r, y - r, r * 2, r * 2); }); ctx.restore();
-      ctx.save(); ctx.globalAlpha = .05; ctx.strokeStyle = CY; ctx.lineWidth = 1; const s = U() / 14, off = (T * 4) % s; for (let x = -off; x < W; x += s) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); } for (let y = -off; y < H; y += s) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); } ctx.restore(); }
-    function finishing(T) { ctx.save(); ctx.globalAlpha = .55; ctx.fillStyle = ctx.createPattern(grain, "repeat"); ctx.translate(Math.random() * 160, Math.random() * 160); ctx.fillRect(-160, -160, W + 320, H + 320); ctx.restore();
-      const v = ctx.createRadialGradient(W / 2, H / 2, U() * .3, W / 2, H / 2, Math.max(W, H) * .78); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,.72)"); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
-      ctx.save(); ctx.globalAlpha = .06; ctx.fillStyle = "#000"; for (let y = 0; y < H; y += 3) ctx.fillRect(0, y, W, 1); ctx.restore();
+    let BG = null, FG = null; const SPR = {};
+    function sprite(col) { if (SPR[col]) return SPR[col]; const c = document.createElement("canvas"); c.width = c.height = 128; const g = c.getContext("2d"), rg = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+      rg.addColorStop(0, col === CY ? "rgba(70,227,255,.10)" : "rgba(255,61,127,.10)"); rg.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = rg; g.fillRect(0, 0, 128, 128); return SPR[col] = c; }
+    function buildLayers() { const mk = () => { const c = document.createElement("canvas"); c.width = Math.ceil(W * dpr); c.height = Math.ceil(H * dpr); const g = c.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); return [c, g]; };
+      let g; [BG, g] = mk(); const lg = g.createLinearGradient(0, 0, W, H); lg.addColorStop(0, "#070A14"); lg.addColorStop(.55, "#0A0E1E"); lg.addColorStop(1, "#140818"); g.fillStyle = lg; g.fillRect(0, 0, W, H);
+      g.globalAlpha = .05; g.strokeStyle = CY; g.lineWidth = 1; const st = U() / 14; g.beginPath(); for (let x = 0; x < W; x += st) { g.moveTo(x, 0); g.lineTo(x, H); } for (let y = 0; y < H; y += st) { g.moveTo(0, y); g.lineTo(W, y); } g.stroke();
+      [FG, g] = mk(); const v = g.createRadialGradient(W / 2, H / 2, U() * .3, W / 2, H / 2, Math.max(W, H) * .78); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,.72)"); g.fillStyle = v; g.fillRect(0, 0, W, H);
+      g.globalAlpha = .06; g.fillStyle = "#000"; for (let y = 0; y < H; y += 3) g.fillRect(0, y, W, 1); }
+    function background(T) { if (!BG) buildLayers(); ctx.drawImage(BG, 0, 0, W, H);
+      if (FX > 0) { ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = .7 + energy * .6; BOKEH.forEach(b => { const x = ((b.x + T * .004 * b.s) % 1) * W, y = (b.y + Math.sin(T * .3 * b.s + b.x * 9) * .02) * H, r = b.r * U(); ctx.drawImage(sprite(b.c), x - r, y - r, r * 2, r * 2); }); ctx.restore(); } }
+    function finishing(T) { ctx.drawImage(FG, 0, 0, W, H);
       LB = ease(span(T, 0, .9)); const h = lbH(); ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, h); ctx.fillRect(0, H - h, W, h);
-      if (LB > .9) { mono("AMH CORNER", 16, h / 2, Math.max(8, U() * .015), "rgba(234,246,255,.5)", 1); mono(`● REC ${String(Math.floor(T)).padStart(2, "0")}:${String(Math.floor((T % 1) * 24)).padStart(2, "0")}`, W / 2, h / 2, Math.max(8, U() * .015), "rgba(255,61,127,.8)", 1, "center"); } }
+      if (LB > .9) { mono("AMH CORNER", 16, h / 2, Math.max(8, U() * .015), "rgba(234,246,255,.5)", 1); mono(`\u25CF REC ${String(Math.floor(T)).padStart(2, "0")}:${String(Math.floor((T % 1) * 24)).padStart(2, "0")}`, W / 2, h / 2, Math.max(8, U() * .015), "rgba(255,61,127,.8)", 1, "center"); } }
 
     /* ---------- A. boot (0–3.2) ---------- */
     function sBoot(T) { if (T > 3.4) return; const k = 1 - span(T, 2.9, 3.4), y = H / 2, half = W * .46 * ease(span(T, .3, 1.3));
@@ -1801,14 +1818,14 @@ function amhMark(size = 32, cls = "") {
     function sHud(T) { if (T < 2.8 || T > 12.6) return; const exit = span(T, 11.9, 12.5), a0 = clamp((T - 2.8) / .4) * (1 - exit), cx = W / 2, cy = H / 2, R = U() * (portrait() ? .24 : .2);
       ctx.save(); ctx.globalAlpha = a0; const z = lerp(1, 1.08, span(T, 3, 12)) + ease(exit) * .5; ctx.translate(cx, cy); ctx.scale(z, z); ctx.translate(-cx, -cy);
       /* scanner rings */
-      const ring = (r, dash, spd, col, al, wd = 1.2) => { ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = al; ctx.strokeStyle = col; ctx.lineWidth = wd; ctx.setLineDash(dash); ctx.lineDashOffset = T * spd; ctx.shadowColor = col; ctx.shadowBlur = 8; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 6.283); ctx.stroke(); ctx.restore(); };
+      const ring = (r, dash, spd, col, al, wd = 1.2) => glowArc(cx, cy, r, 0, 6.283, col, wd, al, dash, T * spd);
       const grow = ease(span(T, 3, 4.2));
       ring(R * 1.18 * grow, [2, 6], 30, CY, .55); ring(R * 1.05 * grow, [R * .5, R * .12], -60, CY, .8, 2); ring(R * .78 * grow, [1, 3], 18, MG, .6);
-      for (let i = 0; i < 72; i++) { const an = i / 72 * 6.283 + T * .1, r1 = R * 1.26 * grow, r2 = r1 + (i % 6 ? 4 : 10); ctx.save(); ctx.globalAlpha = .5; ctx.strokeStyle = CY; ctx.beginPath(); ctx.moveTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1); ctx.lineTo(cx + Math.cos(an) * r2, cy + Math.sin(an) * r2); ctx.stroke(); ctx.restore(); }
+      ctx.save(); ctx.globalAlpha = .5; ctx.strokeStyle = CY; ctx.beginPath(); for (let i = 0; i < 72; i++) { const an = i / 72 * 6.283 + T * .1, r1 = R * 1.26 * grow, r2 = r1 + (i % 6 ? 4 : 10); ctx.moveTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1); ctx.lineTo(cx + Math.cos(an) * r2, cy + Math.sin(an) * r2); } ctx.stroke(); ctx.restore();
       /* radar sweep */
-      ctx.save(); ctx.globalCompositeOperation = "lighter"; const sw = T * 2.2; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R * .98 * grow, sw, sw + .55); ctx.closePath(); const sg = ctx.createRadialGradient(cx, cy, 0, cx, cy, R); sg.addColorStop(0, "rgba(70,227,255,0)"); sg.addColorStop(1, "rgba(70,227,255,.22)"); ctx.fillStyle = sg; ctx.fill(); ctx.restore();
+      ctx.save(); ctx.globalCompositeOperation = "lighter"; const sw = T * 2.2; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R * .98 * grow, sw, sw + .55); ctx.closePath(); ctx.fillStyle = "rgba(70,227,255,.13)"; ctx.fill(); ctx.restore();
       /* loading progress arc and counter */
-      const prog = ease(span(T, 3.6, 11.4)); ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = CY; ctx.lineWidth = Math.max(3, R * .035); ctx.shadowColor = CY; ctx.shadowBlur = 18; ctx.lineCap = "round"; ctx.beginPath(); ctx.arc(cx, cy, R * .92, -Math.PI / 2, -Math.PI / 2 + 6.283 * prog); ctx.stroke(); ctx.restore();
+      const prog = ease(span(T, 3.6, 11.4)); if (prog > 0) glowArc(cx, cy, R * .92, -Math.PI / 2, -Math.PI / 2 + 6.283 * prog, CY, Math.max(3, R * .035), 1);
       const pct = Math.floor(prog * 100), ns = String(pct).padStart(2, "0"), nw = Math.round(lerp(200, 800, prog)); ctx.save(); ctx.font = `${nw} ${R * .52}px ${FONT}`; if ("letterSpacing" in ctx) ctx.letterSpacing = (-R * .02) + "px"; const tw = ctx.measureText(ns).width, pw = R * .12; ctx.restore();
       text(ns, cx - pw / 2, cy - R * .02, R * .52, { w: nw, c: WH, glow: CY, ls: -R * .02 }); text("%", cx - pw / 2 + tw / 2 + pw * .65, cy - R * .12, R * .16, { w: 500, c: CY });
       mono(pct < 100 ? "LOADING DATA" : "SYSTEM READY", cx, cy + R * .42, Math.max(9, R * .075), pct < 100 ? CY : AM, 1, "center");
@@ -1826,7 +1843,7 @@ function amhMark(size = 32, cls = "") {
           [-.42, .42].forEach(s => glowLine([[inn.x, inn.y + inn.h / 2 + s * inn.h], [inn.x + inn.w, inn.y + inn.h / 2 + s * inn.h]], MG, 1, .7 * q, 4)); glowLine([[inn.x, inn.y + inn.h / 2], [inn.x + inn.w, inn.y + inn.h / 2]], "#3DFFB0", 1, .6 * q, 4); glowLine(part(pts, q), WH, 1.3, .9, 6); }
         if (i === 2) { const gx = inn.x + inn.w / 2, gy = inn.y + inn.h * .92, gr = Math.min(inn.w * .42, inn.h * .85), v = ease(q) * 6 / 6;
           ctx.save(); ctx.globalAlpha = .3; ctx.strokeStyle = AM; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(gx, gy, gr, Math.PI, 2 * Math.PI); ctx.stroke(); ctx.restore();
-          ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = AM; ctx.lineWidth = 6; ctx.shadowColor = AM; ctx.shadowBlur = 12; ctx.beginPath(); ctx.arc(gx, gy, gr, Math.PI, Math.PI + Math.PI * v); ctx.stroke(); ctx.restore();
+          if (v > 0) glowArc(gx, gy, gr, Math.PI, Math.PI + Math.PI * v, AM, 6, 1);
           const an = Math.PI + Math.PI * v; glowLine([[gx, gy], [gx + Math.cos(an) * gr * .9, gy + Math.sin(an) * gr * .9]], WH, 2, 1, 6); text((6 * ease(q)).toFixed(1) + "σ", gx, gy - gr * .38, Math.max(12, gr * .38), { w: 800, c: WH, glow: AM }); }
         if (i === 3) { const fs = Math.max(8, U() * .015), rows = Math.floor(inn.h / (fs * 1.5)), cols = 4; for (let r2 = 0; r2 < rows; r2++) for (let c2 = 0; c2 < cols; c2++) { const seed = (r2 * 7 + c2 * 13 + Math.floor(T * 10)) % 97;
           mono((48 + (seed * 37 % 400) / 100).toFixed(2), inn.x + c2 * inn.w / cols, inn.y + r2 * fs * 1.5 + fs / 2, fs, seed % 11 === 0 ? MG : CY, q * (seed % 5 ? .55 : 1)); } } });
@@ -1861,7 +1878,7 @@ function amhMark(size = 32, cls = "") {
         if (scan > 0 && scan < h + .4) { const sy = Math.min(scan, h); glowLine([pr(x0, sy, z0), pr(x1, sy, z0), pr(x1, sy, z1)], WH, 1.5, .9, 10); }
         tops[i] = pr((x0 + x1) / 2, h, z0); });
       ctx.restore();
-      const tags = [[count(() => TERMS, 127), "TERMS", 2], [count(() => VIDEOS, 1000), "VIDEOS", 6], [count(() => MCQ, 610), "QUESTIONS", 10], [count(() => HEROES, 30), "INNOVATORS", 14]];
+      const tags = [[count(() => TERMS, 127), "TERMS", 2], [count(() => VIDEOS, 1000), "VIDEOS", 6], [count(() => MCQ, 610), "QUESTIONS", 10], [count(() => HEROES, 100), "INNOVATOR STORIES", 14]];
       tags.forEach(([n, l, bi], i) => { const t0 = 15.4 + i * 1.25, p = span(T, t0, t0 + .9); if (p <= 0 || !tops[bi]) return; const [bx, by] = tops[bi], up = portrait() ? H * .14 : H * .16, side = i < 2 ? -1 : 1, lx = bx + side * W * .06, ly = Math.max(lbH() + 60, by - up - (i % 2) * H * .06);
         const al = a0 * clamp(p * 3); glowLine(part([[bx, by], [lx, ly], [lx + side * W * .05, ly]], ease(p)), i % 2 ? MG : CY, 1.2, al, 6); node(bx, by, 3, WH, al);
         if (p > .45) { const q = clamp((p - .45) * 2.5), tx = lx + side * W * .055; mono(l, tx, ly - U() * .03, Math.max(9, U() * .018), i % 2 ? MG : CY, al, side < 0 ? "right" : "left", q * 1.5);
@@ -1876,7 +1893,7 @@ function amhMark(size = 32, cls = "") {
       glowLine([[x0, y], [x0 + (x1 - x0) * ease(span(T, 22.4, 23.2)), y]], CY, 1.2, .35, 4);
       const beam = clamp((T - 22.9) / 4.6); glowLine([[x0, y], [x0 + (x1 - x0) * beam, y]], CY, 3, 1, 16); node(x0 + (x1 - x0) * beam, y, 4 + energy * 4, WH);
       DM.forEach(([L, word], i) => { const x = x0 + (x1 - x0) * i / 4, t = T - (22.9 + 4.6 * i / 4), on = t >= 0, sp = spring(t, 12, .4);
-        ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = on ? (i === 4 ? MG : CY) : "rgba(70,227,255,.35)"; ctx.lineWidth = on ? 2.2 : 1; ctx.shadowColor = ctx.strokeStyle; ctx.shadowBlur = on ? 16 : 0;
+        ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = on ? (i === 4 ? MG : CY) : "rgba(70,227,255,.35)"; ctx.lineWidth = on ? 2.2 : 1; 
         ctx.beginPath(); for (let k = 0; k < 6; k++) { const an = Math.PI / 6 + k * Math.PI / 3, rr = r * (on ? Math.min(1.15, .7 + .3 * sp + .15) : .85); k ? ctx.lineTo(x + Math.cos(an) * rr, y + Math.sin(an) * rr) : ctx.moveTo(x + Math.cos(an) * rr, y + Math.sin(an) * rr); } ctx.closePath(); ctx.stroke(); ctx.restore();
         if (on && t > 0 && t < .8) { const q = t / .8; ctx.save(); ctx.globalAlpha = 1 - q; ctx.strokeStyle = WH; ctx.beginPath(); ctx.arc(x, y, r * (1 + q * 1.8), 0, 6.283); ctx.stroke(); ctx.restore(); }
         text(L, x, y, r * .95, { w: on ? Math.round(lerp(200, 900, clamp(sp))) : 300, c: on ? WH : "rgba(234,246,255,.35)", glow: on ? CY : null });
@@ -1903,8 +1920,8 @@ function amhMark(size = 32, cls = "") {
       mono("ACCESS LEVELS  //  WHITE → BLACK", W / 2, y0 - u * .06, Math.max(9, u * .018), CY, 1, "center", span(T, 33.7, 34.6));
       BELTS.forEach(([n, c], i) => { const y = y0 + i * (bh + 18), fill = ease(span(T, 34 + i * .55, 34.9 + i * .55));
         ctx.save(); ctx.strokeStyle = "rgba(234,246,255,.2)"; ctx.strokeRect(x0 + .5, y + .5, bw, bh); ctx.restore();
-        ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = .8; ctx.fillStyle = c; ctx.shadowColor = c; ctx.shadowBlur = 16; ctx.fillRect(x0 + 2, y + 2, (bw - 4) * fill, bh - 4); ctx.restore();
-        for (let k = 1; k < 20; k++) { ctx.save(); ctx.fillStyle = "rgba(5,7,13,.6)"; ctx.fillRect(x0 + bw * k / 20, y + 2, 2, bh - 4); ctx.restore(); }
+        ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = .8; ctx.fillStyle = c; ctx.fillRect(x0 + 2, y + 2, (bw - 4) * fill, bh - 4); ctx.globalAlpha = .12; ctx.fillRect(x0 - 4, y - 4, (bw + 4) * fill, bh + 8); ctx.restore();
+        ctx.fillStyle = "rgba(5,7,13,.6)"; for (let k = 1; k < 20; k++) ctx.fillRect(x0 + bw * k / 20, y + 2, 2, bh - 4);
         mono(`LEVEL 0${i + 1}  ${n}`, x0, y - 9, Math.max(9, u * .016), c, clamp(fill * 3), "left"); mono(Math.round(fill * 100) + "%", x0 + bw, y - 9, Math.max(9, u * .016), c, clamp(fill * 3), "right"); });
       ctx.restore(); caption("Four belts. One path from White to Black.", T, 35.4, 37.4); }
 
@@ -1913,7 +1930,8 @@ function amhMark(size = 32, cls = "") {
       ctx.save(); ctx.globalCompositeOperation = "lighter"; for (let i = 0; i < 40; i++) { const x = ((i * 137.5) % W + T * 6 * (i % 3 + 1)) % W, y = (i * 91.7) % H + Math.sin(T * .6 + i) * 10, r = 2 + (i % 4) * 2;
         ctx.globalAlpha = .12 + energy * .2; ctx.fillStyle = i % 3 ? CY : MG; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); } ctx.restore(); }
 
-    function frame() { const T = now(), e = level(); energy = lerp(energy, e, .3); if (e - lastE > .08) beatHit = 1; lastE = e; beatHit *= .88;
+    function frame(ts) { if (lastF) { ftAvg = ftAvg * .92 + (ts - lastF) * .08; if (ftAvg > 26 && FX > 0) FX = 0; } lastF = ts;
+      const T = now(), e = level(); energy = lerp(energy, e, .3); if (e - lastE > .08) beatHit = 1; lastE = e; beatHit *= .88;
       ctx.clearRect(0, 0, W, H); background(T);
       const kick = beatHit * 3; ctx.save(); ctx.translate((Math.random() - .5) * kick, (Math.random() - .5) * kick);
       /* each scene is drawn on its own: a problem in one can never stop the film */
@@ -1924,6 +1942,7 @@ function amhMark(size = 32, cls = "") {
       d.style.setProperty("--beat", energy.toFixed(3));
       if (T >= DESIGN - .3 || T_end) finish();
       if (!done) raf = requestAnimationFrame(frame); }
+    start();   /* start only after every part of the film is set up */
   }
 
   window.playIntro = () => { try { sessionStorage.removeItem("amh-intro"); } catch (e) {} build(); };
@@ -8303,6 +8322,85 @@ function heroCard() { const h = HEROES[(dayIndex() * 11) % HEROES.length], ini =
 
 </script>
 <script>
+/* ===== 70 more innovators: 100 stories in all =====
+   The founders of probability, statistics, operations research, ergonomics, Lean, Six Sigma and data science.
+   Dates and contributions follow standard histories of each field (for example Stigler, The History of Statistics, 1986;
+   Gass and Assad, An Annotated Timeline of Operations Research, 2005; Womack, Jones and Roos, 1990). */
+HEROES.push(
+  { n: "Gerolamo Cardano", y: "1501–1576", f: "Early probability", gave: "An Italian physician and gambler who wrote Liber de ludo aleae, one of the first works to reason about chance with counting, published long after his death.", use: "List every outcome of rolling two dice and count how often each total appears.", t: "probrules" },
+  { n: "Blaise Pascal", y: "1623–1662", f: "Probability theory", gave: "In letters with Pierre de Fermat in 1654 he solved the problem of dividing the stakes of an unfinished game, laying the foundations of probability theory.", use: "Work out the fair split of a prize when a game stops halfway.", t: "probrules" },
+  { n: "John Graunt", y: "1620–1674", f: "Demography and data", gave: "Analysed London's weekly Bills of Mortality and in 1662 published the first life table, showing that patterns appear in large sets of data.", use: "Collect one simple count every day for two weeks and look for a pattern.", t: "datatypes" },
+  { n: "Jacob Bernoulli", y: "1655–1705", f: "Law of large numbers", gave: "Proved the first law of large numbers in Ars Conjectandi (1713): the share of successes settles towards the true probability as trials grow.", use: "Flip a coin 10, 100 and 1000 times in a simulator and watch the share of heads settle.", t: "lln" },
+  { n: "Abraham de Moivre", y: "1667–1754", f: "Normal approximation", gave: "Showed in 1733 that the binomial distribution can be approximated by the bell-shaped curve we now call the normal distribution.", use: "Compare a binomial histogram with n = 50 against a normal curve.", t: "binomial" },
+  { n: "Thomas Bayes", y: "c. 1701–1761", f: "Bayesian inference", gave: "A Presbyterian minister whose essay on updating beliefs with evidence was published after his death in 1763 by Richard Price. It gave us Bayes' theorem.", use: "Update the chance a part is defective after a test says it failed.", t: "bayes" },
+  { n: "Adam Smith", y: "1723–1790", f: "Division of labour", gave: "Opened The Wealth of Nations (1776) with a pin factory, showing how dividing work into specialised steps multiplies output.", use: "Split one task into steps and see which steps one person could specialise in.", t: "processmap" },
+  { n: "Richard Arkwright", y: "1732–1792", f: "The factory system", gave: "His water-powered cotton mill at Cromford (1771) organised machines, workers and shifts in one building, a model for the modern factory.", use: "Sketch how materials flow through a workshop you know.", t: "vsm" },
+  { n: "Pierre-Simon Laplace", y: "1749–1827", f: "Probability and the central limit theorem", gave: "His Théorie analytique des probabilités (1812) developed the central limit theorem and applied probability to errors of measurement.", use: "Average 30 dice rolls many times and see the averages form a bell curve.", t: "clt" },
+  { n: "William Playfair", y: "1759–1823", f: "Statistical graphics", gave: "A Scottish engineer who invented the line chart, the bar chart and the pie chart to explain economic data at a glance.", use: "Turn a table of monthly numbers into a line chart.", t: "histogram" },
+  { n: "Eli Whitney", y: "1765–1825", f: "Interchangeable parts", gave: "Promoted making musket parts to a pattern so they could be swapped between guns, an idea central to later mass production (historians debate how far he achieved it).", use: "Find a product whose parts are interchangeable and explain why that saves time.", t: "spc" },
+  { n: "Marc Isambard Brunel", y: "1769–1849", f: "Early mass production", gave: "Designed the Portsmouth Block Mills (about 1803), where machines made ships' pulley blocks in sequence, one of the first examples of mass production.", use: "Break a product into the steps a machine line would need.", t: "takt" },
+  { n: "Carl Friedrich Gauss", y: "1777–1855", f: "Least squares and the normal curve", gave: "Published the method of least squares (1809) and justified it with the normal distribution of errors, often called the Gaussian distribution.", use: "Fit a straight line to five points by least squares in the regression lab.", t: "normal" },
+  { n: "Siméon Denis Poisson", y: "1781–1840", f: "Rare events", gave: "Introduced in 1837 the distribution that bears his name, now used for counts of rare events such as defects, calls or arrivals.", use: "Count customers arriving per minute and compare with a Poisson model.", t: "poisson" },
+  { n: "Charles Babbage", y: "1791–1871", f: "Economics of manufacturing", gave: "Studied factories in On the Economy of Machinery and Manufactures (1832) and designed mechanical computers, the Difference and Analytical Engines.", use: "Estimate how much time a machine would save on one repetitive task.", t: null },
+  { n: "Adolphe Quetelet", y: "1796–1874", f: "Social statistics", gave: "A Belgian astronomer who applied the normal curve to human measurements, introduced the 'average man' and the body-mass index.", use: "Measure a characteristic of 20 classmates and describe its centre and spread.", t: "mean" },
+  { n: "Wojciech Jastrzębowski", y: "1799–1882", f: "Ergonomics", gave: "A Polish scientist who coined the word ergonomics in 1857, the science of fitting work to people.", use: "Check the height of your chair and screen against basic ergonomic guidance.", t: null },
+  { n: "John Snow", y: "1813–1858", f: "Data-driven investigation", gave: "Mapped cholera deaths in London in 1854 and traced them to the Broad Street water pump, a landmark in using data to find a root cause.", use: "Plot where problems happen on a simple map or layout drawing.", t: "causation" },
+  { n: "Francis Galton", y: "1822–1911", f: "Regression and correlation", gave: "Discovered regression to the mean and the idea of correlation while studying heredity, and popularised the use of percentiles.", use: "Look for regression to the mean in two rounds of a quiz score.", t: "pearson" },
+  { n: "Henri Fayol", y: "1841–1925", f: "Management theory", gave: "A French mining engineer who described the functions of management (planning, organising, commanding, coordinating, controlling) and 14 principles in 1916.", use: "Plan, organise and control one small project this week.", t: "charter" },
+  { n: "Andrey Markov", y: "1856–1922", f: "Markov chains", gave: "Studied sequences where the next state depends only on the current one. Markov chains now model queues, machine states and customer behaviour.", use: "Model a machine as Working, Idle or Broken and estimate the chances of moving between them.", t: null },
+  { n: "Charles Spearman", y: "1863–1945", f: "Rank correlation", gave: "Introduced rank correlation in 1904, a way to measure association that works with rankings and ignores outliers.", use: "Rank five suppliers on price and on quality and calculate Spearman's rho.", t: "spearman" },
+  { n: "Ford W. Harris", y: "1877–1962", f: "Inventory theory", gave: "Published the economic order quantity formula in 1913, balancing the cost of ordering against the cost of holding stock.", use: "Calculate the EOQ for an item you buy often.", t: null },
+  { n: "Elton Mayo", y: "1880–1949", f: "Human relations", gave: "Led the interpretation of the Hawthorne studies at Western Electric (1924–1932), showing that social factors affect productivity.", use: "Ask an operator what slows their work down before changing anything.", t: null },
+  { n: "Frank Wilcoxon", y: "1892–1965", f: "Nonparametric tests", gave: "A chemist who introduced the rank-sum and signed-rank tests in 1945, tests that work without assuming normal data.", use: "Compare two small samples with the Mann–Whitney test.", t: "mannwhitney" },
+  { n: "Harold F. Dodge", y: "1893–1976", f: "Acceptance sampling", gave: "At Bell Telephone Laboratories he developed acceptance sampling and, with Harry Romig, the Dodge–Romig sampling tables.", use: "Design a simple sampling plan: how many parts to check from each batch.", t: null },
+  { n: "P. C. Mahalanobis", y: "1893–1972", f: "Sample surveys", gave: "Founded the Indian Statistical Institute (1931), pioneered large-scale sample surveys and the Mahalanobis distance.", use: "Split a population into groups and take a stratified sample.", t: "stratified" },
+  { n: "Jerzy Neyman", y: "1894–1981", f: "Confidence intervals", gave: "Developed the theory of confidence intervals (1937) and, with Egon Pearson, the Neyman–Pearson framework for hypothesis testing.", use: "Build a 95% confidence interval for an average you measured.", t: "ci" },
+  { n: "Norbert Wiener", y: "1894–1964", f: "Cybernetics and feedback", gave: "Founded cybernetics (1948), the science of control and communication through feedback, in machines and in organisations.", use: "Draw the feedback loop of a process you control: measure, compare, act.", t: "controlplan" },
+  { n: "Egon Pearson", y: "1895–1980", f: "Hypothesis testing and quality", gave: "Co-developed the Neyman–Pearson approach to testing and promoted statistical quality control in British industry in the 1930s.", use: "State a null and alternative hypothesis for a change you want to make.", t: "hyptest" },
+  { n: "Harold Hotelling", y: "1895–1973", f: "Multivariate statistics", gave: "Introduced principal component analysis (1933) and the T-squared statistic used in multivariate control charts.", use: "Look at two related measurements together instead of one at a time.", t: null },
+  { n: "Patrick Blackett", y: "1897–1974", f: "Operational research", gave: "A physicist who led British operational research teams in the Second World War, using data to improve anti-submarine and air-defence tactics.", use: "Use data, not opinion, to choose between two ways of doing a task.", t: null },
+  { n: "Gertrude Cox", y: "1900–1978", f: "Experimental design", gave: "Built leading statistics departments in the United States and wrote Experimental Designs (1950) with William Cochran.", use: "Plan an experiment with a control group and random assignment.", t: "doe" },
+  { n: "Ralph M. Barnes", y: "1900–1984", f: "Motion and time study", gave: "Wrote Motion and Time Study (1937), the standard textbook for generations of industrial engineering students.", use: "Time a task and separate value-adding from non-value-adding motions.", t: "wastes" },
+  { n: "Allan H. Mogensen", y: "1901–1989", f: "Work simplification", gave: "Taught 'work simplification' to managers and operators from the 1930s, putting process charts and improvement in everyone's hands.", use: "Draw a process chart of a routine task and remove one step.", t: "processmap" },
+  { n: "Frank Yates", y: "1902–1994", f: "Factorial experiments", gave: "Worked with Fisher at Rothamsted on factorial designs and gave us Yates's algorithm and Yates's continuity correction.", use: "Run a 2 × 2 factorial experiment in the DOE lab.", t: "factorial" },
+  { n: "Abraham Wald", y: "1902–1950", f: "Sequential analysis", gave: "Developed sequential sampling in the Second World War and showed why armour belongs where returning planes were not hit: an early lesson in survivorship bias.", use: "Ask what data is missing from any sample you are given.", t: "sampbias" },
+  { n: "John von Neumann", y: "1903–1957", f: "Game theory and computing", gave: "Co-founded game theory (1944), shaped the design of modern computers and, with Ulam, the Monte Carlo method.", use: "Simulate a risky decision 1000 times instead of guessing.", t: null },
+  { n: "Philip M. Morse", y: "1903–1985", f: "Operations research", gave: "Called the father of operations research in the United States, he co-wrote Methods of Operations Research (1951) and studied queueing.", use: "Measure the average queue length at a service point.", t: "littleslaw" },
+  { n: "Ellis R. Ott", y: "1906–1981", f: "Process quality control", gave: "Taught industrial statistics at Rutgers, wrote Process Quality Control (1975) and created analysis of means (ANOM).", use: "Compare several machines' averages against the overall mean.", t: "anova1" },
+  { n: "William G. Cochran", y: "1909–1980", f: "Sampling", gave: "Wrote Sampling Techniques (1953), the classic text on how many items to sample and how to choose them.", use: "Calculate the sample size needed to estimate a proportion within 5%.", t: "samplesize" },
+  { n: "Peter Drucker", y: "1909–2005", f: "Modern management", gave: "Coined the term knowledge worker and popularised management by objectives in The Practice of Management (1954).", use: "Write one measurable objective for your week.", t: "charter" },
+  { n: "Stanislaw Ulam", y: "1909–1984", f: "Monte Carlo simulation", gave: "Proposed the Monte Carlo method in the 1940s: estimate complex probabilities by running many random trials on a computer.", use: "Estimate the chance a project finishes late by simulating task times.", t: null },
+  { n: "Paul Fitts", y: "1912–1965", f: "Human factors", gave: "A pioneer of aviation psychology whose 1954 law predicts how long it takes to point at a target, still used in interface and workstation design.", use: "Put the most-used controls closest and largest.", t: "pokayoke" },
+  { n: "Leonid Kantorovich", y: "1912–1986", f: "Linear programming", gave: "Formulated linear programming for production planning in 1939 and shared the 1975 Nobel Prize in economics for optimal allocation of resources.", use: "Write a two-product production plan as a linear program.", t: null },
+  { n: "Alan Turing", y: "1912–1954", f: "Computing and codebreaking", gave: "Defined the theoretical computer (1936) and at Bletchley Park used Bayesian reasoning to break Enigma messages.", use: "Update a probability step by step as new evidence arrives.", t: "bayes" },
+  { n: "Eiji Toyoda", y: "1913–2013", f: "Toyota Production System", gave: "As head of Toyota he backed Taiichi Ohno's production system and studied American plants to build a leaner way of making cars.", use: "Visit a real workplace and note what you would copy and what you would not.", t: "wastes" },
+  { n: "C. West Churchman", y: "1913–2004", f: "Systems thinking", gave: "Co-wrote Introduction to Operations Research (1957) and argued that every problem must be seen as part of a larger system.", use: "Draw the system around a problem: who supplies it, who uses it, what limits it.", t: "sipoc" },
+  { n: "Dorian Shainin", y: "1914–2000", f: "Statistical engineering", gave: "Developed practical problem-solving tools such as the Red X strategy and components search to find the dominant cause of variation.", use: "Compare a best and a worst part to find what differs.", t: "doe" },
+  { n: "Herbert A. Simon", y: "1916–2001", f: "Decision making", gave: "Introduced bounded rationality and 'satisficing'. People decide with limited information and time. Nobel Prize in economics, 1978.", use: "Set a clear 'good enough' criterion before you search for a solution.", t: null },
+  { n: "Claude Shannon", y: "1916–2001", f: "Information theory", gave: "Founded information theory in 1948, defining the bit and the limits of sending data through noisy channels.", use: "Notice how much 'noise' hides the signal in any report you read.", t: "causes" },
+  { n: "Alphonse Chapanis", y: "1917–2002", f: "Human factors engineering", gave: "Showed that many aircraft accidents blamed on pilots came from badly designed controls, and redesigned them with distinct shapes.", use: "Find a design that invites a mistake and propose a fix.", t: "pokayoke" },
+  { n: "Jay W. Forrester", y: "1918–2016", f: "System dynamics", gave: "Founded system dynamics at MIT and showed in Industrial Dynamics (1961) how delays amplify swings in supply chains.", use: "Play a supply-chain game and watch orders swing more than demand.", t: null },
+  { n: "Russell L. Ackoff", y: "1919–2009", f: "Systems and operations research", gave: "A founder of operations research who argued that improving parts separately can make the whole system worse.", use: "Check whether a local improvement helps the whole process.", t: null },
+  { n: "William Kruskal", y: "1919–2005", f: "Nonparametric statistics", gave: "With W. Allen Wallis he introduced the Kruskal–Wallis test (1952), comparing several groups using ranks.", use: "Compare three shifts' results when the data are not normal.", t: "kruskal" },
+  { n: "C. R. Rao", y: "1920–2023", f: "Statistical theory", gave: "An Indian statistician known for the Cramér–Rao bound and Rao–Blackwell theorem, which tell us how precisely anything can be estimated.", use: "Ask how much more data would make an estimate meaningfully more precise.", t: "se" },
+  { n: "Richard Bellman", y: "1920–1984", f: "Dynamic programming", gave: "Invented dynamic programming in the 1950s: solve a big decision problem by solving its smaller stages in order.", use: "Plan a multi-stage decision by working backwards from the goal.", t: null },
+  { n: "Bob Galvin", y: "1922–2011", f: "Six Sigma leadership", gave: "As chief executive of Motorola he backed the Six Sigma quality programme launched in 1987, and Motorola won the first Baldrige Award in 1988.", use: "Pick one quality goal and say clearly who owns it.", t: "dpmo" },
+  { n: "David Cox", y: "1924–2022", f: "Regression and survival analysis", gave: "A British statistician who introduced the proportional hazards model (1972) and shaped modern logistic regression and experimental design.", use: "Model the chance of a pass or fail result with logistic regression.", t: "logistic" },
+  { n: "Harold W. Kuhn", y: "1925–2014", f: "Assignment problem", gave: "Published the Hungarian method in 1955, an efficient way to assign workers to jobs at minimum cost.", use: "Assign three people to three tasks to minimise total time.", t: null },
+  { n: "Lester R. Ford Jr.", y: "1927–2017", f: "Network flows", gave: "With Delbert Fulkerson he proved the max-flow min-cut theorem (1956), the basis for analysing capacity in networks and supply chains.", use: "Find the bottleneck link in a simple delivery network.", t: null },
+  { n: "Leo Breiman", y: "1928–2005", f: "Machine learning", gave: "Co-developed classification and regression trees and invented random forests (2001), widely used for prediction in industry.", use: "Draw a simple decision tree that predicts a defect from two causes.", t: null },
+  { n: "Masaaki Imai", y: "1930–2023", f: "Kaizen", gave: "Brought the word kaizen to the world with Kaizen: The Key to Japan's Competitive Success (1986) and founded the Kaizen Institute.", use: "Make one small improvement every day for a week.", t: "kaizen" },
+  { n: "Edsger Dijkstra", y: "1930–2002", f: "Shortest paths", gave: "Designed the shortest-path algorithm (1956) that still powers route planning and network routing.", use: "Find the shortest route through a small map by hand.", t: null },
+  { n: "Bradley Efron", y: "born 1938", f: "The bootstrap", gave: "Invented the bootstrap (1979): estimate uncertainty by resampling your own data many times on a computer.", use: "Resample a small data set to see how much its average varies.", t: "se" },
+  { n: "Edward Tufte", y: "born 1942", f: "Data visualisation", gave: "Wrote The Visual Display of Quantitative Information (1983), teaching charts that show the data clearly without decoration.", use: "Remove everything from a chart that does not show data.", t: "histogram" },
+  { n: "Geoffrey Hinton", y: "born 1947", f: "Deep learning", gave: "Helped popularise backpropagation (1986) and led the deep-learning breakthroughs behind modern AI. He shared the 2024 Nobel Prize in physics.", use: "Read how a neural network is trained on the AI for IE page.", t: null },
+  { n: "Hans Rosling", y: "1948–2017", f: "Data storytelling", gave: "A Swedish doctor whose animated charts and book Factfulness (2018) showed how data can correct common misconceptions about the world.", use: "Tell one data story in three sentences and one chart.", t: null },
+  { n: "James P. Womack", y: "born 1948", f: "Lean thinking", gave: "Co-wrote The Machine That Changed the World (1990), which introduced the word lean, and Lean Thinking (1996) with its five principles.", use: "Apply the five Lean principles to a service you use.", t: "vsm" },
+  { n: "Mikel Harry", y: "1951–2017", f: "Six Sigma deployment", gave: "An engineer at Motorola who helped turn Six Sigma into a structured deployment with roles and belts, and co-founded the Six Sigma Academy.", use: "Describe who would play Champion, Black Belt and Green Belt in a project.", t: "dmaic" }
+);
+
+</script>
+<script>
 /* ===== TODAY: daily recommendations, streak, activity calendar and personal learning paths ===== */
 const QUOTES = [
   ["Essentially, all models are wrong, but some are useful.", "George E. P. Box", "Box & Draper (1987), Empirical Model-Building and Response Surfaces"],
@@ -9089,35 +9187,35 @@ addEventListener("hashchange", icSync); function icSync() { const v = (location.
 let IC_RAF = 0;
 function icStop() { cancelAnimationFrame(IC_RAF); IC_RAF = 0; }
 function icConstellation(cv, tip) {
-  const H = HEROES.map(h => ({ h, yr: icYear(h) })).sort((a, b) => a.yr - b.yr), y0 = 1815, y1 = 1945, ctx = cv.getContext("2d");
+  const H = HEROES.map(h => ({ h, yr: icYear(h) })).sort((a, b) => a.yr - b.yr), ctx = cv.getContext("2d"), N = H.length;
   let W = 0, Ht = 0, dpr = 1, pts = [], sel = -1, t0 = performance.now();
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const layout = () => { dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; Ht = cv.clientHeight; cv.width = W * dpr; cv.height = Ht * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const pad = W < 600 ? 22 : 48, lanes = W < 600 ? 5 : 4;
-    pts = H.map((o, i) => ({ ...o, x: pad + (o.yr - y0) / (y1 - y0) * (W - pad * 2), y: Ht * .22 + ((i * 3) % lanes) / (lanes - 1) * Ht * .52 + (i % 2 ? 8 : -8), ph: i * 1.7 })); };
-  const links = []; H.forEach((a, i) => H.forEach((b, j) => { if (j > i && Math.abs(a.yr - b.yr) <= 14) links.push([i, j]); }));
-  const col = n => getComputedStyle(document.body).getPropertyValue(n).trim();
+  const pad = () => W < 600 ? 22 : 48, xOf = i => pad() + i / (N - 1) * (W - pad() * 2);
+  const ticks = [0, .25, .5, .75, 1].map(q => { const i = Math.round(q * (N - 1)); return [H[i].yr, i]; });
+  const layout = () => { dpr = Math.min(devicePixelRatio || 1, 1.5); W = cv.clientWidth; Ht = cv.clientHeight; cv.width = W * dpr; cv.height = Ht * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const rnd = i => { const v = Math.sin(i * 12.9898 + 4.1) * 43758.5453; return v - Math.floor(v); };   /* fixed scatter, like a star field */
+    pts = H.map((o, i) => ({ ...o, x: xOf(i) + (rnd(i + 99) - .5) * (W - pad() * 2) / N * 1.6, y: Ht * .14 + rnd(i) * Ht * .64, ph: i * 1.7 })); };
+  /* each innovator links to the next two in time: ideas passing from one generation to the next */
+  const links = []; for (let i = 0; i < N; i++) for (let j = i + 1; j <= Math.min(N - 1, i + 2); j++) links.push([i, j]);
   function frame(now) { if (!cv.isConnected || !el("view-corner").classList.contains("show")) return icStop();
     const t = (now - t0) / 1000, ink = "#E9EEF5", acc = "#E5484D";
     ctx.clearRect(0, 0, W, Ht);
-    /* decade axis */
-    ctx.strokeStyle = "rgba(233,238,245,.12)"; ctx.lineWidth = 1; ctx.font = "500 11px Geist, Segoe UI, sans-serif"; ctx.fillStyle = "rgba(233,238,245,.38)"; ctx.textAlign = "center";
-    for (let d = 1820; d <= 1940; d += 20) { const x = pts.length ? 48 + 0 : 0, X = (W < 600 ? 22 : 48) + (d - y0) / (y1 - y0) * (W - (W < 600 ? 44 : 96)); ctx.beginPath(); ctx.moveTo(X, Ht * .12); ctx.lineTo(X, Ht * .86); ctx.stroke(); ctx.fillText(d + "s", X, Ht * .95); }
-    const P = pts.map(p => ({ ...p, X: p.x + (reduced ? 0 : Math.sin(t * .6 + p.ph) * 3), Y: p.y + (reduced ? 0 : Math.cos(t * .5 + p.ph) * 4) }));
-    /* links, with a pulse travelling along each: ideas passing between generations */
-    links.forEach(([i, j], k) => { const a = P[i], b = P[j], hot = sel === i || sel === j;
-      ctx.strokeStyle = hot ? "rgba(229,72,77,.75)" : "rgba(233,238,245,.14)"; ctx.lineWidth = hot ? 1.6 : 1; ctx.beginPath(); ctx.moveTo(a.X, a.Y); ctx.lineTo(b.X, b.Y); ctx.stroke();
-      if (!reduced) { const u = ((t * .35 + k * .137) % 1); ctx.fillStyle = hot ? acc : "rgba(233,238,245,.55)"; ctx.beginPath(); ctx.arc(a.X + (b.X - a.X) * u, a.Y + (b.Y - a.Y) * u, hot ? 2.4 : 1.4, 0, 6.283); ctx.fill(); } });
-    P.forEach((p, i) => { const on = i === sel, r = on ? 7 : 4.5;
-      if (on) { ctx.fillStyle = "rgba(229,72,77,.18)"; ctx.beginPath(); ctx.arc(p.X, p.Y, 16 + Math.sin(t * 4) * 2, 0, 6.283); ctx.fill(); }
+    ctx.strokeStyle = "rgba(233,238,245,.12)"; ctx.lineWidth = 1; ctx.font = "500 11px Geist, Segoe UI, sans-serif"; ctx.fillStyle = "rgba(233,238,245,.4)"; ctx.textAlign = "center";
+    ticks.forEach(([y, i]) => { const X = xOf(i); ctx.beginPath(); ctx.moveTo(X, Ht * .1); ctx.lineTo(X, Ht * .86); ctx.stroke(); ctx.fillText(String(y), X, Ht * .95); });
+    const P = pts.map(p => ({ ...p, X: p.x + (reduced ? 0 : Math.sin(t * .6 + p.ph) * 2), Y: p.y + (reduced ? 0 : Math.cos(t * .5 + p.ph) * 3) }));
+    ctx.lineWidth = 1; ctx.strokeStyle = "rgba(233,238,245,.13)"; ctx.beginPath(); links.forEach(([i, j]) => { ctx.moveTo(P[i].X, P[i].Y); ctx.lineTo(P[j].X, P[j].Y); }); ctx.stroke();
+    if (sel >= 0) { ctx.strokeStyle = "rgba(229,72,77,.8)"; ctx.lineWidth = 1.6; ctx.beginPath(); links.forEach(([i, j]) => { if (i === sel || j === sel) { ctx.moveTo(P[i].X, P[i].Y); ctx.lineTo(P[j].X, P[j].Y); } }); ctx.stroke(); }
+    if (!reduced) { ctx.fillStyle = "rgba(233,238,245,.55)"; links.forEach(([i, j], k) => { if (k % 3) return; const u = ((t * .35 + k * .137) % 1); ctx.beginPath(); ctx.arc(P[i].X + (P[j].X - P[i].X) * u, P[i].Y + (P[j].Y - P[i].Y) * u, 1.3, 0, 6.283); ctx.fill(); }); }
+    P.forEach((p, i) => { const on = i === sel, r = on ? 6.5 : 3.6;
+      if (on) { ctx.fillStyle = "rgba(229,72,77,.2)"; ctx.beginPath(); ctx.arc(p.X, p.Y, 15 + Math.sin(t * 4) * 2, 0, 6.283); ctx.fill(); }
       ctx.fillStyle = on ? acc : ink; ctx.beginPath(); ctx.arc(p.X, p.Y, r, 0, 6.283); ctx.fill();
-      if (W >= 700 || on) { ctx.fillStyle = on ? "#fff" : "rgba(233,238,245,.62)"; ctx.font = (on ? "600 12px " : "500 10.5px ") + "Geist, Segoe UI, sans-serif"; ctx.textAlign = "center"; ctx.fillText(p.h.n.replace(/ \(.*?\)|‘.*?’/g, "").split(" ").slice(-1)[0], p.X, p.Y - (on ? 14 : 10)); } });
+      if (on) { ctx.fillStyle = "#fff"; ctx.font = "600 12px Geist, Segoe UI, sans-serif"; ctx.textAlign = "center"; ctx.fillText(p.h.n.replace(/ \(.*?\)|‘.*?’/g, ""), p.X, p.Y - 14); } });
     if (!reduced) IC_RAF = requestAnimationFrame(frame); }
-  const pick = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = -1, bd = 30;
+  const pick = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = -1, bd = 22;
     pts.forEach((p, i) => { const d = Math.hypot(p.x - x, p.y - y); if (d < bd) { bd = d; best = i; } }); return best; };
-  const show = i => { sel = i; if (i < 0) { tip.innerHTML = `<span class="muted">Tap a point to meet an innovator.</span>`; return; } const h = pts[i].h;
+  const show = i => { sel = i; if (i < 0) { tip.innerHTML = `<span class="muted">Tap a point to meet one of ${N} innovators.</span>`; return; } const h = pts[i].h;
     tip.innerHTML = `<b>${esc(h.n)}</b> <span class="muted">${h.y}, ${esc(h.f)}</span><br>${h.gave.split(". ")[0]}.${h.t && TERM[h.t] ? ` <a href="#term/${h.t}">Related term</a>` : ""}`; if (reduced) frame(performance.now()); };
-  cv.onpointermove = e => { if (e.pointerType === "mouse") { const i = pick(e); cv.style.cursor = i >= 0 ? "pointer" : "default"; } };
+  cv.onpointermove = e => { if (e.pointerType === "mouse") { const i = pick(e); cv.style.cursor = i >= 0 ? "pointer" : "default"; if (i >= 0 && i !== sel) show(i); } };
   cv.onclick = e => show(pick(e));
   layout(); new ResizeObserver(() => { layout(); if (reduced) frame(performance.now()); }).observe(cv);
   show(H.findIndex(o => o.h === HEROES[(dayIndex() * 11) % HEROES.length]));
@@ -9128,7 +9226,7 @@ function renderCorner() { icHead("corner");
   const story = icPick(STORIES, 1), cs = icPick(CASES, 3), ai = icPick(AI_USES, 5), vids = dailyVideos(3, VIDEOS.filter(v => /Quality and Lean|Data, AI|Six Sigma|Industrial/.test(v.g || "")), 31);
   const sorted = [...HEROES].sort((a, b) => icYear(a) - icYear(b));
   el("view-corner").innerHTML = `
-  <section class="ic-hero"><div class="ic-hero-txt"><p class="ic-kicker">${HEROES.length} innovators, ${STORIES.length} stories, ${CASES.length} case studies, ${AI_USES.length} AI applications</p>
+  <section class="ic-hero"><div class="ic-hero-txt"><p class="ic-kicker">${HEROES.length} innovator stories, ${STORIES.length} innovation stories, ${CASES.length} case studies, ${AI_USES.length} AI applications</p>
      <h1>Innovators Corner</h1><p class="ic-lede">The people, factories, hospitals and algorithms that turned data into better work. Read how they did it, then use the same tools yourself.</p></div>
    <div class="ic-sky"><canvas id="icsky" aria-label="Constellation of ${HEROES.length} innovators placed by birth year; lines join people whose working lives overlapped"></canvas><p class="ic-tip" id="ictip" aria-live="polite"></p></div></section>
 
@@ -9144,7 +9242,7 @@ function renderCorner() { icHead("corner");
     <a class="ic-door" href="#cases"><span class="ic-num">${CASES.length}</span><h3>Case studies</h3><p>Real projects from breweries to hospitals, each with the data, the tool that cracked it and the lesson for your work.</p><ul>${CASES.slice(0, 3).map(c => `<li>${esc(c.t)}</li>`).join("")}</ul><span class="ic-go">Open case studies</span></a>
     <a class="ic-door" href="#ai"><span class="ic-num">${AI_USES.length}</span><h3>AI for IE</h3><p>Where machine learning helps an industrial engineer today: the problem, the model, the data you need and the trap to avoid.</p><ul>${AI_USES.slice(0, 3).map(a => `<li>${esc(a.t)}</li>`).join("")}</ul><span class="ic-go">Open AI for IE</span></a></div></section>
 
-  <section><div class="page-head"><h2>Two centuries of innovators</h2><p>Scroll the timeline. Each card says what the person gave us and how you can use it this week.</p></div>
+  <section><div class="page-head"><h2>Five centuries of innovators</h2><p>${HEROES.length} people, from Cardano to Hinton. Scroll the timeline. Each card says what the person gave us and how you can use it this week.</p></div>
    <ol class="ic-line">${sorted.map(h => `<li><span class="ic-yr">${icYear(h)}</span><b>${esc(h.n)}</b><span class="muted small">${esc(h.f)}</span><p>${h.gave.split(". ")[0]}.</p><p class="ic-use"><b class="ui">Try it.</b> ${h.use}</p></li>`).join("")}</ol></section>
 
   <section><div class="page-head"><h2>Watch</h2><p>Three videos on innovation in quality, operations and data, new every day. Over a thousand more in the video library.</p></div>
