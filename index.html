@@ -1099,6 +1099,15 @@ body.intro-on{overflow:hidden}
 @keyframes in-ready{50%{box-shadow:0 0 0 8px rgba(242,245,249,.12)}}
 #intro.go .in-stage{pointer-events:none}#intro.ready .in-stage{pointer-events:auto}
 
+
+/* auto-start: sound button shown only when the browser blocked sound */
+.in-sound{position:absolute;left:50%;top:max(18px,env(safe-area-inset-top));transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:8px;font:600 .95rem "Geist","Segoe UI",system-ui,sans-serif;color:#0A111A;background:#F2F5F9;border:none;border-radius:999px;padding:11px 20px 11px 16px;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35);animation:snd-in .5s ease both}
+.in-sound[hidden]{display:none}
+.in-sound svg{width:18px;height:18px}
+.in-sound-ring{position:absolute;inset:-6px;border-radius:999px;border:1px solid rgba(242,245,249,.55);animation:tap-ring 1.8s ease-out infinite}
+@keyframes snd-in{from{opacity:0;transform:translate(-50%,-8px)}}
+@media(max-width:600px){.in-sound{top:auto;bottom:calc(40px + env(safe-area-inset-bottom));}}
+
 .credit{display:block;margin-top:6px;color:var(--ink-2)}
 .credit b{font-family:var(--head);color:var(--ink)}
 .credit button{background:none;border:none;color:var(--blue);font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0}
@@ -1652,47 +1661,56 @@ function amhMark(size = 32, cls = "") {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const d = document.createElement("div"); d.id = "intro"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-label", "AMH Corner by Ayman Al-Hayek, introduction");
     d.innerHTML = `<canvas class="in-cv" aria-hidden="true"></canvas>
-      <div class="in-gate"><div class="in-gate-logo">${amhMark(96, "gate")}</div><p class="in-gate-name">AMH Corner</p>
-        <button class="in-tap" type="button"><span class="in-tap-ring" aria-hidden="true"></span>Tap to start</button><p class="in-gate-hint">Turn your sound on. The introduction lasts about 40 seconds.</p></div>
       <div class="in-stage"><div class="in-logo">${amhMark(124, "big")}</div>
         <h1 class="in-word" aria-label="AMH Corner"><span class="w1">${[..."AMH"].map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span><span class="w2">${[..."Corner"].map((c, i) => `<span style="--d:${i}">${c}</span>`).join("")}</span></h1>
         <p class="in-name"><span>by</span> Ayman Al-Hayek</p><p class="in-tag">Applied statistics, Lean Six Sigma and industrial engineering</p>
         <button class="in-go" type="button" disabled>Enter AMH Corner</button></div>
+      <button class="in-sound" type="button" hidden><span class="in-sound-ring" aria-hidden="true"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Tap for sound</button>
       <div class="in-ctl"><button class="in-mute" type="button" aria-pressed="false" aria-label="Mute music"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="w" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="x" d="m16 9 6 6m0-6-6 6"/></svg></button>${seenFull ? `<button class="in-skip" type="button">Skip</button>` : ""}</div>
-      <div class="in-prog" aria-hidden="true"><i></i><span class="in-time">0:00</span></div>`;
+      <div class="in-prog" aria-hidden="true"><i></i><span class="in-time">0:43</span></div>`;
     document.body.appendChild(d); document.body.classList.add("intro-on");
-    const cv = d.querySelector(".in-cv"), ctx = cv.getContext("2d"), logo = d.querySelector(".in-logo svg"), go = d.querySelector(".in-go"), bar = d.querySelector(".in-prog i"), tlab = d.querySelector(".in-time");
-    const audio = new Audio(SRC); audio.preload = "auto";
-    let W = 0, H = 0, dpr = 1, raf = 0, started = false, done = false, ended = false, analyser = null, fbuf = null, energy = 0, beatHit = 0, lastE = 0, ox = 0, oy = 0, clock0 = 0, D = DESIGN;
+    const cv = d.querySelector(".in-cv"), ctx = cv.getContext("2d"), logo = d.querySelector(".in-logo svg"), go = d.querySelector(".in-go"), bar = d.querySelector(".in-prog i"), tlab = d.querySelector(".in-time"), snd = d.querySelector(".in-sound");
+    /* the music starts downloading the moment the page opens, so it never starts late or stutters */
+    const audio = new Audio(); audio.preload = "auto"; audio.src = SRC; audio.load();
+    let W = 0, H = 0, dpr = 1, raf = 0, started = false, done = false, ended = false, analyser = null, fbuf = null, energy = 0, beatHit = 0, lastE = 0, ox = 0, oy = 0, clock0 = 0, D = DESIGN, soundMode = false, actx = null, T_end = false;
     audio.addEventListener("loadedmetadata", () => { if (isFinite(audio.duration) && audio.duration > 10) D = audio.duration; });
+    audio.addEventListener("ended", () => { T_end = true; });
 
-    const fadeAudio = () => { const v0 = audio.volume, s = performance.now(); const step = () => { const k = (performance.now() - s) / 1200; audio.volume = Math.max(0, v0 * (1 - k)); if (k < 1) requestAnimationFrame(step); else audio.pause(); }; if (!audio.paused) step(); };
+    /* the music is never faded or cut: Enter only unlocks after the last note */
     const close = () => { if (done) return; done = true; try { sessionStorage.setItem("amh-intro", "1"); } catch (e) {}
-      fadeAudio(); d.classList.add("out"); document.body.classList.remove("intro-on"); removeEventListener("keydown", onKey); removeEventListener("resize", size);
+      if (!audio.ended) audio.pause(); d.classList.add("out"); document.body.classList.remove("intro-on"); removeEventListener("keydown", onKey); removeEventListener("resize", size);
       setTimeout(() => { cancelAnimationFrame(raf); d.remove(); const m = document.getElementById("main"); if (m) m.focus({ preventScroll: true }); }, 1000); };
-    const finish = () => { if (ended) return; ended = true; try { localStorage.setItem("amh-intro-full", "1"); } catch (e) {} go.disabled = false; d.classList.add("ready"); setTimeout(() => go.focus({ preventScroll: true }), 50); };
-    const onKey = e => { if (!started && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); start(innerWidth / 2, innerHeight / 2); } else if (ended && e.key === "Enter") { e.preventDefault(); close(); } };
+    const finish = () => { if (ended) return; ended = true; try { localStorage.setItem("amh-intro-full", "1"); } catch (e) {} go.disabled = false; snd.hidden = true; d.classList.add("ready"); setTimeout(() => go.focus({ preventScroll: true }), 50); };
+    const onKey = e => { if (ended && e.key === "Enter") { e.preventDefault(); close(); } else if (!soundMode && !ended) enableSound(); };
     addEventListener("keydown", onKey);
     go.onclick = e => { e.stopPropagation(); if (ended) close(); };
     const skip = d.querySelector(".in-skip"); if (skip) skip.onclick = e => { e.stopPropagation(); close(); };
-    const mute = d.querySelector(".in-mute"); mute.onclick = e => { e.stopPropagation(); audio.muted = !audio.muted; mute.setAttribute("aria-pressed", audio.muted); mute.setAttribute("aria-label", audio.muted ? "Unmute music" : "Mute music"); };
-    d.querySelector(".in-tap").onclick = e => { e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); start(r.left + r.width / 2, r.top + r.height / 2); };
-    d.addEventListener("click", e => { if (!started) start(e.clientX, e.clientY); });
-    setTimeout(() => d.querySelector(".in-tap").focus({ preventScroll: true }), 80);
-    audio.addEventListener("ended", () => { T_end = true; });
-    let T_end = false;
+    const mute = d.querySelector(".in-mute"); mute.onclick = e => { e.stopPropagation(); if (!soundMode) return enableSound(); audio.muted = !audio.muted; mute.setAttribute("aria-pressed", audio.muted); mute.setAttribute("aria-label", audio.muted ? "Unmute music" : "Mute music"); };
+    /* the first touch anywhere turns the sound on */
+    d.addEventListener("pointerdown", () => { if (!soundMode && !ended) enableSound(); });
 
-    function start(x, y) { if (started) return; started = true; ox = x; oy = y; d.classList.add("go");
-      audio.play().catch(() => {}); clock0 = performance.now();
-      if (/^https?:/.test(location.protocol)) { try { const A = new (window.AudioContext || window.webkitAudioContext)(); const src = A.createMediaElementSource(audio); analyser = A.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = .6; src.connect(analyser); analyser.connect(A.destination); fbuf = new Uint8Array(analyser.frequencyBinCount); A.resume(); } catch (e) { analyser = null; } }
+    function analyse() { if (analyser || !/^https?:/.test(location.protocol)) return;   // on file:// pages the analyser would silence the music
+      try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state !== "running") return;
+        const src = actx.createMediaElementSource(audio); analyser = actx.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = .6; src.connect(analyser); analyser.connect(actx.destination); fbuf = new Uint8Array(analyser.frequencyBinCount); } catch (e) { analyser = null; } }
+    /* sound on: restart from the first second so the whole track is heard, in sync with the picture */
+    function enableSound() { if (soundMode || done) return; soundMode = true; snd.hidden = true;
+      try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume().then(analyse).catch(() => {}); } catch (e) {}
+      audio.muted = false; audio.currentTime = 0; d.classList.remove("logo-on", "words"); clock0 = performance.now();
+      audio.play().then(analyse).catch(() => { soundMode = false; snd.hidden = false; }); }
+
+    /* starts by itself; tries sound straight away (allowed for returning visitors in some browsers) */
+    function start() { if (started) return; started = true; d.classList.add("go"); clock0 = performance.now(); ox = innerWidth * .5; oy = innerHeight * .5;
       if (document.fonts && document.fonts.load) { document.fonts.load(`700 40px ${FONT}`).catch(() => {}); document.fonts.load(`500 20px ${MONO}`).catch(() => {}); }
-      if (reduced) { d.classList.add("logo-on", "words"); const wait = () => { if (done) return; if ((audio.ended || audio.currentTime > D - .5) || performance.now() - clock0 > (D + 1) * 1000) finish(); else setTimeout(wait, 400); }; wait(); return; }
+      audio.play().then(() => { soundMode = true; try { actx = new (window.AudioContext || window.webkitAudioContext)(); actx.resume().then(analyse).catch(() => {}); } catch (e) {} })
+        .catch(() => { soundMode = false; snd.hidden = false; });
+      if (reduced) { d.classList.add("logo-on", "words"); const wait = () => { if (done) return; if (T_end || (soundMode ? audio.currentTime > D - .3 : performance.now() - clock0 > D * 1000)) finish(); else setTimeout(wait, 400); }; wait(); return; }
       size(); addEventListener("resize", size); raf = requestAnimationFrame(frame); }
+    start();
 
     function size() { dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     function level() { if (!analyser) { const s = (performance.now() - clock0) / 1000; return .3 + .3 * Math.pow(Math.max(0, Math.sin(s * 3.6)), 6); } analyser.getByteFrequencyData(fbuf); let s = 0; for (let i = 1; i < 14; i++) s += fbuf[i]; return s / (13 * 255); }
     /* the timeline in design seconds (0–43), driven by the music when it plays */
-    function now() { const sec = (!audio.paused && audio.currentTime > 0) || audio.ended ? audio.currentTime : (performance.now() - clock0) / 1000; return sec * DESIGN / D; }
+    function now() { const sec = soundMode ? (audio.ended ? D : audio.currentTime) : (performance.now() - clock0) / 1000; return sec * DESIGN / D; }
 
     /* ---------- drawing helpers ---------- */
     const U = () => Math.min(W, H);
