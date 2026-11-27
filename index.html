@@ -1639,38 +1639,6 @@ footer.credit-only{text-align:center;font:500 .92rem var(--head);color:var(--ink
 body.pk-dragging{cursor:grabbing}
 @media(max-width:640px){.pk-grid{gap:8px}.pk-box{padding:9px;min-height:140px}.pk-h small{display:none}.pk-chart{grid-template-columns:22px minmax(0,1fr)}}
 
-/* Innovation TV */
-.tv{margin:6px 0 8px}
-.tv-set{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:16px;padding:14px;border-radius:22px;background:linear-gradient(180deg,#1a1f28,#0d1016);box-shadow:0 20px 50px -20px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06);color:#E8EDF3}
-@media(max-width:900px){.tv-set{grid-template-columns:1fr}}
-.tv-screen{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 0 0 6px #07090c}
-.tv-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.tv-static{position:absolute;inset:0;pointer-events:none;opacity:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.18) 0 1px,rgba(0,0,0,.25) 1px 3px),radial-gradient(circle at 50% 50%,#444,#000);mix-blend-mode:screen}
-.tv-screen.switch .tv-static{animation:tv-static .45s steps(6) both}
-@keyframes tv-static{0%{opacity:1;transform:translateY(0)}50%{opacity:.8;transform:translateY(-6px)}100%{opacity:0;transform:translateY(0)}}
-.tv-power{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:0;background:radial-gradient(circle at 50% 45%,#1c2533,#05070b);color:#E8EDF3;font:600 1rem var(--head);cursor:pointer}
-.tv-power svg{width:54px;height:54px;padding:12px;border-radius:50%;background:#E5484D;color:#fff;box-shadow:0 0 0 8px rgba(229,72,77,.18)}
-.tv-power:hover svg{transform:scale(1.05)}
-.tv-side{display:flex;flex-direction:column;gap:10px;min-width:0}
-.tv-now{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.tv-live{display:inline-flex;align-items:center;gap:5px;font:700 .7rem var(--mono);color:#fff;background:#E5484D;padding:3px 7px;border-radius:5px;letter-spacing:.06em}
-.tv-live i{width:6px;height:6px;border-radius:50%;background:#fff;animation:tv-blink 1.2s infinite}
-@keyframes tv-blink{50%{opacity:.2}}
-.tv-chn{font:600 .74rem var(--mono);color:#8FA0B4}
-.tv-now b{font:650 1rem var(--head)}
-.tv-title{margin:0;font:600 .98rem/1.35 var(--head);color:#fff}
-.tv-meta,.tv-next{margin:0;font-size:.8rem;color:#8FA0B4}
-.tv-next span{color:#C9D3DE}
-.tv-chans{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow:auto}
-.tv-chans button{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#E8EDF3;border-radius:10px;padding:8px 10px;cursor:pointer;font:inherit}
-.tv-chans button:hover{background:rgba(255,255,255,.07)}
-.tv-chans button[aria-checked="true"]{border-color:#E5484D;background:rgba(229,72,77,.12)}
-.tv-chans b{display:block;font:600 .9rem var(--head)}
-.tv-chans small{display:block;font-size:.74rem;color:#8FA0B4}
-.tv-num{width:28px;height:28px;flex:none;display:grid;place-items:center;border-radius:8px;background:rgba(255,255,255,.08);font:700 .82rem var(--mono)}
-.tv-btns .btn{background:rgba(255,255,255,.06);color:#E8EDF3;border-color:rgba(255,255,255,.12);box-shadow:none}
-.tv-btns .btn:hover{background:rgba(255,255,255,.12)}
-
 /* PICK chart on phones: task text gets the full width, controls sit underneath */
 @media(max-width:640px){
   .pk-add #ft{flex:1 1 100%}
@@ -1684,6 +1652,119 @@ body.pk-dragging{cursor:grabbing}
 .sw-seg{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
 .sw-seg button small{opacity:.6;font-size:.75em;margin-left:2px}
 @media(max-width:640px){.sw-seg{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.sw-seg button{flex:none}}
+
+/* Innovation TV */
+.tv2{margin:6px 0 8px;--ink-tv:#E9EEF4;--mut-tv:#8C9AAB}
+.tv2-set{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,1fr);gap:18px;padding:16px;border-radius:24px;background:linear-gradient(180deg,#161b23,#0b0e13);box-shadow:0 24px 60px -24px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06);color:var(--ink-tv)}
+.tv2-main{min-width:0;display:flex;flex-direction:column;gap:12px}
+.tv2-screen{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 0 0 6px #05070a}
+.tv2-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tv2-screen:fullscreen{border-radius:0;box-shadow:none}
+.tv2-static{position:absolute;inset:0;pointer-events:none;opacity:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.2) 0 1px,rgba(0,0,0,.3) 1px 3px),radial-gradient(circle at 50% 50%,#555,#000);mix-blend-mode:screen}
+.tv2-screen.switch .tv2-static{animation:tv2-static .45s steps(6) both}
+@keyframes tv2-static{0%{opacity:1;transform:translateY(0)}50%{opacity:.8;transform:translateY(-6px)}100%{opacity:0}}
+.tv2-osd{position:absolute;left:16px;top:16px;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:12px;background:rgba(8,10,14,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;opacity:0;transform:translateY(-6px);transition:opacity .35s,transform .35s}
+.tv2-screen.osd .tv2-osd,.tv2-screen.osd .tv2-clock{opacity:1;transform:none}
+.tv2-osd-n{min-width:44px;height:40px;padding:0 6px;display:grid;place-items:center;border-radius:9px;background:var(--c);color:#fff;font:800 1.25rem var(--mono)}
+.tv2-osd-t{display:flex;flex-direction:column;line-height:1.2}
+.tv2-osd-t b{font:650 1rem var(--head);color:#fff}
+.tv2-osd-t small{font:700 .66rem var(--mono);letter-spacing:.1em;color:#ff6b6f;display:flex;align-items:center;gap:5px}
+.tv2-dot{width:6px;height:6px;border-radius:50%;background:#ff5a5f;animation:tv2-blink 1.2s infinite}
+.tv2-clock{position:absolute;right:16px;top:16px;padding:6px 10px;border-radius:9px;background:rgba(8,10,14,.72);font:600 .85rem var(--mono);color:#fff;pointer-events:none;opacity:0;transition:opacity .35s}
+@keyframes tv2-blink{50%{opacity:.25}}
+.tv2-standby{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;text-align:center;overflow:hidden}
+.tv2-standby::before{content:"";position:absolute;inset:-20px;background:var(--bg) center/cover;filter:blur(18px) brightness(.35) saturate(1.2);transform:scale(1.05)}
+.tv2-standby>*{position:relative}
+.tv2-power{width:76px;height:76px;border-radius:50%;border:0;background:#E5484D;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 10px rgba(229,72,77,.18),0 12px 30px -8px rgba(229,72,77,.7);transition:transform .2s}
+.tv2-power:hover{transform:scale(1.06)}
+.tv2-power svg{width:32px;height:32px}
+.tv2-sb-ch{margin:6px 0 0;font:600 1.05rem var(--head);color:#fff}
+.tv2-sb-ch span{font:700 .78rem var(--mono);color:var(--mut-tv);margin-right:6px}
+.tv2-sb-t{margin:0;max-width:520px;font-size:.86rem;color:#C9D3DE;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tv2-now{display:flex;flex-direction:column;gap:6px}
+.tv2-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.8rem;color:var(--mut-tv)}
+.tv2-live{display:inline-flex;align-items:center;gap:5px;font:700 .66rem var(--mono);color:#fff;background:#E5484D;padding:3px 7px;border-radius:5px;letter-spacing:.08em}
+.tv2-live i{width:6px;height:6px;border-radius:50%;background:#fff;animation:tv2-blink 1.2s infinite}
+.tv2-chip{font:700 .7rem var(--mono);padding:3px 7px;border-radius:5px;background:var(--c);color:#fff}
+.tv2-chname{font:650 .9rem var(--head);color:var(--ink-tv)}
+.tv2-src::before{content:"·";margin-right:8px}
+.tv2-title{margin:0;font:650 1.12rem/1.35 var(--head);color:#fff}
+.tv2-prog{display:flex;align-items:center;gap:10px}
+.tv2-time{font:600 .74rem var(--mono);color:var(--mut-tv);flex:none}
+.tv2-track{flex:1;height:5px;border-radius:5px;background:rgba(255,255,255,.1);overflow:hidden}
+.tv2-track i{display:block;height:100%;background:linear-gradient(90deg,#E5484D,#ff8a5c);border-radius:5px;transition:width 1s linear}
+.tv2-next{margin:0;font-size:.82rem;color:var(--mut-tv);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv2-next b{font-weight:500;color:#C9D3DE}
+.tv2-remote{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tv2-btn{height:40px;min-width:40px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 10px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--ink-tv);font:600 .84rem var(--head);cursor:pointer;transition:background .15s,border-color .15s}
+.tv2-btn svg{width:18px;height:18px;flex:none}
+.tv2-btn:hover{background:rgba(255,255,255,.11)}
+.tv2-btn:focus-visible,.tv2-row:focus-visible,.tv2-blk:focus-visible,.tv2-genres button:focus-visible{outline:2px solid #6aa8ff;outline-offset:2px}
+.tv2-btn.red{background:#E5484D;border-color:#E5484D;color:#fff}
+.tv2-btn[aria-pressed="true"]{background:rgba(106,168,255,.16);border-color:#6aa8ff}
+.tv2-chbtns{display:inline-flex;align-items:center;gap:2px;padding:2px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.tv2-chbtns .tv2-btn{border:0;background:none;height:36px;min-width:36px}
+.tv2-chbtns .tv2-btn:hover{background:rgba(255,255,255,.1)}
+.tv2-chlbl{font:700 .7rem var(--mono);color:var(--mut-tv);padding:0 4px}
+.tv2-side{min-width:0;display:flex;flex-direction:column;gap:10px;min-height:0}
+.tv2-genres{display:flex;gap:6px;flex-wrap:wrap}
+.tv2-genres button{border:1px solid rgba(255,255,255,.1);background:none;color:var(--mut-tv);border-radius:999px;padding:5px 11px;font:600 .76rem var(--head);cursor:pointer}
+.tv2-genres button[aria-pressed="true"]{background:#E9EEF4;color:#0b0e13;border-color:#E9EEF4}
+.tv2-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:470px;padding-right:4px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.tv2-row{display:flex;align-items:center;gap:11px;text-align:left;border:1px solid transparent;background:rgba(255,255,255,.03);color:var(--ink-tv);border-radius:12px;padding:6px;cursor:pointer;font:inherit;transition:background .15s,border-color .15s}
+.tv2-row:hover{background:rgba(255,255,255,.07)}
+.tv2-row[aria-checked="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 16%,transparent)}
+.tv2-thumb{position:relative;width:104px;aspect-ratio:16/9;flex:none;border-radius:8px;overflow:hidden;background:#000}
+.tv2-thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9}
+.tv2-thumb i{position:absolute;left:0;bottom:0;height:3px;background:#E5484D}
+.tv2-num{position:absolute;left:4px;top:4px;font:700 .66rem var(--mono);padding:1px 5px;border-radius:4px;background:var(--c);color:#fff}
+.tv2-rt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tv2-rt b{font:650 .9rem var(--head)}
+.tv2-rt small{font-size:.76rem;color:var(--mut-tv);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* TV guide */
+.tv2-guide{margin-top:16px;padding:16px;border-radius:20px;background:#0f1319;color:var(--ink-tv);--gch:150px}
+.tv2-gh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.tv2-gh h3{margin:0;font:650 1.05rem var(--head);color:#fff}
+.tv2-gh p{margin:0;color:var(--mut-tv)}
+.tv2-gscroll{overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.tv2-ggrid{position:relative;width:calc(var(--gch) + var(--w));display:flex;flex-direction:column;gap:4px}
+.tv2-axis{display:flex;height:22px}
+.tv2-gch-sp{width:var(--gch);flex:none;position:sticky;left:0;background:#0f1319;z-index:2}
+.tv2-ticks{position:relative;flex:1;margin-left:4px}
+.tv2-ticks span{position:absolute;top:2px;font:600 .7rem var(--mono);color:var(--mut-tv);border-left:1px solid rgba(255,255,255,.15);padding-left:5px}
+.tv2-grow{display:flex;height:50px}
+.tv2-gch{width:var(--gch);flex:none;position:sticky;left:0;z-index:2;display:flex;align-items:center;gap:8px;padding:0 10px;border:0;border-radius:9px;background:#161b23;color:var(--ink-tv);cursor:pointer;text-align:left;font:inherit;box-shadow:6px 0 10px -6px rgba(0,0,0,.6)}
+.tv2-gch span{font:700 .66rem var(--mono);padding:2px 5px;border-radius:4px;background:var(--c);color:#fff}
+.tv2-gch b{font:600 .8rem var(--head);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv2-grow.cur .tv2-gch{box-shadow:inset 3px 0 0 var(--c),6px 0 10px -6px rgba(0,0,0,.6)}
+.tv2-lane{position:relative;flex:1;margin-left:4px}
+.tv2-blk{position:absolute;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:4px 8px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.04);color:#C9D3DE;text-align:left;overflow:hidden;cursor:default;font:inherit}
+.tv2-blk small{font:600 .64rem var(--mono);color:var(--mut-tv)}
+.tv2-blk span{font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv2-blk.live{background:rgba(229,72,77,.14);border-color:rgba(229,72,77,.45);color:#fff;cursor:pointer}
+.tv2-blk.live:hover{background:rgba(229,72,77,.24)}
+.tv2-nowline{position:absolute;top:22px;bottom:0;width:2px;margin-left:4px;background:#E5484D;z-index:1;pointer-events:none;box-shadow:0 0 8px rgba(229,72,77,.7)}
+.tv2-nowline::before{content:"";position:absolute;top:-4px;left:-3px;width:8px;height:8px;border-radius:50%;background:#E5484D}
+@media(max-width:960px){.tv2-set{grid-template-columns:1fr}.tv2-list{max-height:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}}
+@media(max-width:640px){
+  .tv2-set{padding:10px;border-radius:18px;gap:12px}
+  .tv2-screen{border-radius:10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 0 0 3px #05070a}
+  .tv2-osd{left:8px;top:8px;padding:5px 10px 5px 5px;gap:7px}.tv2-osd-n{min-width:34px;height:30px;font-size:.95rem}.tv2-osd-t b{font-size:.85rem}.tv2-clock{right:8px;top:8px;font-size:.74rem}
+  .tv2-power{width:60px;height:60px}.tv2-power svg{width:26px;height:26px}
+  .tv2-title{font-size:1rem}
+  .tv2-remote{gap:6px}.tv2-btn.wide{flex:1}
+  .tv2-genres{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.tv2-genres button{flex:none}
+  .tv2-list{display:flex;flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 0 4px}
+  .tv2-row{flex:0 0 74%;scroll-snap-align:start;flex-direction:column;align-items:stretch;gap:6px}
+  .tv2-thumb{width:100%}
+  .tv2-guide{padding:12px;--gch:104px}
+  .tv2-gch b{font-size:.72rem}
+}
+.tv2-blk.tiny{padding:0}.tv2-blk.tiny>*{display:none}
+.tv2-sb-t small{display:block;font:700 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mut-tv);margin-bottom:3px}
+.tv2-sb-t span{display:block}
+.tv2-btn{white-space:nowrap}
+@media(max-width:640px){.tv2-remote{display:grid;grid-template-columns:auto 1fr auto;gap:8px}.tv2-chbtns{justify-content:space-between}.tv2-btn.wide{grid-row:2}.tv2-remote [data-tv=guide]{grid-column:1/3}.tv2-remote [data-tv=surprise]{grid-column:3/4;padding:0 12px}}
 
 </style>
 <style>
@@ -9519,10 +9600,9 @@ if (el("fobtn")) el("fobtn").onclick = focusSetup;
    DW, Al Jazeera, Real Engineering, TED-Ed) and checked with YouTube's oEmbed service to be playable inside the site.
    s = length in seconds, used to build the 24-hour "live" schedule. */
 const TV_RAW = {
- sharktank: [
+ shark: [
   { id: "oGoY8Zqm9lo", t: "Top 5 Business Pitches That Sparked Bidding Wars", c: "Shark Tank Global", s: 2933 },
   { id: "JP-xGYYvvuw", t: "Top 3 Pitches The Sharks LOVED!", c: "Shark Tank Global", s: 1486 },
-  { id: "ae5MssJ8en4", t: "A Bidding War Breaks Out During Scrub Daddy's Pitch", c: "Shark Tank Global", s: 741 },
   { id: "kjD6uz-BxkU", t: "Top 5 Million Dollar Deals", c: "Shark Tank Global", s: 2827 },
   { id: "D83MdEeYe6g", t: "The \"Best Pitch Ever!\" On Shark Tank With Haven", c: "Shark Tank Global", s: 516 },
   { id: "6FHO8EnSqIA", t: "A Pitch With A Standing Ovation!?", c: "Shark Tank Global", s: 507 },
@@ -9532,11 +9612,39 @@ const TV_RAW = {
   { id: "zMbpKT6EZRM", t: "Mr. Wonderful Wants To Buy The Product Mid-Pitch!?", c: "Shark Tank Global", s: 545 },
   { id: "vXeRyFyTsac", t: "They Have To Start Their Pitch All Over Again!?", c: "Shark Tank Global", s: 528 },
   { id: "HpUR7-Oe1ss", t: "Best Pitches From Seasons 11", c: "Shark Tank Global", s: 2617 },
-  { id: "0g_CmXBBTT8", t: "Best of the Brand New Season!", c: "Shark Tank Global", s: 3275 }
+  { id: "0g_CmXBBTT8", t: "Best of the Brand New Season!", c: "Shark Tank Global", s: 3275 },
+  { id: "IeEQZNeyWKg", t: "Three of The Biggest Shark Fights In The Tank | Shark Tank US | Shark Tank Global", c: "Shark Tank Global", s: 2150 },
+  { id: "P51GTC8gvRw", t: "Top 3 Moments When Entrepreneurs Sold Their Entire Company | Shark Tank US | Shark Tank Global", c: "Shark Tank Global", s: 1891 },
+  { id: "ej6OdImAhAE", t: "MrBeast Joins The Sharks And Likes What He Sees!? | Shark Tank US | Shark Tank Global", c: "Shark Tank Global and ABC", s: 565 },
+  { id: "fuM1Vh7OgfY", t: "Larq Has The Highest Valuation Ever On Shark Tank! | Shark Tank US | Shark Tank Global", c: "Shark Tank Global", s: 679 },
+  { id: "0P9nSXUiLFg", t: "Shark Tank US | Top 3 Biggest Deals", c: "Sony Pictures Television", s: 2151 },
+  { id: "BaUkuszb7dg", t: "Shark Tank US | 10-Year-Old Entrepreneur Wows Sharks With Her Baby Spoon Product", c: "Sony Pictures Television", s: 428 },
+  { id: "uGqOFKtqT7w", t: "Shark Tank US | Sharks Are Shocked at 13-Year-Old Entrepreneur's Negotiating Skills", c: "Sony Pictures Television", s: 520 },
+  { id: "qx6m3xxw5RM", t: "CoinOut Entrepreneur SHUTSDOWN The Sharks & Treats Them As \"Equals\" | Shark Tank US", c: "Shark Tank Global", s: 701 },
+  { id: "88kFPRHK12U", t: "Top 3: Biggest Offers | Shark Tank", c: "Shark Tank Global", s: 2031 },
+  { id: "OW1VPGmSIdk", t: "Shark Tank US | All Five Sharks Fight For Deal With TheMagic5", c: "Sony Pictures Television", s: 619 },
+  { id: "dKSrVSXvm4Y", t: "The Most Intense Negotiation Between Hopscotch Owner and Mark Cuban! | Shark Tank US", c: "Shark Tank Global", s: 723 },
+  { id: "et_zjQxl8Sk", t: "Could Amber Be The Shortest & WORST Pitch EVER? | Shark Tank US | Shark Tank Global", c: "Shark Tank Global", s: 388 },
+  { id: "zHP7kntYtAY", t: "Shark Tank US | Mark Cuban Calls Jax Sheets The Best Pitch Ever", c: "Sony Pictures Television", s: 603 },
+  { id: "w1l0_ll_HIU", t: "Kevin and Lori's Intense Showdown Over Outer's Outdoor Furniture | Shark Tank US | Shark Tank Global", c: "Shark Tank Global", s: 607 },
+  { id: "1mlFdXpcf9c", t: "One Shark Calls This the 'Best Pitch Ever' - Shark Tank", c: "ABC", s: 224 },
+  { id: "f7irjlFKD4E", t: "Top 5 Most Successful Products | Shark Tank US | Shark Tank Global", c: "Shark Tank Global", s: 3154 },
+  { id: "vLb6QjLgW8A", t: "Shark Tank US | Top 3 Pitches That Were Offered $1M or More!", c: "Sony Pictures Television", s: 1727 },
+  { id: "KSGRhXMlh58", t: "Shark Tank US | Craziest Pitches On Season 14", c: "Sony Pictures Television", s: 1471 },
+  { id: "PwiuQGs7WfQ", t: "Shark Tank US | The Sharks Can't Believe This Simple Grip Solution Works", c: "Sony Pictures Television", s: 520 },
+  { id: "DC8UvhBU368", t: "Shark Tank US | The Best Pitches Voted By You!", c: "Sony Pictures Television", s: 1978 },
+  { id: "j2udH-54HG0", t: "Shark Tank US | Child-Safe Box Cutter Has Sharks Ready to Invest", c: "Sony Pictures Television", s: 614 },
+  { id: "X3IZwbLBvWQ", t: "Steven Bartlett Grills Entrepreneurs Behind Nutcase! ft. Ninja | Shark Tank US | Shark Tank Global", c: "Shark Tank Global and ABC", s: 546 },
+  { id: "0N0IrbuRstc", t: "Top 5 Toughest Negotiations! | Shark Tank AUS", c: "Shark Tank Australia", s: 3726 },
+  { id: "--fiGrZOyzg", t: "Shark Tank US | Top 3 Products For Your 4th of July BBQ", c: "Sony Pictures Television", s: 1650 },
+  { id: "nd1nJALU1MU", t: "Viral Spotlight: Lori Offers $1 Million for Everlywell | Shark Tank US | Shark Tank Global", c: "Shark Tank Global and Sony Pictures Television", s: 523 },
+  { id: "NXMYLkdygEM", t: "Shark Tank US | Mark Cuban Offers $400K for a Stake in Stasher", c: "Sony Pictures Television", s: 565 },
+  { id: "SjZ63w38HOs", t: "Shark Tank US | The Highest Valuation In Shark Tank History!", c: "Sony Pictures Television", s: 679 },
+  { id: "3_yOUd6349o", t: "Shark Tank US | Can Recharj Make Power Naps a Business?", c: "Sony Pictures Television", s: 598 }
  ],
  dragons: [
   { id: "WKPvhn6hDHc", t: "A sportswear brand for girls leaves the Dragons speechless", c: "BBC", s: 406 },
-  { id: "6w7ArIazzUs", t: "Entrepreneur leaves Peter Jones speechless ️", c: "BBC", s: 574 },
+  { id: "6w7ArIazzUs", t: "Entrepreneur leaves Peter Jones speechless", c: "BBC", s: 574 },
   { id: "Mjobty9mOFw", t: "18-Year-Old Entrepreneur WOWS Dragons", c: "BBC", s: 384 },
   { id: "8usz6i07qYs", t: "Monetising personal digital data sparks interest in the Den Dragons’ Den - BBC", c: "BBC", s: 597 },
   { id: "t5CESe7R9vU", t: "Inspirational travel pitch receives an unexpected offer…", c: "BBC", s: 578 },
@@ -9544,7 +9652,7 @@ const TV_RAW = {
   { id: "LUlFaKDXwz8", t: "Three Dragons fight for a portion of this gifting business", c: "BBC", s: 526 },
   { id: "QcmKq7JNQcE", t: "Two young entrepreneurs seriously impress the Dragons - BBC", c: "BBC", s: 548 },
   { id: "0HZftd5F0L0", t: "Inspiring pitch leaves Dragons in tears!", c: "BBC", s: 770 },
-  { id: "2rTabFCNJIo", t: "A food pitch gets spicy in the Den ️", c: "BBC", s: 557 },
+  { id: "2rTabFCNJIo", t: "A food pitch gets spicy in the Den", c: "BBC", s: 557 },
   { id: "xo2TlcdqDsA", t: "Dragons LOVE pet portrait business", c: "BBC", s: 597 },
   { id: "Iuwmys5i2Rk", t: "Inspirational travel business receives TWO surprise offers from Dragons", c: "BBC", s: 830 },
   { id: "kojnjAYYGn0", t: "One of the Best Negotiations in Den History!", c: "Dragons' Den", s: 748 },
@@ -9552,16 +9660,39 @@ const TV_RAW = {
   { id: "PsjayihqedQ", t: "Dragons Blown Away by Ingenius Wall Threading Device", c: "Dragons' Den", s: 889 },
   { id: "Odx8NV6dX0Q", t: "BEST PITCHES: Levi Roots' Reggae Reggae pitch lures Peter Jones!", c: "BBC", s: 783 },
   { id: "Lodig6J0iMU", t: "Dragons blown away by \"toughest negotiation in the Den\"", c: "BBC", s: 1012 },
-  { id: "Rq-GKvIqDd0", t: "The Most Successful Pitch in Dragons' Den History?", c: "Dragons' Den", s: 849 }
+  { id: "Rq-GKvIqDd0", t: "The Most Successful Pitch in Dragons' Den History?", c: "Dragons' Den", s: 849 },
+  { id: "8_TwyTHtzxA", t: "Businessman Overwhelmed By FIVE Separate Offers In The Den | Dragons' Den", c: "Dragons' Den", s: 868 },
+  { id: "IBuVp9BbbwQ", t: "Best Pitches: 4 of the Toughest Negotiations | Dragons' Den", c: "Dragons' Den", s: 3659 },
+  { id: "5myl7GFaEbQ", t: "3 of the Biggest Investments in Den History | Dragons' Den", c: "Dragons' Den", s: 2326 },
+  { id: "iuaAApb3wbc", t: "The BIGGEST Deal In Dragons' Den HISTORY! | Dragons’ Den", c: "Dragons' Den", s: 876 },
+  { id: "JpwOhUS4UwI", t: "Bullheaded Millionaire Demonstrates Why They Need Him | Dragons' Den", c: "Dragons' Den", s: 888 },
+  { id: "G6PX6TVY1LI", t: "Dragons Fight Over Jaw-Dropping Furniture Business | Dragons’ Den", c: "Dragons' Den", s: 950 },
+  { id: "GBxjWK22cHo", t: "Dragons Are Flabbergasted By Company's Fat Shaming Business Strategy | Dragons' Den", c: "Dragons' Den", s: 667 },
+  { id: "fWnpe2z5E3E", t: "Accident Preventions System Wins \"Worst Invention EVER\" | Dragons' Den", c: "Dragons' Den", s: 544 },
+  { id: "t9RUzGuVT0A", t: "Entrepreneur Wants £150k Investment For 1%! | Dragons’ Den", c: "Dragons' Den", s: 293 },
+  { id: "bIk8KmNgkRY", t: "Entrepreneur Snatches Their Attention When They Discover His SECOND Business! | Dragons' Den", c: "Dragons' Den", s: 881 },
+  { id: "U9rGfnpslqQ", t: "Pioneering new invention grabs the Dragons' attention! | Dragons' Den - BBC", c: "BBC", s: 896 },
+  { id: "yR_8fWfVRnU", t: "Inventor Guarantees There's Nothing Like It On The Market | Dragons' Den", c: "Dragons' Den", s: 843 },
+  { id: "Y0ylz9hIC7Q", t: "Life-Changing Device Amazes Dragons & Teachers | Dragons' Den", c: "Dragons' Den", s: 704 },
+  { id: "bcMOP4yoJZw", t: "The most prepared entrepreneur to ever enter the Den Dragons' Den BBC", c: "BBC", s: 320 },
+  { id: "fZsJjuo-QnU", t: "The most MASTERFUL pitch in the Den | Dragons' Den - BBC", c: "BBC", s: 613 },
+  { id: "H1_5XwHpxTE", t: "How has this not been invented before now? Dragons’ Den – BBC", c: "BBC", s: 588 },
+  { id: "zra69fd-Tak", t: "Top 3 Most Confusing Pitches From Season 7 | Dragons' Den Canada", c: "Dragons' Den Canada", s: 1233 },
+  { id: "5jZmiTwJ7hY", t: "Top 3 Most Bizarre Inventions Pitched In The Den | Vol.1 | Dragons' Den Canada", c: "Dragons' Den Canada", s: 1218 },
+  { id: "UonH3H70aRw", t: "\"I Will Figure Out How To Suck Every Dime Out Of You\" | Dragons' Den Canada", c: "Dragons' Den Canada", s: 553 },
+  { id: "W6Rse8u2V-c", t: "Entrepreneur Thinks There's A Gap In The Market But Dragons Disagree | Dragons' Den Canada", c: "Dragons' Den Canada", s: 487 },
+  { id: "CdcK1wWy9Tk", t: "Kevin BEGS Entrepreneurs To Give Up On Their Smart Tech Idea | Dragons' Den Canada", c: "Dragons' Den Canada", s: 397 },
+  { id: "oSt2B0-f844", t: "Dragons Put Off By Entrepreneur's MAJOR Marketing Hurdle | Dragons' Den Canada", c: "Dragons' Den Canada", s: 514 },
+  { id: "ITOyQT8OzJg", t: "Dragons Not Willing To Invest In A Castle Made Of Straw | Dragons' Den Canada", c: "Dragons' Den Canada", s: 480 },
+  { id: "RsTaThjbZGk", t: "A HIGH-ENERGY PITCH! | Dragons' Den - BBC", c: "BBC", s: 326 },
+  { id: "5YCKhHvzia0", t: "Entrepreneurs with \"No Sales And Orders\" Leave Dragons Unimpressed | Dragons' Den Canada", c: "Dragons' Den Canada", s: 356 },
+  { id: "RJ57LaqUYf0", t: "Rough Pitch Leads To A Promising Deal | Dragons' Den Canada", c: "Dragons' Den Canada", s: 437 }
  ],
- arabic: [
+ arshark: [
   { id: "0B5ArxRIZBA", t: "مقيم شركته ب700 مليون جنيه", c: "Shark Tank Egypt", s: 1681 },
   { id: "idJ-tuHYMLA", t: "بدأ المشروع وهو 19 سنة .. Wady Le3b بتغير تجربة لعب الكورة", c: "Shark Tank Egypt", s: 1307 },
   { id: "e1huH9yeMyo", t: "DIDO's Snacks براند مصري قدروا يحققوا مبيعات 30 مليون جنيه في 12 شهر", c: "Shark Tank Egypt", s: 1341 },
   { id: "kLZsHEKuJP4", t: "من تمويل ذاتي لـ Deal مع الشاركس بملايين", c: "Shark Tank Egypt", s: 1317 },
-  { id: "k-PDvpQ0tBU", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 1701 },
-  { id: "2vYN5Kb78O0", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 1556 },
-  { id: "P7L-Q5PYnSQ", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 3122 },
   { id: "zWX8Ghs7slU", t: "بيبيعوا الهوا في ازايز !", c: "Shark Tank Egypt", s: 1185 },
   { id: "DqHbQtCCcEE", t: "ملخص الحلقة الثامنة .. 3 مشاريع بتقدم افكار مبتكرة وبتنافس بقوة", c: "Shark Tank Egypt", s: 2532 },
   { id: "gt_EJdt-1hU", t: "فكرة جديدة لصيانة العربيات.. مشروع Carviseta", c: "Shark Tank Egypt", s: 1735 },
@@ -9572,18 +9703,547 @@ const TV_RAW = {
   { id: "R5rAHjFa2gA", t: "من حلم بدأ بتجربة شخصية لـ5 مليون جنيه مبيعات", c: "Shark Tank Egypt", s: 887 },
   { id: "cXPw8IH4yGw", t: "محمد البرعي وأحمد أشرف مؤسسين مشروع Gutty قدموا فكرة جديدة بتغير مفهوم الـ Fast Food", c: "Shark Tank Egypt", s: 1159 },
   { id: "X7RNgGyiU3U", t: "انت عملت احسن برزنتيشن احنا سمعناها ! [ شارك تانك مصر]", c: "Shark Tank Egypt", s: 1679 },
-  { id: "vifPEM5cJRs", t: "علوم كونية - التكنولوجيا", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 2916 },
-  { id: "K2f8f5yhKpM", t: "ريبورتاج", c: "DW Documentary وثائقية دي دبليو", s: 746 },
-  { id: "1qsTrw6M8bI", t: "الذكاء الاصطناعي.. كيف تتوسع تطبيقاته في إنقاذ الأرواح وتوصيل الطلبات بالروبوتات؟ - تقانة", c: "الجزيرة - برامج", s: 1448 },
-  { id: "MOm8GWHuTbI", t: "الذكاء الاصطناعي ومستقبل الإنسان", c: "AlJazeera Arabic  قناة الجزيرة", s: 2725 },
-  { id: "gmRoGq7zTaQ", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 2546 }
+  { id: "ClQHs-wLEVc", t: "رائد أعمال رفض يبيع شركته مقابل ١٠٠ مليون دولار!", c: "Shark Tank Egypt", s: 1964 },
+  { id: "ScyYbiIYZss", t: "الاستثمار الأكبر منذ بداية الموسم.. الـ SHARKS قدموا له عروض استثمار لكن هو كان ليه رأي تاني", c: "CBC Egypt", s: 1472 },
+  { id: "0dOX_Lh7C2k", t: "\"لأول مرة الشاركس يعضوا في بعض\".. مشروع The Potcast عمل جدل كبير بين الشاركس | مصر Shark Tank", c: "CBC Egypt", s: 1746 },
+  { id: "tohcTXS2oOU", t: "قال للشاركس انا مش محتاج فلوس عندي كتير اوي! | شارك تانك مصر.", c: "Shark Tank Egypt", s: 1917 },
+  { id: "baoDggC-xoI", t: "شارك تانك مصر | نادر لما تحصل في #sharktankمصر الشاركس بيعلوا على بعض في الأوفرز", c: "CBC Egypt", s: 1367 },
+  { id: "m8v361d9kOg", t: "شارك تانك مصر | \"قال للشاركس مش هبيع شركتي بمليار دولار!\".. هتنبهروا من صاحب شركة ABS للشحن", c: "CBC Egypt", s: 2051 },
+  { id: "e2ZOleU9XF0", t: "Shark Tank | عندها 16 سنة لكنها قدرت تبهر الشاركس من أول لحظة بمشروعها وشطارتها", c: "WATCH IT", s: 402 },
+  { id: "7Vxh65Z8IIE", t: "Shark Tank | أصغر مؤسسين شركة في Shark Tank ملقوش مقاساتهم راحوا أسسوا شركة", c: "WATCH IT", s: 473 },
+  { id: "NHvBuQ627rg", t: "مشاريع قدرت تقنع ال٥ شاركس يجتمعوا ويدخلوا فى استثمار واحد! [شارك تانك مصر]", c: "Shark Tank Egypt", s: 2002 },
+  { id: "Ls0pel2WgnQ", t: "Plume براند مصري بدأ كورشة عيلة وبقى مورّد لأكبر فنادق مصر | شارك تانك مصر | الموسم الرابع", c: "Shark Tank Egypt", s: 1449 },
+  { id: "zia2Seja5bM", t: "خلاف بين صاحب ProTile والشاركس على المنتج | شارك تانك مصر", c: "Shark Tank Egypt", s: 1368 },
+  { id: "xTWuiBrIoUk", t: "حلول مصرية بثلث سعر الخبير الأجنبي |شارك تانك مصر | الموسم الرابع EISAC Automation", c: "Shark Tank Egypt", s: 1359 },
+  { id: "fqAtdj_jIpY", t: "Shark Tank | عاملين عالم بحاله Hype و Vibe و أكل .. و أيمن عباس قال لهم الناس هتفتكر الحلقة دي", c: "WATCH IT", s: 943 },
+  { id: "UqH7FHMSKhI", t: "شارك تانك | بدأ مصنعه بمليون جنيه، وبيبيع حالياً بـ 450 مليون جنيه!QMC", c: "CBC Egypt", s: 487 },
+  { id: "kt0AQoI-8zo", t: "شارك تانك | o2 Volta هما اللي عبوا الهوا في أزايز حرفيااااااً مش كلام! بيور أكسجين معاك لو مهبط", c: "CBC Egypt", s: 471 },
+  { id: "S490EZ3t6NQ", t: "Shark Tank | Strong offers from the Sharks, but who will Youssef choose?", c: "WATCH IT", s: 275 }
  ],
- innovation: [
+ startup: [
+  { id: "bNpx7gpSqbY", t: "The single biggest reason why start-ups succeed | Bill Gross | TED", c: "TED", s: 401 },
+  { id: "JW5s9Md4U2U", t: "The Rise and Reckoning of Jensen Huang | The Circuit with Emily Chang", c: "Bloomberg Originals", s: 2708 },
+  { id: "CBYhVcO4WgI", t: "Lecture 1 - How to Start a Startup (Sam Altman, Dustin Moskovitz)", c: "YC Root Access", s: 2633 },
+  { id: "1KVaoVX-Y0s", t: "I Quit My $35K Job To Grow My Side Hustle - Now It Brings In $141 Million", c: "CNBC Make It", s: 486 },
+  { id: "X2LwIiKhczo", t: "The Spectacular Rise and Fall of WeWork", c: "Bloomberg Originals", s: 809 },
+  { id: "Dy8ogOaKk4Y", t: "Google, Facebook, Amazon - The rise of the mega-corporations | DW Documentary", c: "DW Documentary", s: 2546 },
+  { id: "OnfPWmOMgPk", t: "How I Turned Vending Machines Into A $300K Business | On The Job", c: "CNBC Make It", s: 482 },
+  { id: "Gv2fzC96Z40", t: "The Underdog: From His Parent’s Basement to $25M", c: "Starter Story", s: 849 },
+  { id: "FWrazQKd8ZU", t: "I Launched A Business From My Living Room — Now It Brings In $9 Million A Year", c: "CNBC Make It", s: 544 },
+  { id: "akihe-AtpW8", t: "Russia's energy empire: Putin and the rise of Gazprom | DW Documentary", c: "DW Documentary", s: 3056 },
+  { id: "IuoscQiQQLg", t: "The Underdog: He Turned His Last $4,000 Into $48M", c: "Starter Story", s: 795 },
+  { id: "4VDZRR07Eqw", t: "How to Get Into Silicon Valley’s $600 Billion Startup School | The Circuit with Emily Chang", c: "Bloomberg Originals", s: 1442 },
+  { id: "ri-tzZcGYk0", t: "How I Built A $6.5 Billion App Called Duolingo | Founder Effect", c: "CNBC Make It", s: 942 },
+  { id: "KTLw2vM3N6I", t: "Bringing In $600K A Year Painting Nails", c: "CNBC Make It", s: 571 },
+  { id: "T_wEmB5MapE", t: "How I Built A $1M Business From This Starbucks", c: "Starter Story", s: 577 },
+  { id: "KxQ5Irai-eA", t: "How I Turned My Love For Photography Into A $177K Business | On The Side", c: "CNBC Make It", s: 546 },
+  { id: "eErcrQQHzg4", t: "Start a Business With No Money | Eric Ries’ Guide for First-Time Founders", c: "Think School", s: 3967 },
+  { id: "5vAek2UoYuo", t: "I Turned My Property Manager Side Hustle Into A $3 Million Business | Millennial Money", c: "CNBC Make It", s: 541 },
+  { id: "s95o3ClA09A", t: "How I Work 5 Hours A Week & Make $1.6 Million A Year", c: "CNBC Make It", s: 580 },
+  { id: "sibESmao22A", t: "How I Built KIND Into A Multibillion-Dollar Business", c: "CNBC Make It", s: 399 },
+  { id: "hJxBdRYm81I", t: "How Gen Z Brothers Turned High School Jobs Into A $3 Million/Year Business", c: "CNBC Make It", s: 485 },
+  { id: "PTin1OC3RM8", t: "How I Grew A $100K A Year Business Without A College Degree", c: "CNBC Make It", s: 521 },
+  { id: "odN3ON4ZVOE", t: "I Quit My $21K Day Job To Start My Own Business - Now It Brings In Over $500,000", c: "CNBC Make It", s: 288 },
+  { id: "x7pGM5FSTpI", t: "I Started A Business With $1,000 - Now It Brings In Over $25 Million A Year", c: "CNBC Make It", s: 523 },
+  { id: "51w7gSHVqAc", t: "How I Bring In $400K A Year Selling Cheese In NYC | On The Job", c: "CNBC Make It", s: 507 },
+  { id: "E_sPvPHwpuk", t: "How I Built A $1M Business in 117 Days", c: "Starter Story", s: 766 },
+  { id: "PSx0vcUY-sk", t: "I Got Rejected From YC, Then Built a $200M Startup", c: "Starter Story", s: 904 }
+ ],
+ factory: [
+  { id: "ihfjEFGdZdc", t: "Bugatti Chiron - Inside the Factory | Full Documentary", c: "WELT Documentary", s: 2945 },
+  { id: "TWLyRQbvr6o", t: "THE SECRETS OF LUXURY SEDANS: How S-Class, Maybach and EQS are made | WELT Documentary", c: "WELT Documentary", s: 3030 },
+  { id: "hktm2mvQKc0", t: "How Millions Of Cheesecakes Are Made In A New Jersey Factory", c: "Business Insider and Insider Food", s: 642 },
+  { id: "BORVxbsdkCM", t: "Why Hagoromo Chalk Is So Expensive | So Expensive | Business Insider", c: "Business Insider", s: 973 },
+  { id: "20LdNzARkk4", t: "How 3,000 Pounds Of Tofu Are Handmade A Day | Big Business", c: "Business Insider", s: 528 },
+  { id: "yEnDZcX3xc8", t: "How Domino's Became The Biggest Pizza Chain", c: "Business Insider", s: 921 },
+  { id: "6I6D3TT5Vmk", t: "Caterpillar Manufacturing: Inside the Factories Building Behemoths | FD Engineering", c: "Free Documentary - Engineering", s: 2992 },
+  { id: "w6V7CILdVJM", t: "How A Steak Factory Supplies Thousands Of Restaurants", c: "Business Insider", s: 631 },
+  { id: "1qlrRmRTbVY", t: "How Ben & Jerry’s Makes Nearly One Million Pints A Day | Big Business", c: "Business Insider", s: 325 },
+  { id: "xWOCxtfN4js", t: "Why the US Has Only One Factory for Cannon Barrels", c: "Business Insider", s: 809 },
+  { id: "k_zBkqBTFtE", t: "How Millions Of Wine Corks Are Made Every Day", c: "Business Insider", s: 792 },
+  { id: "suibdQZSmZ4", t: "Bentley Continental GT W12 - Inside the Factory | Full Documentary", c: "WELT Documentary", s: 2894 },
+  { id: "XW-ejnjlj_4", t: "Why Coconut Oil Is So Expensive | So Expensive | Business Insider", c: "Business Insider", s: 332 },
+  { id: "Z9NQ6VEciFk", t: "How 400 Million Mushrooms Are Grown A Year In This Small Town | Big Business", c: "Business Insider", s: 685 },
+  { id: "Q-8nM3ydZw4", t: "Inside The Secret Doughnut Factory Supplying NYC's Food Carts", c: "Business Insider and Insider Food", s: 1042 },
+  { id: "TNl9diGdyPo", t: "How Ferrero Makes Millions Of Chocolates In America", c: "Business Insider and Insider Food", s: 1160 },
+  { id: "t7RGilxjj5Y", t: "Volvo Mega Manufacturing: The World’s Most Advanced Truck Factory | FD Engineering", c: "Free Documentary - Engineering", s: 2817 },
+  { id: "M2SE6mqVpLU", t: "Massive Excavator Manufacturing: Inside Sany's Mega Factory | FD Engineering", c: "Free Documentary - Engineering", s: 2880 },
+  { id: "G6O2zTuGOVQ", t: "Inside The World's Biggest Baked Bean Factory", c: "Business Insider", s: 189 },
+  { id: "zQeQWGqfFN0", t: "How Toyota Cars Are Made - Toyota Virtual Plant Tour - Episode 01", c: "Toyota Motor Corporation", s: 305 },
+  { id: "iEYsdIO7u7M", t: "How Frank's Cranks Out 20 Million Gallons Of Hot Sauce", c: "Business Insider", s: 611 },
+  { id: "DVpfAN6l5Nk", t: "Mega Factories: Manpower Meets High-Tech | FD Engineering", c: "Free Documentary - Engineering", s: 5412 },
+  { id: "W-D494Go2No", t: "Why Japanese Manufacturing is NEXT LEVEL — Full Factory Tour!", c: "BuildWitt", s: 1347 },
+  { id: "XpbtB29BCzM", t: "Inside Japan’s Giant Excavator Factory – UNSEEN Factory Tour!", c: "BuildWitt", s: 1495 }
+ ],
+ eng: [
   { id: "6xVYIDkXGYM", t: "Bioplastics and other innovations against climate change", c: "DW Documentary", s: 1556 },
   { id: "9z52xavACQY", t: "Africa‘s tech pioneers - Innovative solutions for a sustainable future", c: "DW Documentary", s: 2546 },
   { id: "UVf2Yw7uFoE", t: "Global renewables: Pioneering the energy transition", c: "DW Documentary", s: 2546 },
   { id: "0SMNYivhGsc", t: "How inventions change history (for better and for worse) - Kenneth C. Davis", c: "TED-Ed", s: 314 },
-  { id: "OwS9aTE2Go4", t: "Transistors - The Invention That Changed The World", c: "Real Engineering", s: 492 }
+  { id: "OwS9aTE2Go4", t: "Transistors - The Invention That Changed The World", c: "Real Engineering", s: 492 },
+  { id: "MiUHjLxm3V0", t: "The Closest Thing We Have to Alien Technology", c: "Veritasium", s: 3300 },
+  { id: "bHIhgxav9LY", t: "The Biggest Misconception About Electricity", c: "Veritasium", s: 888 },
+  { id: "Q56PMJbCFXQ", t: "This Skyscraper Was Days From Collapsing And No One Knew", c: "Veritasium", s: 2019 },
+  { id: "CWulQ1ZSE3c", t: "How does an Electric Motor work? (DC Motor)", c: "Jared Owen", s: 541 },
+  { id: "JsBZOcqZerk", t: "The Insane Real Engineering of the Nazi Enigma Machine", c: "Veritasium", s: 2862 },
+  { id: "vSNtifE0Z2Q", t: "How NASA Made The Indestructible Wheel", c: "Veritasium", s: 1534 },
+  { id: "QtxVdC7pBQM", t: "The Ridiculous Engineering Of Jet Engines", c: "Veritasium", s: 2374 },
+  { id: "NiCgcUTL9_Q", t: "Fiber Optics are so much cooler than I thought", c: "Veritasium", s: 2072 },
+  { id: "QiYvXKQksgI", t: "The Insane Scale of Europe’s New Mega-Tunnel", c: "The B1M", s: 1671 },
+  { id: "ThwuT3_AG6w", t: "Engineering with Origami", c: "Veritasium", s: 1102 },
+  { id: "rWVAzS5duAs", t: "I got buried in concrete to explain how it works", c: "Veritasium", s: 1443 },
+  { id: "oI_X2cMHNe0", t: "How Electricity Actually Works", c: "Veritasium", s: 1471 },
+  { id: "1lCOgFPtaZ4", t: "The Insane Engineering of the F-35B", c: "Real Engineering", s: 1504 },
+  { id: "H6q6pYZ9Fho", t: "Why Is MIT Making Robot Insects?", c: "Veritasium", s: 1276 },
+  { id: "Rdj5-6t6QI8", t: "Why don't trains make that clacking noise anymore?", c: "Veritasium", s: 1640 },
+  { id: "FU_YFpfDqqA", t: "Why The First Computers Were Made Out Of Light Bulbs", c: "Veritasium", s: 1136 },
+  { id: "eyZEqSPeMwg", t: "Relativity is so much weirder than we thought...", c: "Veritasium", s: 2068 },
+  { id: "cIQ0yIZgQeE", t: "How a Diesel-Electric Locomotive Works", c: "Animagraffs", s: 1513 },
+  { id: "EhhOin2p5Qs", t: "The Insane Engineering of the F-16", c: "Real Engineering", s: 2453 },
+  { id: "y3qfeoqErtY", t: "How Overnight Shipping Works", c: "Wendover Productions", s: 674 },
+  { id: "1zjcnnx7igc", t: "The Insane Engineering of the F-117 Nighthawk", c: "Real Engineering", s: 1657 },
+  { id: "L24Wf0VlTE0", t: "How Jet Engines Work", c: "Animagraffs", s: 301 },
+  { id: "PhW2BjFQCZM", t: "The Los Angeles Aqueduct is Wild", c: "Practical Engineering", s: 1379 },
+  { id: "g8l7WEITqgQ", t: "The World's Most Impressive Megaprojects", c: "The B1M", s: 435 },
+  { id: "6LcGrLnzYuU", t: "The Questionable Engineering of Oceangate", c: "Real Engineering", s: 912 },
+  { id: "6AcE7hBhpYU", t: "Why SpaceX Built A Stainless Steel Starship", c: "Real Engineering", s: 729 },
+  { id: "8d5d_HXGeMA", t: "How Ocean Shipping Works (And Why It's Broken)", c: "Wendover Productions", s: 1158 },
+  { id: "dGXahSnA_oA", t: "How Airlines Schedule Flights", c: "Wendover Productions", s: 582 },
+  { id: "2qanMpnYsjk", t: "How Amazon's Super-Complex Shipping System Works", c: "Wendover Productions", s: 1130 },
+  { id: "nIOUg5TV5Uc", t: "Construction Fails: When Projects Go Wrong", c: "The B1M", s: 3604 },
+  { id: "BNpk_OGEGlA", t: "The Incredible Logistics of Grocery Stores", c: "Wendover Productions", s: 1010 },
+  { id: "MY8AB1wYOtg", t: "The Absurd Logistics of Concert Tours", c: "Wendover Productions", s: 916 },
+  { id: "ekUROM87vTA", t: "Rebuilding the Oroville Dam Spillways", c: "Practical Engineering", s: 1238 },
+  { id: "QlPrAKtegFQ", t: "How Long-Haul Trucking Works", c: "Wendover Productions", s: 752 },
+  { id: "00BHXAzYRTA", t: "How the World’s Most Remote Megaproject Went Wrong", c: "The B1M", s: 903 },
+  { id: "N4dOCfWlgBw", t: "The Insane Logistics of Shutting Down the Cruise Industry", c: "Wendover Productions", s: 1001 },
+  { id: "xPksDeGoh4E", t: "Do Retention Ponds Actually Work?", c: "Practical Engineering", s: 1063 },
+  { id: "HuMxQzX0uso", t: "The Logistics of Natural Gas", c: "Wendover Productions", s: 1147 },
+  { id: "4GfqB7P6uAE", t: "The Real Life Sci-Fi of Vertical Take-Off Planes", c: "Real Engineering", s: 521 },
+  { id: "jPJCYrxqyT8", t: "The Most Implausible Tunneling Method", c: "Practical Engineering", s: 932 },
+  { id: "r4G0aTq5oSM", t: "How Flood Tunnels Work", c: "Practical Engineering", s: 834 },
+  { id: "JrO_tvMjqjo", t: "Hawaii's Logistics Problem", c: "Wendover Productions", s: 1474 },
+  { id: "spQ4v0Y2FfM", t: "Europe's Megaproject to Replace Russian Railways", c: "The B1M", s: 682 }
+ ],
+ future: [
+  { id: "xi6r3hZe5Tg", t: "City of the Future: Singapore – Full Episode | National Geographic", c: "National Geographic", s: 2665 },
+  { id: "GhIJs4zbH0o", t: "Inside OpenAI's Stargate Megafactory with Sam Altman | The Circuit", c: "Bloomberg Originals", s: 2532 },
+  { id: "24O00Jz8R04", t: "The Struggle of Building the Original iPhone - The Untold Story", c: "ColdFusion", s: 2065 },
+  { id: "v1wZwxY3CMg", t: "Inside Anthropic, the $965 Billion AI Juggernaut | The Circuit", c: "Bloomberg Originals", s: 2860 },
+  { id: "1kUE0BZtTRc", t: "Renewable Energy 101 | National Geographic", c: "National Geographic", s: 197 },
+  { id: "-sB12gk9ESA", t: "A.I. Revolution | Full Documentary | NOVA | PBS", c: "NOVA PBS Official", s: 3226 },
+  { id: "2I4qMBiK6hg", t: "AI out of control? - Why Artificial Intelligence experts are sounding the alarm | DW Documentary", c: "DW Documentary", s: 5332 },
+  { id: "JH2nXMv6yZI", t: "Intel - From Inventors of the CPU to Laughing Stock [Part 1]", c: "ColdFusion", s: 1389 },
+  { id: "KfB2sx9uCkI", t: "The Futuristic Farms That Will Feed the World | Freethink | Future of Food", c: "Freethink", s: 380 },
+  { id: "AC6VmXvhst4", t: "Tidal Power: Unlocking the Greatest Untapped Energy Resource on the Planet | FD Engineering", c: "Free Documentary - Engineering", s: 3390 },
+  { id: "trA5s2iGj2A", t: "Mechanical Batteries: The Future of Energy Storage? | FD Engineering", c: "Free Documentary - Engineering", s: 3094 },
+  { id: "eXXwN_TDdLU", t: "Why Building AI Data Centres Isn’t Working Anymore", c: "ColdFusion", s: 1635 },
+  { id: "8KOYyfZbPzo", t: "How the Electrical Grid Is Being Rebuilt for AI | Bloomberg Primer", c: "Bloomberg Originals", s: 1442 },
+  { id: "mmyrbKBZ6SU", t: "Breakthrough in renewable energy - VPRO documentary", c: "vpro documentary", s: 2771 },
+  { id: "elfCDnMx3Ug", t: "Apple’s AI Disaster - A Rare Failure", c: "ColdFusion", s: 1156 },
+  { id: "iqVhUX4Vel8", t: "Is AI Making Us Dumber?", c: "ColdFusion", s: 1557 },
+  { id: "tj7ckn8WhEM", t: "'Idiocracy' is Here", c: "ColdFusion", s: 1370 },
+  { id: "QpBcAu7eFnU", t: "The new medical innovations that could change everything - The Engineers, BBC World Service", c: "BBC World Service", s: 1555 },
+  { id: "UWvObtGg6Rk", t: "The Real Reason NVIDIA’s Board Folded", c: "ColdFusion", s: 1133 },
+  { id: "nZmoq_XJW6Y", t: "Big Tech is Acting Dodgy At the Moment", c: "ColdFusion", s: 1041 },
+  { id: "QxuUzGflicw", t: "How to build an inclusive economy | Freethink", c: "Freethink", s: 420 },
+  { id: "ACCnhY1fKoI", t: "Why Clean Energy Is an Unstoppable Force | Michael Liebreich | TED", c: "TED", s: 661 },
+  { id: "zy7vUppYPC8", t: "Will renewables stop the climate crisis? | DW Documentary", c: "DW Documentary", s: 2546 },
+  { id: "rSTrXfu_vJw", t: "Why Europe Failed to Dominate Tech", c: "ColdFusion", s: 1287 },
+  { id: "EIUWYCXHo0g", t: "Next-Gen Solar Energy: Tapping Into the Sun’s Full Power | FD Engineering", c: "Free Documentary - Engineering", s: 3114 },
+  { id: "OO_o6qNelM4", t: "Why Electricity is Holding Africa Back", c: "Bloomberg Originals", s: 637 },
+  { id: "aTRAucqmEyM", t: "These Gloves Hack Your Brain | Freethink Superhuman", c: "Freethink", s: 419 },
+  { id: "JbWHAIDHUQ4", t: "This Neuroscientist Uses fMRI to Communicate With People in a Vegetative State | Freethink", c: "Freethink", s: 296 },
+  { id: "2ZIfqLDG_Qs", t: "The Best Thing That Could Happen to the Energy Industry | Matt Tilleard | TED", c: "TED", s: 770 },
+  { id: "cEjT2_NCeFc", t: "How green energy will change our future - Docu", c: "vpro documentary", s: 2692 },
+  { id: "jdNwFfQkFB4", t: "Will Robots Take Our Jobs? | Freethink Wrong", c: "Freethink", s: 273 },
+  { id: "he9rHbH6Kvw", t: "Brain Implant Restores Movement to Paralyzed Man | Freethink Superhuman", c: "Freethink", s: 442 },
+  { id: "sP14yyQaz3s", t: "How AI Could Revolutionize Coffee | Freethink Coded", c: "Freethink", s: 415 },
+  { id: "1lF7JE6n_rs", t: "Could Freezing Your Body Offer a Chance at Immortality? | Freethink On the Fringe", c: "Freethink", s: 450 },
+  { id: "o4eU6C3duwQ", t: "Father Creates Bionic Organ for Son | Freethink Superhuman", c: "Freethink", s: 308 },
+  { id: "_mtFW2ROEAI", t: "The race to create the ultimate AI - Global Eye, BBC World Service", c: "BBC World Service", s: 1766 },
+  { id: "KW5cy6mj9CI", t: "Made in Space | Freethink's The New Space Race", c: "Freethink", s: 512 },
+  { id: "eL51K7Huy2A", t: "Aircraft of the Future: Hydrogen, Electric or Solar? | FD Engineering", c: "Free Documentary - Engineering", s: 5394 }
+ ],
+ ted: [
+  { id: "arj7oStGLkU", t: "Inside the Mind of a Master Procrastinator | Tim Urban | TED", c: "TED", s: 844 },
+  { id: "iG9CE55wbtY", t: "Do schools kill creativity? | Sir Ken Robinson | TED", c: "TED", s: 1204 },
+  { id: "TQMbvJNRpLE", t: "How to Achieve Your Most Ambitious Goals | Stephen Duneier | TEDxTucson", c: "TEDx Talks", s: 1073 },
+  { id: "9vJRopau0g0", t: "The Super Mario Effect - Tricking Your Brain into Learning More | Mark Rober | TEDxPenn", c: "TEDx Talks", s: 909 },
+  { id: "fxbCHn6gE3U", t: "The surprising habits of original thinkers | Adam Grant | TED", c: "TED", s: 925 },
+  { id: "P6FORpg0KVo", t: "How to Make Learning as Addictive as Social Media | Duolingo's Luis Von Ahn | TED", c: "TED", s: 775 },
+  { id: "Fkd9TWUtFm0", t: "A 12-year-old app developer | Thomas Suarez | TED", c: "TED", s: 281 },
+  { id: "bEusrD8g-dM", t: "Creative thinking - how to get out of the box and generate ideas: Giovanni Corazza at TEDxRoma", c: "TEDx Talks", s: 819 },
+  { id: "eHJnEHyyN1Y", t: "6 Tips on Being a Successful Entrepreneur | John Mullins | TED", c: "TED", s: 920 },
+  { id: "YrtANPtnhyg", t: "The thrilling potential of SixthSense technology | Pranav Mistry", c: "TED", s: 920 },
+  { id: "86x-u-tz0MA", t: "Your elusive creative genius | Elizabeth Gilbert", c: "TED", s: 1169 },
+  { id: "6pY7EjqD3QA", t: "The four-letter code to selling anything | Derek Thompson | TEDxBinghamtonUniversity", c: "TEDx Talks", s: 1270 },
+  { id: "Mtjatz9r-Vc", t: "The art of innovation | Guy Kawasaki | TEDxBerkeley", c: "TEDx Talks", s: 1276 },
+  { id: "RDFGkBE2O50", t: "Mark Rober’s $60 Million Science Experiment | TED", c: "TED and Mark Rober", s: 861 },
+  { id: "WRS9Gek4V5Q", t: "Give yourself permission to be creative | Ethan Hawke | TED", c: "TED", s: 557 },
+  { id: "c0bsKc4tiuY", t: "Why you should make useless things | Simone Giertz", c: "TED", s: 718 },
+  { id: "LhoLuui9gX8", t: "Building a psychologically safe workplace | Amy Edmondson | TEDxHGSE", c: "TEDx Talks", s: 687 },
+  { id: "FEeTLopLkEo", t: "Inspiring the next generation of female engineers | Debbie Sterling | TEDxPSU", c: "TEDx Talks", s: 1029 },
+  { id: "gOwAWpBeDSg", t: "How to create a successful mindset | Maxi Knust | TEDxHHL", c: "TEDx Talks", s: 979 },
+  { id: "0af00UcTO-c", t: "Where good ideas come from | Steven Johnson", c: "TED", s: 1097 },
+  { id: "Ihs4VFZWwn4", t: "The Power of an Entrepreneurial Mindset | Bill Roche | TEDxLangleyED", c: "TEDx Talks", s: 981 },
+  { id: "zESeeaFDVSw", t: "Draw your future | Patti Dobrowolski | TEDxRainier", c: "TEDx Talks", s: 635 },
+  { id: "w4rG5GY9IlA", t: "Learning Software Engineering During the Era of AI | Raymond Fu | TEDxCSTU", c: "TEDx Talks", s: 747 },
+  { id: "j648moM5j0w", t: "Will technology shape our future or will we | Deborah Nas | TEDxAlkmaar", c: "TEDx Talks", s: 816 },
+  { id: "3lPnN8omdPA", t: "How to Stop AI from Killing Your Critical Thinking | Advait Sarkar | TED", c: "TED", s: 895 },
+  { id: "gFYBqZnFQ6w", t: "How to Know If You're Meant to Be An Entrepreneur | Kiki Ayers | TEDxBuckhead", c: "TEDx Talks", s: 1005 },
+  { id: "2XZ9z6OewR0", t: "The case for making art when the world is on fire | Amie McNee | TEDxManchester", c: "TEDx Talks", s: 872 },
+  { id: "yjYrxcGSWX4", t: "A powerful way to unleash your natural creativity | Tim Harford", c: "TED", s: 1042 },
+  { id: "paXKoZ1pr5w", t: "How science fiction can help predict the future - Roey Tzezana", c: "TED-Ed", s: 322 },
+  { id: "r63spwe1LCI", t: "The Gravity-Defying Future of Manufacturing | Schendy Kernizan | TED", c: "TED and TED Fellow", s: 288 },
+  { id: "4HBJa279i8M", t: "Your elusive creative genius - Elizabeth Gilbert", c: "TED-Ed", s: 1172 }
+ ],
+ ardocs: [
+  { id: "k-PDvpQ0tBU", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 1701 },
+  { id: "2vYN5Kb78O0", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 1556 },
+  { id: "P7L-Q5PYnSQ", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 3122 },
+  { id: "vifPEM5cJRs", t: "علوم كونية - التكنولوجيا", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 2916 },
+  { id: "K2f8f5yhKpM", t: "ريبورتاج", c: "DW Documentary وثائقية دي دبليو", s: 746 },
+  { id: "1qsTrw6M8bI", t: "الذكاء الاصطناعي.. كيف تتوسع تطبيقاته في إنقاذ الأرواح وتوصيل الطلبات بالروبوتات؟ - تقانة", c: "الجزيرة - برامج", s: 1448 },
+  { id: "MOm8GWHuTbI", t: "الذكاء الاصطناعي ومستقبل الإنسان", c: "AlJazeera Arabic قناة الجزيرة", s: 2725 },
+  { id: "gmRoGq7zTaQ", t: "وثائقي", c: "DW Documentary وثائقية دي دبليو", s: 2546 },
+  { id: "e8T46Z52vH0", t: "أروع العجائب الهندسية: مصنع السيارات الضخم | ناشونال جيوغرافيك أبوظبي", c: "Nat Geo Abu Dhabi", s: 2655 },
+  { id: "ON7V2XiQFrM", t: "وثائقي | قوة الأفكار - لغز كبير يواجه العلم | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 1556 },
+  { id: "VmWZ5AtLKSQ", t: "مصانع عملاقة - شاحنة ماك", c: "Nat Geo Abu Dhabi", s: 2703 },
+  { id: "R3jB9ORTgqU", t: "كيف يتم تصنيع التونة داخل المصنع؟ – Tuna Factory", c: "نظرة داخل المصنع", s: 786 },
+  { id: "-qnCaJSpmXs", t: "كيف يتم إنتاج النوتيلا في المصنع ؟ – Nutella", c: "نظرة داخل المصنع", s: 921 },
+  { id: "wTFDUGxh5ys", t: "خبراء الشوكولاتة.. سر النكهة الفاخرة للشوكولاتة", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 3094 },
+  { id: "ZqaxBQ_SPkw", t: "مطار داشينغ الصيني.. عبقرية الهندسة والتكنولوجيا - الشرق الوثائقية", c: "Asharq Documentary الشرق الوثائقية", s: 3099 },
+  { id: "yD-MsLEL6og", t: "وثائقي | الصين - دولة رقابة أم مختبر مستقبلي؟ | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2546 },
+  { id: "sW2Ksfq85jk", t: "كيف يتم تصنيع جبنة لافاش كيري داخل المصنع – La Vache Qui Rit Factory", c: "نظرة داخل المصنع", s: 764 },
+  { id: "iM7xvoC_-WM", t: "صناعة الجهل.. كيف تضلل الشركات العلم وتربك الحقيقة؟", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 3230 },
+  { id: "Lq6gE2z6IjI", t: "كيف يتم تصنيع الإندومي داخل المصنع؟ – Noodles Factory", c: "نظرة داخل المصنع", s: 696 },
+  { id: "6Sgemx6YBl8", t: "كيف يتم تصنيع البنزين داخل المصنع – Gasoline Factory", c: "نظرة داخل المصنع", s: 732 },
+  { id: "e1VXqyQV0uM", t: "خبراء زيت الزيتون.. رحلة من الطبيعة إلى المائدة", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 3064 },
+  { id: "tT1ISQcIyS8", t: "كيف يتم إنتاج النسكافيه داخل المصنع؟ – Nescafé Factory", c: "نظرة داخل المصنع", s: 685 },
+  { id: "RzZWx7hNUmQ", t: "وثائقي | بين الحقيقة والمعلومات الزائفة - من يملك المعرفة يملك السلطة | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2546 },
+  { id: "HQBwNk2aAOI", t: "كيف يتم تصنيع وجبات البيك داخل المصنع – Albaik Factory", c: "نظرة داخل المصنع", s: 793 },
+  { id: "fwkeKW0ZArE", t: "وثائقي | ما مدى تأثير الصراع السيبراني والذكاء الإصطناعي في حروب المستقبل؟ | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2547 },
+  { id: "oF4bTQ7ka94", t: "وثائقي | عمالقة التكنولوجيا - هل تتهرب جوجل، فيسبوك، آبل، و أمازون من سيطرة الدول؟| وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2546 },
+  { id: "eKLHKQXwaX4", t: "القهوة.. من إثيوبيا إلى العالم | حكاية مشروب غيّر العالم", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 2939 },
+  { id: "eH-XpgCFPOE", t: "كيف يتم تصنيع شوكولاتة فيريرو روشيه داخل المصنع؟ – Ferrero Rocher Factory", c: "نظرة داخل المصنع", s: 727 },
+  { id: "TuuzQpbm5yM", t: "كيف يتم تصنيع شوكولاتة ميلكا داخل المصنع – Milka Chocolate Factory", c: "نظرة داخل المصنع", s: 712 },
+  { id: "OsKrJYsM-Kk", t: "وثائقي | مستقبل العمل - تغيرات جذرية ونماذج عمل جديدة | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2546 },
+  { id: "lksnt7xOzSY", t: "كيف يتم تصنيع بيضة كندر داخل المصنع؟ – Kinder Egg Factory", c: "نظرة داخل المصنع", s: 720 },
+  { id: "9XuqCRcLJyw", t: "وثائقي | القوة الاقتصادية للصين – إلى أي مدى يمكن لأوروبا الاعتماد عليها؟ | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2548 },
+  { id: "ivuI9tfFVJw", t: "وثائقي | القرصنة السيبرانية - العواقب الوخيمة للهجمات السيبرانية | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2546 },
+  { id: "JfRHrK7uORQ", t: "صناعة الكذب", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 4202 },
+  { id: "lXobxamMTk8", t: "وثائقي | المخاوف من الذكاء الاصطناعي | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 5332 },
+  { id: "KRicVRLYhOk", t: "سادة الفانيلا", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 3124 },
+  { id: "81eqAfYDPEo", t: "الحليب.. ماذا فعلت الصناعة بمشروب أجدادنا؟", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 3066 },
+  { id: "YM6x28IIBMU", t: "ألف طعم لليمون..أصناف غريبة بنكهات تخطف أنظار كبار الطهاة", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 3046 },
+  { id: "BffpjDKOw1s", t: "عالم متسارع | تطوير الآلات.. ازدياد في وتيرة الاكتشاف والتغيير - الشرق الوثائقية", c: "Asharq Documentary الشرق الوثائقية", s: 3115 },
+  { id: "iH-CVfRVEl0", t: "عين على الصين: رحلة الشاي", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 2619 },
+  { id: "zLABTOk7Pb8", t: "وثائقي | هل سينقذنا الذكاء الاصطناعي أم سيهلكنا؟ | نحن وهم | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 1706 },
+  { id: "sM14h6hPeec", t: "كيف صُنعت؟.. الحاسوب | رحلة جهاز واحد عبر العالم", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 2976 },
+  { id: "_1aZLlxj2mc", t: "كيفية تصنيع سيارات BMW داخل المصنع – BMW Production Factory", c: "نظرة داخل المصنع", s: 737 },
+  { id: "jGdJj_8c3jM", t: "أسرار المصانع العملاقة - مصنع سبيشال كيه | الشرق الوثائقية", c: "Asharq Documentary الشرق الوثائقية", s: 2661 },
+  { id: "YSAV-y6D4Iw", t: "كيف صُنعت؟ | السيارات – الرحلة الخفية من المصنع إلى العالم", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 2974 },
+  { id: "uj8Vqnz9T_A", t: "وثائقي | رواد التكنولوجيا في إفريقيا - حلول مبتكرة لمستقبل مستدام | وثائقية دي دبليو", c: "DW Documentary وثائقية دي دبليو", s: 2547 },
+  { id: "2n4EPBYUao8", t: "صناعة الكراهية", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 3141 },
+  { id: "3PscciBbAx8", t: "اختراعات بالصدفة.. كيف غيّرت الأخطاء العلمية تاريخ العالم", c: "Al Jazeera Documentary الجزيرة الوثائقية", s: 2939 },
+  { id: "E8nchBdxE7o", t: "أسرار المصانع العملاقة - مصانع تُشكّل مستقبل العالم | الشرق الوثائقية", c: "Asharq Documentary الشرق الوثائقية", s: 2675 }
+ ],
+ arsci: [
+  { id: "rrnHkoGLyNU", t: "الدحيح - موظفون بؤساء", c: "AJ+ كبريت", s: 2534 },
+  { id: "gPJhjnnBNAs", t: "الدحيح | أعظم تجربة في الفيزياء", c: "New Media Academy Life", s: 1417 },
+  { id: "5IfivfvpgWw", t: "الدحيح - الصدفة", c: "AJ+ كبريت", s: 887 },
+  { id: "HvWiDKNVEEo", t: "الدحيح | نايكي", c: "Museum of The Future متحف المستقبل", s: 1540 },
+  { id: "s0t_4MSQEYQ", t: "أهم قاعدة في الاستثمار | الدحيح", c: "New Media Academy Life", s: 1769 },
+  { id: "3N8vu5DdLbE", t: "El Da7ee7 | The History of the Internet", c: "Museum of The Future متحف المستقبل", s: 1807 },
+  { id: "L-fOHHnVBtY", t: "تويوتا | الدحيح", c: "New Media Academy Life", s: 1832 },
+  { id: "hzODOOurR1g", t: "الدحيح | كيف تصنع قنبلة نووية؟", c: "Museum of The Future متحف المستقبل", s: 1193 },
+  { id: "k1t55VUefPI", t: "الشركة العالمية للأبطال الخارقين | الدحيح", c: "New Media Academy Life", s: 2406 },
+  { id: "4i7c8g5lA5U", t: "العبقري الذي أضاء العالم | الدحيح", c: "New Media Academy Life", s: 1484 },
+  { id: "6KB8n3Q8MEY", t: "الدحيح | بيل جيتس الشرير", c: "Museum of The Future متحف المستقبل", s: 1683 },
+  { id: "xfAIPyl8TSk", t: "ثلاث شركات تحكم العالم | الدحيح", c: "New Media Academy Life", s: 2419 },
+  { id: "rhho9QbxfGM", t: "ساعة الأثرياء | الدحيح", c: "New Media Academy Life", s: 1585 },
+  { id: "MunrrMg7EgA", t: "الدحيح | \"صُنع في الصين\".. كيف غزت بكين العالم في 30 سنة؟", c: "AJ+ كبريت", s: 2442 },
+  { id: "XMrTrxP6ZnQ", t: "الدحيح | الكوانتم كمبيوتر", c: "New Media Academy Life", s: 1599 },
+  { id: "RAUCfqFzTAQ", t: "BYD | الدحيح", c: "New Media Academy Life", s: 1499 },
+  { id: "3KEEVb0yLps", t: "الدحيح | تاريخ المطبخ", c: "Museum of The Future متحف المستقبل", s: 1552 },
+  { id: "h3mpiTwYKX8", t: "العبودية | الدحيح", c: "New Media Academy Life", s: 2392 },
+  { id: "Hkqwf9J_qJM", t: "الدحيح | الطيران", c: "Museum of The Future متحف المستقبل", s: 1383 },
+  { id: "EDEkqDe-MF8", t: "الدحيح - البزنس الذكي", c: "AJ+ كبريت", s: 1027 },
+  { id: "b6Fl15dIGgg", t: "انفيديا | الدحيح", c: "New Media Academy Life", s: 1884 },
+  { id: "PSYv1-fbOM4", t: "الدحيح | قصة فورد", c: "Museum of The Future متحف المستقبل", s: 1432 },
+  { id: "Za9EEd2bWlY", t: "الدحيح | هندسة السيارات", c: "New Media Academy Life", s: 1228 },
+  { id: "HdEzeiSR5eU", t: "معادلة ستغير نظرتك لكل شيء | الدحيح", c: "New Media Academy Life", s: 1594 },
+  { id: "xs5eG7C4WKk", t: "الدحيح - ستارت أب", c: "AJ+ كبريت", s: 875 },
+  { id: "ajkuJMuff30", t: "الدحيح | كيف بدأ العد؟", c: "AJ+ كبريت", s: 2129 },
+  { id: "TMLRF0zWLfE", t: "الدحيح | كيف غيّر الزجاج العالم؟", c: "AJ+ كبريت", s: 2483 },
+  { id: "5qNooNZUVvA", t: "المُخبر الاقتصادي+ | هل نجحت الصين في فك شفرة أخطر ماكينة في العالم وكسر حصار أمريكا؟", c: "AJ+ كبريت", s: 1524 },
+  { id: "09KH5EFWetQ", t: "المُخبر الاقتصادي+ | خرج عن السيطرة؟ لماذا يخاف مطورو الذكاء الاصطناعي من اختراعهم؟", c: "AJ+ كبريت", s: 2063 },
+  { id: "2PUoINowtgE", t: "المُخبر الاقتصادي+ | كيف تحدت الصين أمريكا وسرقت أسرار أخطر ماكينة في العالم من هولندا؟", c: "AJ+ كبريت", s: 1098 },
+  { id: "zbcUirf-gJs", t: "المُخبر الاقتصادي+ | أخطر من 2008؟ كيف انهار الذهب والأسهم الأمريكية بسبب الذكاء الاصطناعي؟", c: "AJ+ كبريت", s: 1780 },
+  { id: "6UeyhPVQe44", t: "المُخبر الاقتصادي+ | النجمة الألمانية تغرق! لماذا قد تغلق مرسيدس مصانعها في ألمانيا؟", c: "AJ+ كبريت", s: 1688 },
+  { id: "sfy7PDzMOlA", t: "المُخبر الاقتصادي+ | كيف بنى غاسل صحون أهم شركة في العالم؟ من وراء سقوط إمبراطور إنفيديا؟", c: "AJ+ كبريت", s: 3708 }
+ ],
+ games: [
+  { id: "HeGVeBWECu8", t: "DUMBEST ANSWERS EVER! Steve Harvey is SPEECHLESS! (Family Feud)", c: "Family Feud", s: 1264 },
+  { id: "HIGtLRnGCD4", t: "The Truth Behind The Cheater | Who Wants To Be A Millionaire?", c: "Who Wants To Be A Millionaire?", s: 305 },
+  { id: "KCbys2E7lLw", t: "All-time funniest Celebrity Family Feud moments with Steve Harvey!", c: "Family Feud", s: 786 },
+  { id: "o6gD9_akew0", t: "The Kardashians vs. The West Family (Full Episode) | Celebrity Family Feud", c: "Family Feud", s: 2226 },
+  { id: "aSs5PDD0K0I", t: "Steve's WIFE loves HIS...", c: "Family Feud", s: 408 },
+  { id: "Wz81ybJ2L2E", t: "Snoop Dogg vs. Sugar Ray Leonard (Full Episode) | Celebrity Family Feud", c: "Family Feud", s: 1549 },
+  { id: "f86aVdHsTYw", t: "Top 10 Fast Money scores from first players on Family Feud! Steve Harvey FREAKS out!", c: "Family Feud", s: 2078 },
+  { id: "Jqx6a3eIn6M", t: "Inside the NBA vs. MLB All-Stars (Full Episode) | Celebrity Family Feud", c: "Family Feud", s: 1611 },
+  { id: "daUQPN5A2zA", t: "The Chase | New Chaser Darragh's Exceptional Performance As A Contestant", c: "The Chase", s: 960 },
+  { id: "fCJZCXy2ixA", t: "BEST EVER STEVE HARVEY QUESTIONS & ANSWERS On Family Feud", c: "Bonus Round", s: 5693 },
+  { id: "BBWR0I9LbOQ", t: "Charles Ingram Fraud Scandal | REAL FOOTAGE | Who Wants To Be A Millionaire?", c: "Who Wants To Be A Millionaire?", s: 2784 },
+  { id: "ORiZv8vBfnU", t: "2018's MOST INCREDIBLE FAST MONEY ROUNDS", c: "Family Feud", s: 3024 },
+  { id: "bd9wfbWFL4w", t: "The Chase | Colin Doesn't Get a Single Question Wrong Against The Sinnerman!", c: "The Chase", s: 356 },
+  { id: "d9q4wWWTOmo", t: "Insane answers DESTROY Steve Harvey!! (3rd season marathon 1/2)", c: "Family Feud", s: 4635 },
+  { id: "ppZ1rIYiBfw", t: "50 Funniest Answers & Moments With Steve Harvey On FAMILY FEUD", c: "Bonus Round", s: 1155 },
+  { id: "uov88PKu_Q0", t: "The Highest Solo Win On The Chase EVER | The Chase", c: "The Chase", s: 533 },
+  { id: "StaPo2u6TGc", t: "The BIGGEST Win Of All Time!? | Deal or No Deal US | S04 E02 | Deal or No Deal Universe", c: "Deal or No Deal Universe", s: 2421 },
+  { id: "qMb6qj_RIVM", t: "Top 20 Family Feud rounds FIRE UP Steve Harvey!!", c: "Family Feud", s: 3558 },
+  { id: "jIE7ztYBIYU", t: "Nigel BEATS Five Chasers For £100,000 | Beat The Chasers", c: "The Chase", s: 713 },
+  { id: "PtyG1qOCr38", t: "FINAL Million Dollar MISSION Game! | Deal or No Deal US | Season 3 Episode 8 | Full Episodes", c: "Deal or No Deal Universe", s: 2442 },
+  { id: "vyWDYi5Ixy8", t: "The Chase | The Funniest Chase Questions Ever!", c: "The Chase", s: 674 },
+  { id: "KVh2ny5mCrk", t: "Funny Family Feud Answers & Moments with Steve Harvey", c: "Bonus Round", s: 4009 },
+  { id: "n8NrMKd1OHo", t: "Full 2022 ToC Exhibition Game | Tournament of Champions | JEOPARDY!", c: "Jeopardy!", s: 1222 },
+  { id: "VOGZqcY4IzM", t: "Fast Money Comebacks That Shouldn’t Be Possible", c: "Family Feud", s: 1729 },
+  { id: "SA51JYgET6o", t: "Family Feud RUINS Steve Harvey!! (Season 4 Marathon 1/2)", c: "Family Feud", s: 4641 },
+  { id: "zdJ-oKxSN0I", t: "Celebrity Feud: Shaquille O’Neal vs. Sherri Shepherd!", c: "Family Feud", s: 2541 },
+  { id: "thb1grBehDE", t: "Brain-melting answers STUN Steve Harvey!!", c: "Family Feud", s: 1524 },
+  { id: "UEibp5sNK0E", t: "Victoria’s Secret Angels vs. The Bachelors (Full Episode) | Celebrity Family Feud", c: "Family Feud", s: 1388 },
+  { id: "y9Cyxp6bruI", t: "The Chase | Karen's AMAZING Solo 20 Step Final Chase!", c: "The Chase", s: 407 },
+  { id: "9AVW4eGLWPU", t: "Donald Fear's Wins £1 Million! | Full Round | Who Wants To Be A Millionaire", c: "Who Wants To Be A Millionaire?", s: 1480 },
+  { id: "XUURLYafbGQ", t: "Celebrities FLOOR Steve Harvey!! (Season 1 Marathon)", c: "Family Feud", s: 2579 },
+  { id: "MfOoj7agIYw", t: "The Chase | The Very Best of The Celebrity Chase", c: "The Chase", s: 903 },
+  { id: "V7_CDcPiTP8", t: "Family Feud Full Episode | Episode 15 Season 1", c: "Bonus Round", s: 2720 },
+  { id: "rmmSTc4zxQg", t: "This Low Score Made Steve Lose It! | Fast Money | Family Feud Botswana", c: "Family Feud Africa", s: 553 },
+  { id: "ElNy_QfFjQU", t: "The Chase's Best Ever Moments! | 100k Subscriber Special | The Chase", c: "The Chase", s: 1156 },
+  { id: "mHIF-l6Lq4g", t: "Mattea Dominates in their 18th Win | Jeopardy! Masters | JEOPARDY!", c: "Jeopardy!", s: 1178 },
+  { id: "DBhZ2T9QwPY", t: "The BIGGEST Deal EVER! | Deal or No Deal US | S03 E47 | Deal or No Deal Universe", c: "Deal or No Deal Universe", s: 3709 },
+  { id: "yv1XYkYlfS8", t: "ToC Game 5 | Jeopardy! Masters | JEOPARDY!", c: "Jeopardy!", s: 1205 },
+  { id: "n7MY9PfGFLs", t: "Can Stephen Fry Answer This £125,000 Geography Question? | Who Wants to Be a Millionaire?", c: "Who Wants To Be A Millionaire?", s: 258 },
+  { id: "JFQvVeOFreY", t: "Jade's Dream Comes True as a Lady! | Deal or No Deal US | S05 E30 | Deal or No Deal Universe", c: "Deal or No Deal Universe", s: 2389 },
+  { id: "1Ec8kZBlA4M", t: "The Banker's most INSANE move! | Deal or No Deal US Season 3 Episode 53 | Full Episodes", c: "Deal or No Deal Universe", s: 2539 },
+  { id: "3ywHxR3osWU", t: "Matt Wins His 34th Game, Finishes with $83K | Jeopardy! Masters | JEOPARDY!", c: "Jeopardy!", s: 1423 },
+  { id: "ovwfuAaIAUs", t: "Family Feud Answers That Made Steve Harvey Lose It!", c: "Bonus Round", s: 1320 },
+  { id: "i05zpmQDuTo", t: "Andrew Pulls Out the W in Game 1 of the ToC | Jeopardy! Masters | JEOPARDY!", c: "Jeopardy!", s: 1190 },
+  { id: "KuhHSWCRiAs", t: "20 Family Feud Rounds That Will Make You Laugh With Steve Harvey", c: "Bonus Round", s: 3558 }
+ ],
+ argames: [
+  { id: "tSV2mS8fvzA", t: "سويت تحدي تسبب بمضاربة و الوضع قلب جد !! ( اصابة شونق!!)", c: "FFearFFul", s: 1551 },
+  { id: "6AtPm7MH_t4", t: "I started a challenge that caused the biggest fight again!! (Revenge after a whole year)", c: "FFearFFul", s: 2346 },
+  { id: "Cuvk41lpNPk", t: "سويت تحدي تسبب بأكبر مضاربه بين الشباب !! ( و اخيراً فاملي فيود السنة الثالثة)", c: "FFearFFul", s: 3040 },
+  { id: "mRn83GSVyaY", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 1", c: "قناة الرابعة - Al Rabiaa TV", s: 2960 },
+  { id: "ZBuRGwE_0n0", t: "اقوى تحدي بين ادارة باور و اليوتيوبرز ( فاملي فيود )", c: "FFearFFul", s: 1415 },
+  { id: "oEqg-NhsoFg", t: "نهائي بطولة فاملي فيود على 50,000 ريال", c: "FFearFFul", s: 1993 },
+  { id: "cJAGPUgkAgc", t: "فاملي فيود النسخه الرمضانيه", c: "FFearFFul", s: 2750 },
+  { id: "lZCivIq-NKQ", t: "شخصنه جديده | مسابقة رمضان مع شونق و ريان و ازم", c: "FFearFFul", s: 2287 },
+  { id: "9umseRR_x14", t: "فاملي فيود نسخة فيرفول على 50,000 ريال #1", c: "FFearFFul", s: 1885 },
+  { id: "ac_FkQsgpkk", t: "بطولة فاملي فيود على 50,000 ريال #2", c: "FFearFFul", s: 2343 },
+  { id: "-ztPbrbCVfU", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 2", c: "قناة الرابعة - Al Rabiaa TV", s: 2653 },
+  { id: "06Yt9jHz8Wk", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 10", c: "قناة الرابعة - Al Rabiaa TV", s: 2367 },
+  { id: "sD1xD0ZdVoo", t: "The Billionaire Season 2 with George Kurdahi | Episode 18", c: "قناة الرابعة - Al Rabiaa TV", s: 2584 },
+  { id: "1lEHhlvrK0w", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 16", c: "قناة الرابعة - Al Rabiaa TV", s: 2974 },
+  { id: "OxCaikFF2Rs", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 5", c: "قناة الرابعة - Al Rabiaa TV", s: 2605 },
+  { id: "9oDqUDrmujk", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 19", c: "قناة الرابعة - Al Rabiaa TV", s: 2518 },
+  { id: "kDspOFAV0Qw", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 7", c: "قناة الرابعة - Al Rabiaa TV", s: 2548 },
+  { id: "z1KBAiFpcto", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 21", c: "قناة الرابعة - Al Rabiaa TV", s: 2675 },
+  { id: "wrwd6WYhtsk", t: "The Billionaire Season 2 with George Kurdahi | Episode 3", c: "قناة الرابعة - Al Rabiaa TV", s: 2508 },
+  { id: "0FHP5wqhYDY", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 6", c: "قناة الرابعة - Al Rabiaa TV", s: 1810 },
+  { id: "wY5pUSJsqQA", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 32", c: "قناة الرابعة - Al Rabiaa TV", s: 2598 },
+  { id: "lqFcqxMlHfw", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 8", c: "قناة الرابعة - Al Rabiaa TV", s: 3080 },
+  { id: "BizXfnPkg_U", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 4", c: "قناة الرابعة - Al Rabiaa TV", s: 2588 },
+  { id: "HwyEXGKQu_4", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 20", c: "قناة الرابعة - Al Rabiaa TV", s: 2627 },
+  { id: "rAE1eJcNI9A", t: "الملياردير الموسم الثاني مع جورج قرداحي | الحلقة 9", c: "قناة الرابعة - Al Rabiaa TV", s: 2425 }
+ ],
+ bank: [
+  { id: "wMNxtiyLFzM", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 1", c: "Bank AlMalomat", s: 5389 },
+  { id: "6ufpDXzllws", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 2", c: "Bank AlMalomat", s: 5326 },
+  { id: "KhKDiLTU3xw", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 3", c: "Bank AlMalomat", s: 5389 },
+  { id: "zwfJqBr96M4", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 4", c: "Bank AlMalomat", s: 5389 },
+  { id: "5_A3xVvc-4A", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 5", c: "Bank AlMalomat", s: 5389 },
+  { id: "G2a8dReTpOo", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 6", c: "Bank AlMalomat", s: 5388 },
+  { id: "gDhjxkuVgH8", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 7", c: "Bank AlMalomat", s: 5389 },
+  { id: "hThtn6wKZ44", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 8", c: "Bank AlMalomat", s: 5494 },
+  { id: "50Pw5Dio7cI", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 9", c: "Bank AlMalomat", s: 5389 },
+  { id: "9Hpb4aDGwKQ", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 10", c: "Bank AlMalomat", s: 5389 },
+  { id: "cooO894bsgs", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 11", c: "Bank AlMalomat", s: 5360 },
+  { id: "s2Xjxt0oPi8", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 12", c: "Bank AlMalomat", s: 5086 },
+  { id: "pqW2_uLLGKY", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 13", c: "Bank AlMalomat", s: 4656 },
+  { id: "B9qdkxuHA2E", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 14", c: "Bank AlMalomat", s: 4820 },
+  { id: "7lsc2QAjTIo", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 15", c: "Bank AlMalomat", s: 4508 },
+  { id: "2xlrsL18oXU", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 16", c: "Bank AlMalomat", s: 5024 },
+  { id: "_pnwXEw_EU8", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 17", c: "Bank AlMalomat", s: 5057 },
+  { id: "W1_A5v4fN-Y", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 18", c: "Bank AlMalomat", s: 5368 },
+  { id: "f4oA8ul-lv4", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 19", c: "Bank AlMalomat", s: 5057 },
+  { id: "WZIGpqF5Drg", t: "برنامج بنك المعلومات | الجزء الاول| الحلقة 20", c: "Bank AlMalomat", s: 4330 },
+  { id: "wY8rwmY2r_k", t: "برنامج بنك المعلومات | الجزء الثاني| الحلقة 1", c: "Bank AlMalomat", s: 4877 },
+  { id: "FJqieuj75Dk", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 1", c: "Bank AlMalomat", s: 4830 },
+  { id: "u9HL_G8Ygng", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 2", c: "Bank AlMalomat", s: 4945 },
+  { id: "WYpnrj_r9Lg", t: "برنامج بنك المعلومات | الجزء الثاني| الحلقة 2", c: "Bank AlMalomat", s: 4945 },
+  { id: "dIMgMZRY-PA", t: "برنامج بنك المعلومات | الجزء الثاني| الحلقة 3", c: "Bank AlMalomat", s: 5224 },
+  { id: "bYJrgHWzttI", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 3", c: "Bank AlMalomat", s: 5224 },
+  { id: "spyNPmCR5W4", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 4", c: "Bank AlMalomat", s: 5124 },
+  { id: "kU6wQPI81cA", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 5", c: "Bank AlMalomat", s: 5507 },
+  { id: "gcaWgf8MxXo", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 6", c: "Bank AlMalomat", s: 4782 },
+  { id: "YFnzSowNz2k", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 7", c: "Bank AlMalomat", s: 5366 },
+  { id: "ztLT5iMnu_k", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 8", c: "Bank AlMalomat", s: 4384 },
+  { id: "KakA7e0yFnM", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 9", c: "Bank AlMalomat", s: 4706 },
+  { id: "5K-GEq0jXpM", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 10", c: "Bank AlMalomat", s: 4572 },
+  { id: "6YfbXjea5HE", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 12", c: "Bank AlMalomat", s: 4788 },
+  { id: "MnsWIsMD5VA", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 13", c: "Bank AlMalomat", s: 4710 },
+  { id: "fDevNW9HnZg", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 14", c: "Bank AlMalomat", s: 5151 },
+  { id: "b6nCGPrFWA4", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 15", c: "Bank AlMalomat", s: 4847 },
+  { id: "IW4qxM28Ea0", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 16", c: "Bank AlMalomat", s: 4797 },
+  { id: "z7qcYR4tKxw", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 17", c: "Bank AlMalomat", s: 4935 },
+  { id: "aYS8Yi6b9wk", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 18", c: "Bank AlMalomat", s: 4754 },
+  { id: "R9YmbK28Cqk", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 19", c: "Bank AlMalomat", s: 5467 },
+  { id: "GurCibNkln4", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 20", c: "Bank AlMalomat", s: 5276 },
+  { id: "cEhcpXV7QYM", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 21", c: "Bank AlMalomat", s: 5142 },
+  { id: "GpQNEVoPLbg", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 22", c: "Bank AlMalomat", s: 5870 },
+  { id: "2ThVSo4BiRk", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 23", c: "Bank AlMalomat", s: 4838 },
+  { id: "CqLxf0tVDKw", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 24", c: "Bank AlMalomat", s: 4509 },
+  { id: "MgW6UxT7OOI", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 25", c: "Bank AlMalomat", s: 4623 },
+  { id: "qCSjWIR8kTw", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 26", c: "Bank AlMalomat", s: 4909 },
+  { id: "-RJNS18XW2c", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 27", c: "Bank AlMalomat", s: 5206 },
+  { id: "bYJ53wJl2-Y", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 28", c: "Bank AlMalomat", s: 5290 },
+  { id: "17FoHzr7rMU", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 29", c: "Bank AlMalomat", s: 5290 },
+  { id: "fpXgRYK7ygw", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 30", c: "Bank AlMalomat", s: 5478 },
+  { id: "Pvb--ZDqZ3g", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 33", c: "Bank AlMalomat", s: 4839 },
+  { id: "OY2PsCBPG5s", t: "برنامج بنك المعلومات | الجزء الثاني | الحلقة 34", c: "Bank AlMalomat", s: 4875 },
+  { id: "_-HloYciMVU", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 01", c: "Bank AlMalomat", s: 4618 },
+  { id: "pKtXY2foeSQ", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 02", c: "Bank AlMalomat", s: 5161 },
+  { id: "urIvui4gmVk", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 03", c: "Bank AlMalomat", s: 5140 },
+  { id: "JuYExlcjBB8", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 04", c: "Bank AlMalomat", s: 4875 },
+  { id: "za8ewe86OMY", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 05", c: "Bank AlMalomat", s: 5401 },
+  { id: "ty_BqmvP8xo", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 06", c: "Bank AlMalomat", s: 5067 },
+  { id: "aFSiir894Xg", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 07", c: "Bank AlMalomat", s: 4242 },
+  { id: "iBe4tDIyb60", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 08", c: "Bank AlMalomat", s: 5128 },
+  { id: "ir5809V5Zyg", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 09", c: "Bank AlMalomat", s: 5571 },
+  { id: "1FLztDc1yfQ", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 10", c: "Bank AlMalomat", s: 5612 },
+  { id: "KPznjBK3kSE", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 11", c: "Bank AlMalomat", s: 5534 },
+  { id: "e6zOIPTa9BU", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 12", c: "Bank AlMalomat", s: 4920 },
+  { id: "qiZKrJmb_F8", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 13", c: "Bank AlMalomat", s: 4315 },
+  { id: "mASb37z_RpU", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 14", c: "Bank AlMalomat", s: 4849 },
+  { id: "78sOK1KyI7g", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 15", c: "Bank AlMalomat", s: 5766 },
+  { id: "5OHIw11yfyA", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 16", c: "Bank AlMalomat", s: 4651 },
+  { id: "D9GUG1cV8ns", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 17", c: "Bank AlMalomat", s: 4786 },
+  { id: "HxOegnlGZx8", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 18", c: "Bank AlMalomat", s: 4528 },
+  { id: "9pfca14dRRY", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 19", c: "Bank AlMalomat", s: 4610 },
+  { id: "XbnHrlQjb_o", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 20", c: "Bank AlMalomat", s: 4636 },
+  { id: "8r_3DPTB2E4", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 21", c: "Bank AlMalomat", s: 5021 },
+  { id: "dVzjfZyc1Lc", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 22", c: "Bank AlMalomat", s: 4365 },
+  { id: "3Qg0hjVi6g4", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 23", c: "Bank AlMalomat", s: 4238 },
+  { id: "k5gL8O1dMM8", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 24", c: "Bank AlMalomat", s: 4516 },
+  { id: "j4AG_-VhpXo", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 25", c: "Bank AlMalomat", s: 5708 },
+  { id: "26vLnQKZn_k", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 26", c: "Bank AlMalomat", s: 5121 },
+  { id: "LK6Nnxpc2QA", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 27", c: "Bank AlMalomat", s: 4794 },
+  { id: "wpYlAiCaJSs", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 28", c: "Bank AlMalomat", s: 4712 },
+  { id: "FcrVD5e6H6w", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 29", c: "Bank AlMalomat", s: 4895 },
+  { id: "QitSkvLfTw4", t: "برنامج بنك المعلومات | الجزء الثالث | الحلقة 30", c: "Bank AlMalomat", s: 4208 },
+  { id: "bkUOevhWs3s", t: "بنك المعلومات | الجزء الخامس - الحلقة 01 كاملة HD", c: "Bank AlMalomat", s: 5576 },
+  { id: "wwvv8hVYsfI", t: "بنك المعلومات الجزء الرابع - الحلقة 01 كاملة HD", c: "Bank AlMalomat", s: 4925 },
+  { id: "qrvUObSG0bw", t: "بنك المعلومات | الجزء الخامس - الحلقة 02 كاملة HD", c: "Bank AlMalomat", s: 5533 },
+  { id: "sXEylYcEIUE", t: "بنك المعلومات الجزء الرابع - الحلقة 02 كاملة HD", c: "Bank AlMalomat", s: 4292 },
+  { id: "vD0Bo4ymU4c", t: "برنامج بنك المعلومات | الجزء الرابع | الحلقة 2", c: "Bank AlMalomat", s: 4292 },
+  { id: "IcBCA3hOBLU", t: "بنك المعلومات | الجزء الخامس - الحلقة 03 كاملة HD", c: "Bank AlMalomat", s: 5585 },
+  { id: "T5qTVcE-MKA", t: "بنك المعلومات الجزء الرابع - الحلقة 03 كاملة HD", c: "Bank AlMalomat", s: 5026 },
+  { id: "hnkXOhqzyNc", t: "بنك المعلومات | الجزء الخامس - الحلقة 04 كاملة HD", c: "Bank AlMalomat", s: 5513 },
+  { id: "PdwwHE_8Jq0", t: "بنك المعلومات الجزء الرابع - الحلقة 04 كاملة HD", c: "Bank AlMalomat", s: 5042 },
+  { id: "tkgGNf7fhBc", t: "بنك المعلومات | الجزء الخامس - الحلقة 05 كاملة HD", c: "Bank AlMalomat", s: 5620 },
+  { id: "y41EPy-Do64", t: "بنك المعلومات الجزء الرابع - الحلقة 05 كاملة HD", c: "Bank AlMalomat", s: 5353 },
+  { id: "GydwSWaKk7c", t: "بنك المعلومات | الجزء الخامس - الحلقة 06 كاملة HD", c: "Bank AlMalomat", s: 5553 },
+  { id: "ov9MOG2JpZM", t: "بنك المعلومات الجزء الرابع - الحلقة 06 كاملة HD", c: "Bank AlMalomat", s: 5221 },
+  { id: "3atff7emGB0", t: "بنك المعلومات | الجزء الخامس - الحلقة 07 كاملة HD", c: "Bank AlMalomat", s: 5547 },
+  { id: "xenNn8apGeA", t: "بنك المعلومات الجزء الرابع - الحلقة 07 كاملة HD", c: "Bank AlMalomat", s: 5211 },
+  { id: "TQzYd8j7niA", t: "بنك المعلومات | الجزء الخامس - الحلقة 08 كاملة HD", c: "Bank AlMalomat", s: 5585 },
+  { id: "sNAOEtbpYJ4", t: "بنك المعلومات الجزء الرابع - الحلقة 08 كاملة HD", c: "Bank AlMalomat", s: 5267 },
+  { id: "Mdo5slHPvuE", t: "بنك المعلومات | الجزء الخامس - الحلقة 09 كاملة HD", c: "Bank AlMalomat", s: 5514 },
+  { id: "V6GEVlzWOn4", t: "بنك المعلومات الجزء الرابع - الحلقة 09 كاملة HD", c: "Bank AlMalomat", s: 5083 },
+  { id: "4qSlmDnm1RM", t: "بنك المعلومات | الجزء الخامس - الحلقة 10 كاملة HD", c: "Bank AlMalomat", s: 5621 },
+  { id: "sLowxrqD4i8", t: "بنك المعلومات الجزء الرابع - الحلقة 10 كاملة HD", c: "Bank AlMalomat", s: 4164 },
+  { id: "rM-OAaROlzI", t: "بنك المعلومات | الجزء الخامس - الحلقة 12 كاملة HD", c: "Bank AlMalomat", s: 5603 },
+  { id: "ybRUu4BPInw", t: "بنك المعلومات الجزء الرابع - الحلقة 12 كاملة HD", c: "Bank AlMalomat", s: 4698 },
+  { id: "XW39IIp82FA", t: "بنك المعلومات | الجزء الخامس - الحلقة 13 كاملة HD", c: "Bank AlMalomat", s: 5647 },
+  { id: "Nl42zAvH0zk", t: "بنك المعلومات الجزء الرابع - الحلقة 13 كاملة HD", c: "Bank AlMalomat", s: 5280 },
+  { id: "GPlJaXL6tpc", t: "بنك المعلومات | الجزء الخامس - الحلقة 14 كاملة HD", c: "Bank AlMalomat", s: 5394 },
+  { id: "-opENdz5q1A", t: "بنك المعلومات الجزء الرابع - الحلقة 14 كاملة HD", c: "Bank AlMalomat", s: 5149 },
+  { id: "uC2km0Jpqt4", t: "بنك المعلومات | الجزء الخامس - الحلقة 15 كاملة HD", c: "Bank AlMalomat", s: 5454 },
+  { id: "E26yyFzcURA", t: "بنك المعلومات الجزء الرابع - الحلقة 15 كاملة HD", c: "Bank AlMalomat", s: 4933 },
+  { id: "gl4Id8swEdI", t: "بنك المعلومات الجزء الرابع - الحلقة 16 كاملة HD", c: "Bank AlMalomat", s: 5040 },
+  { id: "l64Pojiga7g", t: "بنك المعلومات | الجزء الخامس - الحلقة 16 كاملة HD", c: "Bank AlMalomat", s: 4851 },
+  { id: "TIMMqUZ2m-c", t: "بنك المعلومات | الجزء الخامس - الحلقة 17 كاملة HD", c: "Bank AlMalomat", s: 5494 },
+  { id: "gEoIXD4g_iY", t: "بنك المعلومات الجزء الرابع - الحلقة 17 كاملة HD", c: "Bank AlMalomat", s: 5040 },
+  { id: "z3Q31WRMZnw", t: "بنك المعلومات | الجزء الخامس - الحلقة 18 كاملة HD", c: "Bank AlMalomat", s: 5170 },
+  { id: "SEIAJlN39ks", t: "بنك المعلومات الجزء الرابع - الحلقة 18 كاملة HD", c: "Bank AlMalomat", s: 4835 },
+  { id: "cOtq6kKokKs", t: "بنك المعلومات | الجزء الخامس - الحلقة 19 كاملة HD", c: "Bank AlMalomat", s: 5352 },
+  { id: "OrbsZ7S-0Io", t: "بنك المعلومات الجزء الرابع - الحلقة 19 كاملة HD", c: "Bank AlMalomat", s: 5033 },
+  { id: "qDqh4aL2soY", t: "بنك المعلومات | الجزء الخامس - الحلقة 20 كاملة HD", c: "Bank AlMalomat", s: 5547 },
+  { id: "Pf18uL_ym4c", t: "بنك المعلومات الجزء الرابع - الحلقة 20 كاملة HD", c: "Bank AlMalomat", s: 5036 },
+  { id: "lWAbgxjWo9E", t: "بنك المعلومات | الجزء الخامس - الحلقة 21 كاملة HD", c: "Bank AlMalomat", s: 5514 },
+  { id: "JcrGOa9x_xs", t: "بنك المعلومات الجزء الرابع - الحلقة 21 كاملة HD", c: "Bank AlMalomat", s: 5253 },
+  { id: "ogbWxWmrMhU", t: "بنك المعلومات | الجزء الخامس - الحلقة 22 كاملة HD", c: "Bank AlMalomat", s: 5516 },
+  { id: "pShmDAqbUnU", t: "بنك المعلومات الجزء الرابع - الحلقة 22 كاملة HD", c: "Bank AlMalomat", s: 5140 },
+  { id: "TGouQrZIOKk", t: "بنك المعلومات | الجزء الخامس - الحلقة 23 كاملة HD", c: "Bank AlMalomat", s: 5445 },
+  { id: "NcCSEov1awY", t: "بنك المعلومات الجزء الرابع - الحلقة 23 كاملة HD", c: "Bank AlMalomat", s: 5079 },
+  { id: "TxOELxZhSsY", t: "بنك المعلومات | الجزء الخامس - الحلقة 24 كاملة HD", c: "Bank AlMalomat", s: 5128 },
+  { id: "E1dzYxRExbs", t: "بنك المعلومات الجزء الرابع - الحلقة 24 كاملة HD", c: "Bank AlMalomat", s: 4956 },
+  { id: "Auxkm_8W_bo", t: "بنك المعلومات | الجزء الخامس - الحلقة 25 كاملة HD", c: "Bank AlMalomat", s: 5392 },
+  { id: "s8Q1d0zZJwg", t: "بنك المعلومات الجزء الرابع - الحلقة 25 كاملة HD", c: "Bank AlMalomat", s: 4612 },
+  { id: "3IXLJ4htSFU", t: "بنك المعلومات | الجزء الخامس - الحلقة 26 كاملة HD", c: "Bank AlMalomat", s: 5476 },
+  { id: "c9iVmvsvSJQ", t: "بنك المعلومات الجزء الرابع - الحلقة 26 كاملة HD", c: "Bank AlMalomat", s: 4470 },
+  { id: "hVvlmvh8bCc", t: "بنك المعلومات | الجزء الخامس - الحلقة 27 كاملة HD", c: "Bank AlMalomat", s: 5367 },
+  { id: "DE_v33jILN8", t: "بنك المعلومات الجزء الرابع - الحلقة 27 كاملة HD", c: "Bank AlMalomat", s: 4992 },
+  { id: "YQ8tvZjJsx0", t: "بنك المعلومات | الجزء الخامس - الحلقة 28 كاملة HD", c: "Bank AlMalomat", s: 5358 },
+  { id: "QzNH2eeF3yk", t: "بنك المعلومات الجزء الرابع - الحلقة 28 كاملة HD", c: "Bank AlMalomat", s: 4889 },
+  { id: "XQxL8XdLn-o", t: "بنك المعلومات | الجزء الخامس - الحلقة 29 كاملة HD", c: "Bank AlMalomat", s: 5318 },
+  { id: "ql4wlWu2q5U", t: "بنك المعلومات الجزء الرابع - الحلقة 29 كاملة HD", c: "Bank AlMalomat", s: 4276 },
+  { id: "56lWDsyXcok", t: "بنك المعلومات | الجزء الخامس - الحلقة 30 كاملة HD", c: "Bank AlMalomat", s: 8758 },
+  { id: "ngn-zmk6gm0", t: "بنك المعلومات | الجزء الخامس - الحلقة 30 كاملة HD", c: "Bank AlMalomat", s: 5564 },
+  { id: "VHGaZnQlsSM", t: "بنك المعلومات الجزء الرابع - الحلقة 30 كاملة HD", c: "Bank AlMalomat", s: 4857 },
+  { id: "KfzXsR8wcaA", t: "بنك المعلومات | الجزء الخامس - الحلقة 31 كاملة HD", c: "Bank AlMalomat", s: 5604 },
+  { id: "WzFJgPkkYZ0", t: "بنك المعلومات الجزء الرابع - الحلقة 31 كاملة HD", c: "Bank AlMalomat", s: 4852 },
+  { id: "5OvWPnmWRlk", t: "بنك المعلومات | الجزء الخامس - الحلقة 32 كاملة HD", c: "Bank AlMalomat", s: 5287 },
+  { id: "sMju-erwjoI", t: "بنك المعلومات | الجزء الخامس - الحلقة 33 كاملة HD", c: "Bank AlMalomat", s: 4821 },
+  { id: "uwUjSqF2hq0", t: "بنك المعلومات الجزء الرابع - الحلقة 34 كاملة HD", c: "Bank AlMalomat", s: 5171 },
+  { id: "CQlWL0pj_zs", t: "بنك المعلومات | الجزء الخامس - الحلقة 34 كاملة HD", c: "Bank AlMalomat", s: 4773 },
+  { id: "XptOSA17rKQ", t: "بنك المعلومات | الجزء الخامس - الحلقة 35 كاملة HD", c: "Bank AlMalomat", s: 5093 },
+  { id: "4VXF-MV5-Ec", t: "بنك المعلومات الجزء الرابع - الحلقة 35 كاملة HD", c: "Bank AlMalomat", s: 4820 },
+  { id: "nnY_O3XxY5g", t: "بنك المعلومات | الجزء الخامس - الحلقة 38 كاملة HD", c: "Bank AlMalomat", s: 4991 },
+  { id: "loaGGn3APyc", t: "بنك المعلومات | الجزء الخامس - الحلقة 40 كاملة HD", c: "Bank AlMalomat", s: 5445 },
+  { id: "rY3Fy1td5XM", t: "بنك المعلومات | الجزء الخامس - الحلقة 41 كاملة HD", c: "Bank AlMalomat", s: 5529 },
+  { id: "JGmXt2Uz29c", t: "بنك المعلومات | الجزء الخامس - الحلقة 45 كاملة HD", c: "Bank AlMalomat", s: 5208 },
+  { id: "UYhrJLEMIRE", t: "معقول معلومة الكل بعرفها تطلع أصعب سؤال بالتحدي؟ جرّب تجاوب! | بنك المعلومات", c: "Bank AlMalomat", s: 10436 },
+  { id: "zee6-CcuhXA", t: "مستعد تختبر معلوماتك؟ التجميعة دي فيها أسئلة هتخليك تفكر مرتين!", c: "Bank AlMalomat", s: 10395 },
+  { id: "yB1GANg51xo", t: "سؤال واحد كان كفيل يقلب المنافسة كلها تتوقعوا شو صار؟ | بنك المعلومات", c: "Bank AlMalomat", s: 9815 },
+  { id: "pBoj4hf9kEc", t: "في معلومة قلبت التوقعات انتبه كيف تغيّر جو التحدي بلحظة! | بنك المعلومات", c: "Bank AlMalomat", s: 9632 },
+  { id: "imRUUDrzhdA", t: "كبس الزر قبل الكل… بس يا ترى الجواب الصح كان عند مين؟ | بنك المعلومات", c: "Bank AlMalomat", s: 9555 },
+  { id: "VRdNZdSsK5k", t: "اول من خلع نعليه عند دخول الكعبة؟| ج5", c: "Bank AlMalomat", s: 6427 },
+  { id: "zYCFtJXYydw", t: "نصف ساعة من اسئلة واجوبة منوعة في شتى المجالات !", c: "Bank AlMalomat", s: 1495 },
+  { id: "6OGVe0pZgpM", t: "أسئلة سريعة تحديات نارية", c: "Bank AlMalomat", s: 1392 },
+  { id: "3XVDTgKbZZc", t: "المستشفى الذي كان يعمل فيه الكسندر فلمنج عندما اكتشف البنسلين ؟ | ج5", c: "Bank AlMalomat", s: 1275 },
+  { id: "LSDBHezWlv0", t: "عشرين دقيقة من الاسئلة الشيقة والممتعة من برنامج بنك المعلومات", c: "Bank AlMalomat", s: 1262 },
+  { id: "znAX3mHS-c8", t: "أسئلة ممتعة وتحديات شيقة لعشرين دقيقة مليانة فرفشة وذكاء!", c: "Bank AlMalomat", s: 1262 },
+  { id: "5G4OpDu0gVI", t: "المتعة وتطوير المهارات في نفس الوقت في تجميعة أسئلة بنك المعلومات", c: "Bank AlMalomat", s: 1262 },
+  { id: "7n7IZtbvBcc", t: "تحدي ذكاء نار… مين كسب و مين اتحرج؟ هتعرف تجاوب قبلهم؟ جرب حظك", c: "Bank AlMalomat", s: 1160 },
+  { id: "2iY4EQl5st0", t: "مرام القدومي المتسابقة اللي العقل عندها سلاح", c: "Bank AlMalomat", s: 1000 },
+  { id: "a8NPr3lc00s", t: "من اكثر المنافسات تشويق وحماسة بين اذكى بنتين..سلمى النمس و لونا البرغوثي", c: "Bank AlMalomat", s: 928 },
+  { id: "2nTbHMm9k_w", t: "ماذا يقصد بالغرفة الزرقاء في الخطوط الجوية | ج5", c: "Bank AlMalomat", s: 903 },
+  { id: "a2HnqSI3t5Y", t: "ماذا يقصد بالغرفة الزرقاء في الخطوط الجوية | ج5", c: "Bank AlMalomat", s: 903 },
+  { id: "GRieVgeskKc", t: "اللي عمله هاد المتسابق لازم يُدرّس الدكتور وقف مذهول | ج5", c: "Bank AlMalomat", s: 830 },
+  { id: "BK1IP-SNQFU", t: "مرام قدومي كسبت الجولة الماسية باستحقاق !", c: "Bank AlMalomat", s: 826 },
+  { id: "Li4XfNK65ns", t: "سؤال ذكي عن فرعون و مجموعة أخرى من الاسئلة !", c: "Bank AlMalomat", s: 807 },
+  { id: "WJuIPpKLQ38", t: "متسابقة ظريفه و معلومات غزيرة في برنامج بنك المعلومات !", c: "Bank AlMalomat", s: 676 },
+  { id: "Pjzze7oC6Jg", t: "مرام القدومي دخلت المنافسة وطلعت أيقونة البرنامج مين بتذكرها ؟", c: "Bank AlMalomat", s: 624 },
+  { id: "owxrguU-iqk", t: "تحدي الاذكياء والفائز النهائي في مسابقات بنك المعلومات !", c: "Bank AlMalomat", s: 611 },
+  { id: "BXL3RO9qcgU", t: "اسئلة أشعار وأمثال لا مثيل لها ! مع عبقرية اللغة العربية مرام قدومي", c: "Bank AlMalomat", s: 598 },
+  { id: "VEVkal9euRo", t: "تحدي الأشعار بدأ… ومرام قدومي بتثبت إن العربية فن وذكاء!", c: "Bank AlMalomat", s: 598 },
+  { id: "ktcNUSLYNvU", t: "صراع العباقرة وصدمة الدكتور عمر الخطيب بحدة ذكاء المتسابق !", c: "Bank AlMalomat", s: 536 },
+  { id: "M13wCQqQLic", t: "متسابق حطم الأرقام القياسية في الثقافة والحظ !", c: "Bank AlMalomat", s: 457 },
+  { id: "-kU10y1isNc", t: "اسئلة واجوبة ومعلومات غزيرة في 7 دقائق !! ⏰", c: "Bank AlMalomat", s: 413 },
+  { id: "uTHCX4n1rMk", t: "اسئلة وأجوبة سريعة ومعلومات غزيرة ! - بنك المعلومات", c: "Bank AlMalomat", s: 272 }
  ]
 };
 const STUDY_VIDEOS = [
@@ -9672,48 +10332,128 @@ const STUDY_VIDEOS = [
 
 </script>
 <script>
-/* ===== Innovation TV: five channels on a 24-hour schedule =====
-   Each channel's programme is worked out from the clock, so switching on joins whatever is "on air" now (mid-programme),
-   and the player carries on to the next programme by itself, like a real TV channel. */
+/* ===== Innovation TV: twelve channels on a 24-hour schedule =====
+   Every channel's programme is worked out from the clock (seconds since 1 January 2026), so switching on joins whatever is
+   "on air" now, mid-programme, and the player carries on to the next programme by itself, like a real channel.
+   Remote: ↑ ↓ change channel, number keys pick a channel, G opens the guide, F goes full screen. */
+const TV_GENRES = [["", "All"], ["pitch", "Pitches"], ["game", "Game shows"], ["biz", "Business"], ["eng", "Engineering"], ["idea", "Ideas"], ["ar", "العربية"]];
 const TV_CH = (() => {
-  const raw = typeof TV_RAW !== "undefined" ? TV_RAW : { sharktank: [], dragons: [], arabic: [], innovation: [] };
-  const eg = raw.arabic.filter(v => /shark tank/i.test(v.c)), docs = raw.arabic.filter(v => !/shark tank/i.test(v.c));
-  const sec = l => (l || "0").split(":").reduce((a, b) => a * 60 + +b, 0);
-  const pool = (typeof VIDEOS !== "undefined" ? VIDEOS : []).filter(v => v.len && /Real Engineering|Wendover|Efficient Engineer|Bloomberg|Toyota|RealPars/.test(v.c)).map(v => ({ id: v.id, t: v.t, c: v.c, s: sec(v.len) }));
+  const R = typeof TV_RAW !== "undefined" ? TV_RAW : {};
   return [
-    { k: "sharktank", n: "Shark Tank", sub: "Entrepreneurs pitch to investors", ar: false, list: raw.sharktank },
-    { k: "dragons", n: "Dragons' Den", sub: "BBC: pitches, deals and negotiations", ar: false, list: raw.dragons },
-    { k: "egypt", n: "شارك تانك مصر", sub: "Shark Tank Egypt, in Arabic", ar: true, list: eg },
-    { k: "docs", n: "وثائقيات الابتكار", sub: "Innovation documentaries in Arabic", ar: true, list: docs },
-    { k: "eng", n: "Innovation & Engineering", sub: "How inventions and factories change the world", ar: false, list: [...raw.innovation, ...pool] }
-  ].filter(c => c.list.length); })();
-const TV = { ch: 0, on: false };
-/* what is on air: walk the channel's loop by the clock (seconds since 1 January 2026) */
-function tvNow(c) { const list = c.list.filter(v => v.s > 30), tot = list.reduce((a, v) => a + v.s, 0); let t = Math.floor(Date.now() / 1000 - 1767225600) % tot, i = 0;
-  while (t >= list[i].s) { t -= list[i].s; i++; } return { i, off: t, list, next: list[(i + 1) % list.length] }; }
-const tvClock = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-function tvScreen() { const c = TV_CH[TV.ch], n = tvNow(c), v = n.list[n.i];
-  const rest = [...n.list.slice(n.i + 1), ...n.list.slice(0, n.i)].map(x => x.id).slice(0, 120).join(",");
-  return TV.on ? `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&start=${n.off}&rel=0&playlist=${rest}&loop=1&modestbranding=1" title="${esc(c.n)}: ${esc(v.t)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
-    : `<button class="tv-power" id="tvpow" aria-label="Turn the TV on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg><span>Turn on Innovation TV</span></button>`; }
-function tvInfo() { const c = TV_CH[TV.ch], n = tvNow(c), v = n.list[n.i];
-  return `<div class="tv-now"><span class="tv-live"><i></i>LIVE</span><span class="tv-chn">CH ${TV.ch + 1}</span><b ${c.ar ? 'dir="rtl" lang="ar"' : ""}>${esc(c.n)}</b></div>
-    <p class="tv-title" ${/[؀-ۿ]/.test(v.t) ? 'dir="rtl" lang="ar"' : ""}>${esc(v.t)}</p><p class="tv-meta">${esc(v.c)}, ${tvClock(n.off)} of ${tvClock(v.s)}</p>
-    <p class="tv-next">Up next: <span ${/[؀-ۿ]/.test(n.next.t) ? 'dir="rtl" lang="ar"' : ""}>${esc(n.next.t)}</span></p>`; }
-function tvBlock() { return `<div class="tv"><div class="tv-set"><div class="tv-screen" id="tvscr">${tvScreen()}<div class="tv-static" aria-hidden="true"></div></div>
-    <div class="tv-side"><div id="tvinfo">${tvInfo()}</div>
-      <div class="tv-chans" role="radiogroup" aria-label="Channels">${TV_CH.map((c, i) => `<button role="radio" aria-checked="${i === TV.ch}" data-ch="${i}"><span class="tv-num">${i + 1}</span><span><b ${c.ar ? 'dir="rtl" lang="ar"' : ""}>${esc(c.n)}</b><small>${esc(c.sub)}, ${c.list.length} programmes</small></span></button>`).join("")}</div>
-      <div class="row tv-btns"><button class="btn sm" data-tv="prev">Channel −</button><button class="btn sm" data-tv="next">Channel +</button>${TV.on ? `<button class="btn sm quiet" data-tv="off">Turn off</button>` : ""}</div></div></div>
-    <p class="cite">Programmes play from the official channels of Shark Tank Global, BBC Dragons' Den, Shark Tank Egypt, DW, Al Jazeera, Real Engineering, TED-Ed and others. Needs an internet connection.</p></div>`; }
+    { k: "shark", n: "Shark Tank", sub: "Entrepreneurs pitch to the Sharks", g: "pitch", col: "#1E88E5" },
+    { k: "dragons", n: "Dragons' Den", sub: "BBC and CBC: pitches and negotiations", g: "pitch", col: "#C62828" },
+    { k: "arshark", n: "شارك تانك مصر", sub: "Shark Tank Egypt", g: "pitch", ar: true, col: "#00897B" },
+    { k: "games", n: "Game Shows", sub: "Family Feud, Jeopardy!, Millionaire, The Chase", g: "game", col: "#F9A825" },
+    { k: "bank", n: "بنك المعلومات", sub: "Bank AlMalomat: the Arabic knowledge quiz, every episode in order", g: "game", ar: true, col: "#0D47A1" },
+    { k: "argames", n: "مسابقات", sub: "الملياردير مع جورج قرداحي، فاملي فيود", g: "game", ar: true, col: "#8E24AA" },
+    { k: "startup", n: "Startup Stories", sub: "Founders, start-ups and how companies grew", g: "biz", col: "#43A047" },
+    { k: "factory", n: "Inside the Factory", sub: "How things are made, at scale", g: "eng", col: "#6D4C41" },
+    { k: "eng", n: "Engineering Explained", sub: "Veritasium, Real Engineering, The B1M and more", g: "eng", col: "#3949AB" },
+    { k: "future", n: "Future Tech", sub: "AI, energy, cities and breakthrough inventions", g: "idea", col: "#00ACC1" },
+    { k: "ted", n: "TED Ideas", sub: "Talks on innovation, creativity and learning", g: "idea", col: "#E53935" },
+    { k: "arsci", n: "الدحيح وعلوم", sub: "Science and business stories in Arabic", g: "idea", ar: true, col: "#FB8C00" },
+    { k: "ardocs", n: "وثائقيات", sub: "DW, Al Jazeera and Nat Geo documentaries in Arabic", g: "eng", ar: true, col: "#546E7A" }
+  ].map(c => ({ ...c, list: (R[c.k] || []).filter(v => v.s > 60) })).filter(c => c.list.length); })();
+const TV = { ch: Math.min(+(localStorage.getItem("amh-tv-ch") || 0), TV_CH.length - 1), on: false, genre: "", guide: false, osd: 0 };
+const TV_EPOCH = 1767225600;
+const tvTot = c => c.tot || (c.tot = c.list.reduce((a, v) => a + v.s, 0));
+/* what is on air at time t (seconds) */
+function tvAt(c, t = Date.now() / 1000) { const list = c.list; let r = Math.floor(t - TV_EPOCH) % tvTot(c), i = 0;
+  while (r >= list[i].s) { r -= list[i].s; i++; } return { i, off: r, v: list[i], start: Math.floor(t) - r, next: list[(i + 1) % list.length] }; }
+const tvNow = c => tvAt(c);
+const tvHM = s => new Date(s * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+const tvDur = s => s >= 3600 ? `${Math.floor(s / 3600)}:${String(Math.floor(s % 3600 / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}` : `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+const tvRTL = s => /[؀-ۿ]/.test(s) ? 'dir="rtl" lang="ar"' : 'dir="auto"';
+const tvNum = i => String(i + 1).padStart(2, "0");
+const tvVisible = () => TV_CH.map((c, i) => i).filter(i => !TV.genre || (TV.genre === "ar" ? TV_CH[i].ar : TV_CH[i].g === TV.genre));
+
+function tvScreen() { const c = TV_CH[TV.ch], n = tvNow(c);
+  if (!TV.on) return `<div class="tv2-standby" style="--bg:url('${ytThumb(n.v.id)}')"><button class="tv2-power" id="tvpow" aria-label="Turn the TV on">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg></button>
+      <p class="tv2-sb-ch"><span>CH ${tvNum(TV.ch)}</span> <b ${tvRTL(c.n)}>${esc(c.n)}</b></p><p class="tv2-sb-t"><small>On air now</small><span ${tvRTL(n.v.t)}>${esc(n.v.t)}</span></p></div>`;
+  const rest = [...c.list.slice(n.i + 1), ...c.list.slice(0, n.i)].map(x => x.id).slice(0, 150).join(",");
+  return `<iframe src="https://www.youtube-nocookie.com/embed/${n.v.id}?autoplay=1&start=${n.off}&rel=0&playlist=${rest}&loop=1&modestbranding=1&playsinline=1" title="${esc(c.n)}: ${esc(n.v.t)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`; }
+function tvOSD() { const c = TV_CH[TV.ch];
+  return `<div class="tv2-osd" aria-hidden="true"><span class="tv2-osd-n" style="--c:${c.col}">${tvNum(TV.ch)}</span><span class="tv2-osd-t"><b ${tvRTL(c.n)}>${esc(c.n)}</b><small><i class="tv2-dot"></i>LIVE</small></span></div><span class="tv2-clock" aria-hidden="true">${tvHM(Date.now() / 1000)}</span>`; }
+function tvNowBar() { const c = TV_CH[TV.ch], n = tvNow(c), pct = (n.off / n.v.s * 100).toFixed(2);
+  return `<div class="tv2-now"><div class="tv2-meta"><span class="tv2-live"><i></i>LIVE</span><span class="tv2-chip" style="--c:${c.col}">CH ${tvNum(TV.ch)}</span><span ${tvRTL(c.n)} class="tv2-chname">${esc(c.n)}</span><span class="tv2-src">${esc(n.v.c)}</span></div>
+    <h3 class="tv2-title" ${tvRTL(n.v.t)}>${esc(n.v.t)}</h3>
+    <div class="tv2-prog"><span class="tv2-time" data-tv-el>${tvHM(n.start)}</span><div class="tv2-track" role="progressbar" aria-label="Programme progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct)}"><i style="width:${pct}%"></i></div><span class="tv2-time">${tvHM(n.start + n.v.s)}</span></div>
+    <p class="tv2-next"><span>Up next at ${tvHM(n.start + n.v.s)}</span> <b ${tvRTL(n.next.t)}>${esc(n.next.t)}</b></p></div>`; }
+function tvRow(i) { const c = TV_CH[i], n = tvNow(c), pct = (n.off / n.v.s * 100).toFixed(1);
+  return `<button class="tv2-row" role="radio" aria-checked="${i === TV.ch}" data-ch="${i}" style="--c:${c.col}">
+    <span class="tv2-thumb"><img src="${ytThumb(n.v.id)}" alt="" loading="lazy"><span class="tv2-num">${tvNum(i)}</span><i style="width:${pct}%"></i></span>
+    <span class="tv2-rt"><b ${tvRTL(c.n)}>${esc(c.n)}</b><small ${tvRTL(n.v.t)}>${esc(n.v.t)}</small></span></button>`; }
+function tvGuide() { const now = Date.now() / 1000, t0 = Math.floor(now / 1800) * 1800, t1 = t0 + 3 * 3600, PX = 5 / 60; /* 5 px per minute */
+  const rows = tvVisible().map(i => { const c = TV_CH[i]; let p = tvAt(c, now), s = p.start, k = p.i, blocks = [];
+    while (s > t0) { k = (k - 1 + c.list.length) % c.list.length; s -= c.list[k].s; }
+    while (s < t1) { const v = c.list[k], a = Math.max(s, t0), b = Math.min(s + v.s, t1), live = s <= now && now < s + v.s;
+      if (b > a) blocks.push(`<button class="tv2-blk${live ? " live" : ""}${(b - a) * PX < 46 ? " tiny" : ""}" style="left:${((a - t0) * PX).toFixed(1)}px;width:${Math.max((b - a) * PX - 3, 4).toFixed(1)}px" data-gch="${i}" data-live="${live ? 1 : ""}" title="${esc(tvHM(s))}  ${esc(v.t)}"><small>${tvHM(s)}</small><span ${tvRTL(v.t)}>${esc(v.t)}</span></button>`);
+      s += v.s; k = (k + 1) % c.list.length; }
+    return `<div class="tv2-grow${i === TV.ch ? " cur" : ""}"><button class="tv2-gch" data-gch="${i}" data-live="1" style="--c:${c.col}"><span>${tvNum(i)}</span><b ${tvRTL(c.n)}>${esc(c.n)}</b></button><div class="tv2-lane">${blocks.join("")}</div></div>`; }).join("");
+  const ticks = Array.from({ length: 7 }, (_, j) => `<span style="left:${j * 30 * 5}px">${tvHM(t0 + j * 1800)}</span>`).join("");
+  return `<div class="tv2-guide" id="tvguide"><div class="tv2-gh"><h3>TV guide</h3><p class="small muted">Next three hours. Pick anything on air now to watch it.</p></div>
+    <div class="tv2-gscroll"><div class="tv2-ggrid" style="--w:${3 * 60 * 5}px"><div class="tv2-axis"><span class="tv2-gch-sp"></span><div class="tv2-ticks">${ticks}</div></div>${rows}
+    <i class="tv2-nowline" style="left:calc(var(--gch) + ${((now - t0) * PX).toFixed(1)}px)"></i></div></div></div>`; }
+function tvBlock() { const fs = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+  return `<div class="tv2${TV.on ? " on" : ""}">
+   <div class="tv2-set">
+    <div class="tv2-main">
+      <div class="tv2-screen${TV.osd ? " osd" : ""}" id="tvscr">${tvScreen()}${TV.on ? tvOSD() : ""}<div class="tv2-static" aria-hidden="true"></div></div>
+      <div id="tvnow">${tvNowBar()}</div>
+      <div class="tv2-remote" role="group" aria-label="Remote control">
+        <button class="tv2-btn${TV.on ? " red" : ""}" data-tv="power" aria-label="${TV.on ? "Turn off" : "Turn on"}" title="Power"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg></button>
+        <span class="tv2-chbtns"><button class="tv2-btn" data-tv="prev" aria-label="Previous channel" title="Previous channel (↓)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><span class="tv2-chlbl">CH</span><button class="tv2-btn" data-tv="next" aria-label="Next channel" title="Next channel (↑)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 15 6-6 6 6"/></svg></button></span>
+        <button class="tv2-btn wide" data-tv="guide" aria-pressed="${TV.guide}" title="TV guide (G)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg>Guide</button>
+        <button class="tv2-btn wide" data-tv="surprise" title="Surprise me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>Surprise me</button>
+        ${fs ? `<button class="tv2-btn" data-tv="full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>` : ""}
+      </div>
+    </div>
+    <aside class="tv2-side">
+      <div class="tv2-genres" role="group" aria-label="Filter channels">${TV_GENRES.map(([k, n]) => `<button data-genre="${k}" aria-pressed="${TV.genre === k}" ${k === "ar" ? 'lang="ar"' : ""}>${n}</button>`).join("")}</div>
+      <div class="tv2-list" role="radiogroup" aria-label="Channels">${tvVisible().map(tvRow).join("")}</div>
+    </aside>
+   </div>
+   ${TV.guide ? tvGuide() : ""}
+   <p class="cite">${TV_CH.reduce((a, c) => a + c.list.length, 0)} programmes from the official channels of Shark Tank Global, BBC Dragons' Den, Shark Tank Egypt, Family Feud, Jeopardy!, Who Wants To Be A Millionaire, The Chase, Al Rabiaa TV, Bank AlMalomat, TED, Veritasium, Real Engineering, Bloomberg Originals, DW, Al Jazeera, New Media Academy and others. Remote: ↑ ↓ channels, number keys, G guide, F full screen.</p></div>`; }
 function wireTV(root) { const R = root || document;
-  const redraw = () => { const s = R.querySelector("#tvscr"); if (!s) return; s.classList.add("switch"); setTimeout(() => s.classList.remove("switch"), 450);
-    const host = R.querySelector(".tv").parentElement; host.innerHTML = tvBlock(); wireTV(root); const ns = R.querySelector("#tvscr"); ns.classList.add("switch"); setTimeout(() => ns.classList.remove("switch"), 450); };
-  const pow = R.querySelector("#tvpow"); if (pow) pow.onclick = () => { TV.on = true; redraw(); };
-  R.querySelectorAll("[data-ch]").forEach(b => b.onclick = () => { TV.ch = +b.dataset.ch; TV.on = true; redraw(); });
-  R.querySelectorAll("[data-tv]").forEach(b => b.onclick = () => { const a = b.dataset.tv; if (a === "off") TV.on = false; else { TV.ch = (TV.ch + (a === "next" ? 1 : TV_CH.length - 1)) % TV_CH.length; TV.on = true; } redraw(); });
-  clearInterval(wireTV.t); wireTV.t = setInterval(() => { const inf = R.querySelector("#tvinfo"); if (!inf || !inf.isConnected) return clearInterval(wireTV.t); inf.innerHTML = tvInfo(); }, 5000); }
+  const host = () => R.querySelector(".tv2") && R.querySelector(".tv2").parentElement;
+  const redraw = (sw) => { const h = host(); if (!h) return; const gs = R.querySelector(".tv2-gscroll"), gx = gs ? gs.scrollLeft : null, ls = R.querySelector(".tv2-list"), ly = ls ? ls.scrollTop : 0;
+    TV.osd = sw ? 1 : 0; h.innerHTML = tvBlock(); wireTV(root);
+    const s = R.querySelector("#tvscr"); if (sw && s) { s.classList.add("switch"); setTimeout(() => s.classList.remove("switch"), 450); clearTimeout(wireTV.o); wireTV.o = setTimeout(() => { const x = R.querySelector("#tvscr"); x && x.classList.remove("osd"); TV.osd = 0; }, 4000); }
+    const g2 = R.querySelector(".tv2-gscroll"); if (g2) g2.scrollLeft = gx != null ? gx : 0; const l2 = R.querySelector(".tv2-list"); if (l2) { l2.scrollTop = ly; const cur = l2.querySelector('[aria-checked="true"]');
+      if (cur && sw) { const lr = l2.getBoundingClientRect(), cr = cur.getBoundingClientRect();
+        if (cr.top < lr.top || cr.bottom > lr.bottom) l2.scrollTop += cr.top - lr.top - 8; if (cr.left < lr.left || cr.right > lr.right) l2.scrollLeft += cr.left - lr.left - 8; } } };
+  const tune = i => { TV.ch = i; TV.on = true; localStorage.setItem("amh-tv-ch", i); redraw(true); };
+  const step = d => { const vis = tvVisible().length ? tvVisible() : TV_CH.map((c, i) => i), p = vis.indexOf(TV.ch); tune(vis[((p < 0 ? 0 : p + d) + vis.length) % vis.length]); };
+  wireTV.api = { tune, step, redraw, root: R };
+  const pow = R.querySelector("#tvpow"); if (pow) pow.onclick = () => tune(TV.ch);
+  R.querySelectorAll(".tv2-row[data-ch]").forEach(b => b.onclick = () => tune(+b.dataset.ch));
+  R.querySelectorAll("[data-gch]").forEach(b => b.onclick = () => { if (b.dataset.live) tune(+b.dataset.gch); });
+  R.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { TV.genre = b.dataset.genre; redraw(false); });
+  R.querySelectorAll("[data-tv]").forEach(b => b.onclick = () => { const a = b.dataset.tv;
+    if (a === "power") { TV.on = !TV.on; redraw(TV.on); }
+    else if (a === "next") step(1); else if (a === "prev") step(-1);
+    else if (a === "guide") { TV.guide = !TV.guide; redraw(false); if (TV.guide) { const g = R.querySelector("#tvguide"); g && g.scrollIntoView({ behavior: "smooth", block: "nearest" }); } }
+    else if (a === "surprise") { const o = TV_CH.map((c, i) => i).filter(i => i !== TV.ch); tune(o[Math.floor(Math.random() * o.length)]); }
+    else if (a === "full") { const s = R.querySelector("#tvscr"); if (!TV.on) { TV.on = true; redraw(true); } const x = R.querySelector("#tvscr") || s; (x.requestFullscreen || x.webkitRequestFullscreen || (() => {})).call(x); } });
+  /* live clock and progress: cheap updates every second, a full refresh when a programme changes */
+  clearInterval(wireTV.t); let last = TV_CH.map(c => tvNow(c).v.id).join();
+  wireTV.t = setInterval(() => { const nb = R.querySelector("#tvnow"); if (!nb || !nb.isConnected) return clearInterval(wireTV.t);
+    const ids = TV_CH.map(c => tvNow(c).v.id).join(); if (ids !== last) { last = ids; nb.innerHTML = tvNowBar(); const l = R.querySelector(".tv2-list"); if (l) { const y = l.scrollTop; l.innerHTML = tvVisible().map(tvRow).join(""); l.scrollTop = y; l.querySelectorAll("[data-ch]").forEach(b => b.onclick = () => tune(+b.dataset.ch)); } }
+    const n = tvNow(TV_CH[TV.ch]), bar = nb.querySelector(".tv2-track i"); if (bar) bar.style.width = (n.off / n.v.s * 100).toFixed(2) + "%";
+    const ck = R.querySelector(".tv2-clock"); if (ck) ck.textContent = tvHM(Date.now() / 1000);
+    R.querySelectorAll(".tv2-row").forEach(b => { const c = TV_CH[+b.dataset.ch], m = tvNow(c), i = b.querySelector(".tv2-thumb i"); if (i) i.style.width = (m.off / m.v.s * 100).toFixed(1) + "%"; }); }, 1000); }
+/* keyboard remote, active while a TV is on screen */
+addEventListener("keydown", e => { const api = wireTV.api; if (!api || e.ctrlKey || e.metaKey || e.altKey || /INPUT|TEXTAREA|SELECT/.test((e.target.tagName || "")) || e.target.isContentEditable) return;
+  const tv = document.querySelector(".view.show .tv2"); if (!tv || !api.root.contains(tv)) return;
+  if (e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); api.step(1); }
+  else if (e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); api.step(-1); }
+  else if (/^[0-9]$/.test(e.key)) { TV.buf = (TV.buf || "") + e.key; clearTimeout(TV.bt); TV.bt = setTimeout(() => { const i = +TV.buf - 1; TV.buf = ""; if (i >= 0 && i < TV_CH.length) api.tune(i); }, TV.buf.length >= 2 ? 0 : 900); }
+  else if (e.key === "g" || e.key === "G") { const b = tv.querySelector('[data-tv="guide"]'); b && b.click(); }
+  else if (e.key === "f" || e.key === "F") { const b = tv.querySelector('[data-tv="full"]'); b && b.click(); } });
 function renderTV() { icHead("tv");
-  el("view-tv").innerHTML = `<div class="page-head" style="max-width:none"><h2>Innovation TV</h2><p style="max-width:var(--measure)">Five channels of entrepreneurs, inventions and innovation, running around the clock. Switch on and you join whatever is on air now, in English and Arabic.</p></div><div id="tvhost">${tvBlock()}</div>`;
+  el("view-tv").innerHTML = `<div class="page-head" style="max-width:none"><h2>Innovation TV</h2><p style="max-width:var(--measure)">${TV_CH.length} channels running around the clock: pitches, game shows, start-ups, factories, engineering and ideas, in English and Arabic. Switch on and you join whatever is on air now.</p></div><div id="tvhost">${tvBlock()}</div>`;
   wireTV(el("view-tv")); }
 
 </script>
@@ -9732,7 +10472,7 @@ function icHead(cur) {
   ICH.innerHTML = `<div class="ic-band"><div class="ic-band-in"><a href="#corner" class="ic-name"><span class="ic-mark" aria-hidden="true"></span>Innovators Corner</a>
     <nav class="ic-tabs" aria-label="Innovators Corner">${IC_TABS.map(([k, l]) => `<a href="#${k}" ${k === cur ? 'aria-current="page"' : ""}>${l}</a>`).join("")}</nav></div></div>`;
   ICH.hidden = false; }
-addEventListener("hashchange", icSync); function icSync() { const v = (location.hash.slice(1) || "home").split("/")[0]; if (IC_VIEWS.includes(v)) icHead(v); else ICH.hidden = true; if (v !== "tv" && v !== "corner" && typeof TV !== "undefined" && TV.on) { TV.on = false; } document.querySelectorAll(".view:not(.show) .tv-screen iframe").forEach(f => { const h = f.closest(".view").querySelector("#tvhost"); f.remove(); if (h && typeof tvBlock === "function") { h.innerHTML = tvBlock(); wireTV(h.closest(".view")); } }); if (v !== "corner") icStop(); }
+addEventListener("hashchange", icSync); function icSync() { const v = (location.hash.slice(1) || "home").split("/")[0]; if (IC_VIEWS.includes(v)) icHead(v); else ICH.hidden = true; if (v !== "tv" && v !== "corner" && typeof TV !== "undefined" && TV.on) { TV.on = false; } document.querySelectorAll(".view:not(.show) .tv2-screen iframe").forEach(f => { const h = f.closest(".view").querySelector("#tvhost"); f.remove(); if (h && typeof tvBlock === "function") { h.innerHTML = tvBlock(); wireTV(h.closest(".view")); } }); if (v !== "corner") icStop(); }
 
 /* ---------- constellation of innovators ---------- */
 let IC_RAF = 0;
@@ -9781,7 +10521,7 @@ function renderCorner() { icHead("corner");
      <h1>Innovators Corner</h1><p class="ic-lede">The people, factories, hospitals and algorithms that turned data into better work. Read how they did it, then use the same tools yourself.</p></div>
    <div class="ic-sky"><canvas id="icsky" aria-label="Constellation of ${HEROES.length} innovators placed by birth year; lines join people whose working lives overlapped"></canvas><p class="ic-tip" id="ictip" aria-live="polite"></p></div></section>
 
-  <section><div class="page-head"><h2>Innovation TV</h2><p>Shark Tank, Dragons' Den, Shark Tank Egypt and innovation documentaries, running around the clock.</p></div><div id="tvhost">${typeof tvBlock === "function" ? tvBlock() : ""}</div></section>
+  <section><div class="page-head"><h2>Innovation TV</h2><p>${typeof TV_CH !== "undefined" ? TV_CH.length : 13} channels around the clock: Shark Tank, Dragons' Den, Family Feud and game shows, <span lang="ar">بنك المعلومات</span>, start-ups, factories, engineering and ideas.</p></div><div id="tvhost">${typeof tvBlock === "function" ? tvBlock() : ""}</div></section>
   <section><div class="page-head"><h2>Today in the Corner</h2><p>A new story, case and AI application every day.</p></div>
    <div class="ic-today">
     <a class="ic-card ic-story" href="#inno"><span class="ic-lab">Story of the day</span><span class="ic-big">${story.big}</span><b>${esc(story.t)}</b><span class="muted small">${story.cap}</span></a>
