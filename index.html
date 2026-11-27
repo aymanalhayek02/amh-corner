@@ -1680,6 +1680,11 @@ body.pk-dragging{cursor:grabbing}
   .pk-grid .pk-chip .lnk{padding:2px 4px}
 }
 
+/* Study with me filters */
+.sw-seg{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.sw-seg button small{opacity:.6;font-size:.75em;margin-left:2px}
+@media(max-width:640px){.sw-seg{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.sw-seg button{flex:none}}
+
 </style>
 <style>
 /* ===== Phone fixes (loaded last) ===== */
@@ -6153,6 +6158,12 @@ function renderAI() {
 </script>
 <script>
 /* ===== FOCUS CORNER: PICK chart (drag and drop), time budget, study-with-me videos, estimate accuracy ===== */
+/* study-with-me sessions, grouped so people can pick the kind of session they like */
+const SW_GROUPS = [["", "All"], ["p25", "Pomodoro 25/5"], ["p50", "Pomodoro 50/10"], ["long", "3+ hours"], ["lib", "Library & café"], ["quiet", "No music"], ["ar", "ادرس معي"]];
+let swFilt = "";
+const swList = k => (typeof STUDY_VIDEOS !== "undefined" ? STUDY_VIDEOS : []).filter(v => !k || v.g === k);
+const swLen = s => s >= 5400 ? `${Math.round(s / 360) / 10} h` : `${Math.round(s / 60)} min`;
+const swCards = () => swList(swFilt).map(v => videoFacade({ id: v.id, t: v.t, c: `${swLen(v.s)} · ${v.c}` })).join("");
 const QUADS = [
   { k: "q1", imp: true, urg: true, h: "Do it now", d: "Important and urgent" },
   { k: "q2", imp: true, urg: false, h: "Schedule it", d: "Important, not urgent. Most real progress lives here." },
@@ -6207,7 +6218,8 @@ function renderPlan() { const p = P_(), open = p.tasks.filter(t => !t.done), don
     <div><h3 style="margin-bottom:6px">Your planning accuracy</h3><p class="small muted">Most people underestimate how long tasks take: the planning fallacy (Buehler, Griffin and Ross, 1994). Log actual minutes for finished tasks to see your own pattern.</p><canvas class="plot" id="pacc" style="height:230px"></canvas><p class="small" id="paccmsg"></p></div></section>
 
   <section style="margin-top:40px"><div class="page-head"><h2>Study with me</h2><p>Real-time study sessions with timers and calm background sound. Start one, put your phone face down and work alongside.</p></div>
-    <div class="vids">${(typeof STUDY_VIDEOS !== "undefined" ? STUDY_VIDEOS : []).map(v => videoFacade({ id: v.id, t: v.t, c: `${v.c}, ${Math.round(v.s / 60)} min` })).join("")}</div></section>
+    <div class="seg sw-seg" role="group" aria-label="Filter study sessions">${SW_GROUPS.map(([k, n]) => `<button data-sw="${k}" aria-pressed="${swFilt === k}" class="${swFilt === k ? "on" : ""}" ${k === "ar" ? 'lang="ar"' : ""}>${n} <small>${swList(k).length}</small></button>`).join("")}</div>
+    <div class="vids" id="swv">${swCards()}</div></section>
 
   <section style="margin-top:44px"><div class="row" style="justify-content:space-between"><h2>Done</h2>${done.length ? `<button class="btn sm quiet" id="clr">Clear finished tasks</button>` : ""}</div>
    <canvas class="plot" id="pweek" style="height:170px;margin:12px 0"></canvas>
@@ -6235,6 +6247,7 @@ function renderPlan() { const p = P_(), open = p.tasks.filter(t => !t.done), don
         if (d !== over) { over && over.classList.remove("pk-over"); over = d; over && over.classList.add("pk-over"); }
         if (ev.clientY < 70) scrollBy(0, -10); else if (ev.clientY > innerHeight - 70) scrollBy(0, 10); };
       addEventListener("pointermove", mv, { passive: false }); addEventListener("pointerup", up); addEventListener("pointercancel", up); }); });
+  V.querySelectorAll("[data-sw]").forEach(b => b.onclick = () => { swFilt = b.dataset.sw; V.querySelectorAll("[data-sw]").forEach(x => { const on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on); }); const w = el("swv"); w.innerHTML = swCards(); wireVideos(w); });
   wireVideos(V); drawPlanCharts(); curDraw = drawPlanCharts; }
 
 function drawPlanCharts() { const p = P_(), cv = el("pacc"); if (!cv) return;
@@ -9574,21 +9587,87 @@ const TV_RAW = {
  ]
 };
 const STUDY_VIDEOS = [
-  { id: "oXfBd7kp124", t: "50/10 Pomodoro Timer with Pink Noise 2-Hour Study with Me for Deep Focus & ADHD", c: "Timer Palette", s: 7207 },
-  { id: "WL5XBs_ha3g", t: "2-Hour Study with Me / Balcony Moon Rise / Pomodoro 50-10 / Relaxing Lo-Fi / Day 146", c: "Sean Study", s: 7261 },
-  { id: "OS8lnKZdJYc", t: "2-HOUR STUDY WITH ME / calm lofi / Golden Morning in Tokyo / Pomodoro 25-5", c: "Abao in Tokyo", s: 7287 },
-  { id: "ER4QDzu_D_Y", t: "Keep it up! 2-HOUR Study With Me (25/5 Pomodoro) Cozy Home in Korea", c: "Focus with Yoo", s: 6954 },
-  { id: "9zCMXz8ES_c", t: "50/10 Pomodoro Timer with Brown Noise 2-Hour Study with Me for Deep Focus & ADHD", c: "Timer Palette", s: 7207 },
-  { id: "vJUppie2PIQ", t: "(2AM) 2 HOUR STUDY WITH ME cramming for final exams, keyboard sounds, 60/10 pomodoro & pencil asmr", c: "Breanna Quan", s: 8359 },
-  { id: "hvGK0L7EXd8", t: "2-HOUR STUDY WITH ME ️ on an Autumn Day", c: "Celine", s: 6985 },
-  { id: "MTPRw0MZZ7c", t: "2 HOUR STUDY WITH ME", c: "Breanna Quan", s: 9106 },
-  { id: "IxKfhWw53bA", t: "Study with me 2 hrs", c: "Bayan Med", s: 7230 },
-  { id: "VOaRhfJAoBE", t: "2-HOUR STUDY WITH ME / Dark Classical / Pomodoro 45-15", c: "StudyMD", s: 7246 },
-  { id: "jN5UTsc89tI", t: "STUDY WITH ME 1hr", c: "Ray Hon", s: 4539 },
-  { id: "0b04mIlg_jQ", t: "study with me, study asmr with no music for 1 hour", c: "Cerene", s: 3616 },
-  { id: "ph3IXNzqbX0", t: "1 HOUR STUDY WITH ME real time 50/10 animedoro, rainy night vibes, background noise & no music", c: "Breanna Quan", s: 3670 },
-  { id: "wKEWzFaZk7M", t: "STUDY WITH ME at Taipei library (real time, real sound)", c: "Focus with Yoo", s: 3658 },
-  { id: "WzxVo1EsvcQ", t: "1 HOUR STUDY WITH ME", c: "Merve", s: 3700 }
+  {id: "oXfBd7kp124", t: "50/10 Pomodoro Timer with Pink Noise 2-Hour Study with Me for Deep Focus & ADHD", c: "Timer Palette", s: 7207, g: "p50"},
+  {id: "WL5XBs_ha3g", t: "2-Hour Study with Me / Balcony Moon Rise / Pomodoro 50-10 / Relaxing Lo-Fi / Day 146", c: "Sean Study", s: 7261, g: "p50"},
+  {id: "OS8lnKZdJYc", t: "2-HOUR STUDY WITH ME / calm lofi / Golden Morning in Tokyo / Pomodoro 25-5", c: "Abao in Tokyo", s: 7287, g: "p25"},
+  {id: "ER4QDzu_D_Y", t: "Keep it up! 2-HOUR Study With Me (25/5 Pomodoro) Cozy Home in Korea", c: "Focus with Yoo", s: 6954, g: "p25"},
+  {id: "9zCMXz8ES_c", t: "50/10 Pomodoro Timer with Brown Noise 2-Hour Study with Me for Deep Focus & ADHD", c: "Timer Palette", s: 7207, g: "p50"},
+  {id: "vJUppie2PIQ", t: "(2AM) 2 HOUR STUDY WITH ME cramming for final exams, keyboard sounds, 60/10 pomodoro & pencil asmr", c: "Breanna Quan", s: 8359, g: "quiet"},
+  {id: "hvGK0L7EXd8", t: "2-HOUR STUDY WITH ME on an Autumn Day", c: "Celine", s: 6985, g: "p25"},
+  {id: "MTPRw0MZZ7c", t: "2 HOUR STUDY WITH ME", c: "Breanna Quan", s: 9106, g: "p25"},
+  {id: "IxKfhWw53bA", t: "Study with me 2 hrs", c: "Bayan Med", s: 7230, g: "p25"},
+  {id: "VOaRhfJAoBE", t: "2-HOUR STUDY WITH ME / Dark Classical / Pomodoro 45-15", c: "StudyMD", s: 7246, g: "p50"},
+  {id: "jN5UTsc89tI", t: "STUDY WITH ME 1hr", c: "Ray Hon", s: 4539, g: "p25"},
+  {id: "0b04mIlg_jQ", t: "study with me, study asmr with no music for 1 hour", c: "Cerene", s: 3616, g: "quiet"},
+  {id: "ph3IXNzqbX0", t: "1 HOUR STUDY WITH ME real time 50/10 animedoro, rainy night vibes, background noise & no music", c: "Breanna Quan", s: 3670, g: "quiet"},
+  {id: "wKEWzFaZk7M", t: "STUDY WITH ME at Taipei library (real time, real sound)", c: "Focus with Yoo", s: 3658, g: "lib"},
+  {id: "WzxVo1EsvcQ", t: "1 HOUR STUDY WITH ME", c: "Merve", s: 3700, g: "p25"},
+  {id: "Umy2DgjCJ4o", t: "25/5 Pomodoro Timer with White Noise 2-Hour Study with Me for Deep Focus & ADHD", c: "Timer Palette", s: 7207, g: "p25"},
+  {id: "4TNu6_De4V4", t: "2-HOUR STUDY WITH ME [Pomodoro 25/5] with calm lofi music / city view / with timer", c: "Celine", s: 7010, g: "p25"},
+  {id: "MPTBT4-r4Fs", t: "2-HOUR STUDY WITH ME / calm piano / Tokyo Tower at Sunset / Pomodoro 25-5", c: "Abao in Tokyo", s: 7019, g: "p25"},
+  {id: "z6ETHVeutGs", t: "2-HOUR STUDY WITH ME | Calm Piano | Pomodoro 25-5 | My room at Sunrise, Christmas Edition", c: "Carrot TD", s: 7101, g: "p25"},
+  {id: "WIt8cNOMkwc", t: "25 / 5 Pomodoro Timer - 2 hours study | No music - Study for dreams - Deep focus - Study timer", c: "Countdown Time", s: 8726, g: "quiet"},
+  {id: "UXQQ25sIU4g", t: "2 Hour Pomodoro | 25 Minute Intervals | with BROWN NOISE for ADHD Focus", c: "ADHD Focus Club", s: 7206, g: "p25"},
+  {id: "waosMIRyDjw", t: "2-HOUR STUDY WITH ME in Rainy Forest | Gentle Rain Sounds | Pomodoro 25-5 | Nature Ambience", c: "Celine", s: 7002, g: "p25"},
+  {id: "KFHgNMG502I", t: "3-HR STUDY WITH ME 25/5 Pomodoro | Lofi Music for Productivity", c: "tani study", s: 10875, g: "long"},
+  {id: "sScDYHeXpvA", t: "study with me with lofi music | Pomodoro (25 min study x 5 min rest)", c: "elleene", s: 7215, g: "p25"},
+  {id: "53gNFOqDFcE", t: "study with me [pomodoro] 3 hours of lofi focus music", c: "Lofi Girl", s: 10804, g: "long"},
+  {id: "jhND3palDlw", t: "25/5 Pomodoro timer | 2 hours - Relax & study with me Lofi | Comfy Capy #timer #pomodoro #relaxing", c: "Chill Pills Studio", s: 7205, g: "p25"},
+  {id: "VJ3MzyeQbdU", t: "50/10 Pomodoro Timer with Brown Noise 3-Hour Study with Me for Deep Focus & ADHD", c: "Timer Palette", s: 10810, g: "long"},
+  {id: "KNzl1LYrHtw", t: "50/10 Pomodoro Timer with Brown Noise 3-Hour Study with Me for Deep Focus & ADHD", c: "Timer Palette", s: 10807, g: "long"},
+  {id: "74cOUSKXMz0", t: "3-HOUR STUDY WITH ME | Hyper Efficient, Doctor, Focus Music, Pomodoro 50-10", c: "iCanStudy", s: 10303, g: "long"},
+  {id: "vGv0y1EzgM4", t: "3HR Study With Me at my new home! (50/10 pomodoro, crackling fire sound)", c: "Focus with Yoo", s: 10239, g: "long"},
+  {id: "cCnHrJZ3o0Y", t: "3HR Study With Me at my new home! (50/10 pomodoro, real sound)", c: "Focus with Yoo", s: 10293, g: "long"},
+  {id: "Jaj6AKQnh1s", t: "3 HOUR STUDY WITH ME | 50/10 pomodoro | real time finals week", c: "Sab Yang", s: 11032, g: "long"},
+  {id: "DOarY7sSum0", t: "3-Hour Study with Me / 180° Panama City / Pomodoro 50-10/ Relaxing Lo-Fi / Day 150", c: "Sean Study", s: 10861, g: "long"},
+  {id: "ZEbCz7B2-Eg", t: "STUDY WITH ME 4hrs with breaks 50/10 pomodoro (no music)", c: "Maria Silva", s: 13875, g: "long"},
+  {id: "FgxRsuwvY4g", t: "4-HOUR STUDY WITH ME at home with keyboard asmr (50⧸10 pomodoro)", c: "Focus with Yoo", s: 14540, g: "long"},
+  {id: "u01S_vCh954", t: "3 HOUR STUDY WITH ME | final exam season deep focus 50/10 pomodoro", c: "Sab Yang", s: 10925, g: "long"},
+  {id: "B70FUihQT_E", t: "3 HOUR STUDY WITH ME | med school exam, late night studying :) 50/10 pomodoro", c: "Sab Yang", s: 10934, g: "long"},
+  {id: "3bGITNqj0rY", t: "3 HOUR STUDY WITH ME at the LIBRARY | Background noise, no breaks, real-time, no music", c: "Merve", s: 10866, g: "long"},
+  {id: "HMXph1lVYek", t: "5 HOURS study with me in a library | 50/10 POMODORO, real time | ASMR, library background noise", c: "Moon Diaries", s: 16141, g: "long"},
+  {id: "wvhIQSP0fiM", t: "2 HOUR STUDY WITH ME at the LIBRARY | Background noise, no breaks, real time, countdown timer", c: "Merve", s: 7267, g: "lib"},
+  {id: "B7sD7HY0WNo", t: "2.5-HOUR STUDY WITH ME (NO BREAKS) | Library Sounds | University of Oxford | Radcliffe Camera", c: "hdk study", s: 9065, g: "lib"},
+  {id: "aEVzzr3S0HA", t: "3 HOUR STUDY WITH ME at the LIBRARY | Background noise, no breaks, real-time, no music", c: "Merve", s: 10863, g: "long"},
+  {id: "PBUXgYPfUt4", t: "1 HOUR STUDY WITH ME at HARVARD LIBRARY | rain sounds, no music, real time, no breaks, productive", c: "Helaine Zhao", s: 4656, g: "lib"},
+  {id: "s_m1QKaQXVc", t: "STUDY WITH ME CAFE | 1 Hour, real-time pomodoro [coffee shop ambiance ]", c: "Celine", s: 3643, g: "lib"},
+  {id: "b6GrBdQCVqY", t: "STUDY WITH ME at the CAFE (coffee shop ambience, typing, realtime) | 英美莉 Emilie", c: "Emilie 英美莉", s: 3598, g: "lib"},
+  {id: "FFnQNTP8T_M", t: "2-HOUR STUDY WITH ME | Surrounded by Focused Minds at a Silent Café | No Music | Pomodoro 50/10", c: "Hwa Dao Space", s: 6695, g: "lib"},
+  {id: "2BeAqxCLGdI", t: "Study with me in a cozy crowded cafe | Warm light ambience | Pomodoro 50/5 | No Music", c: "Hwa Dao Space", s: 6519, g: "lib"},
+  {id: "buVFKTapdJ8", t: "LATE NIGHT STUDY WITH ME | 2-Hour No Music, Keyboard ASMR | Pomodoro 25/5", c: "The Hanoi Chamomile", s: 7366, g: "quiet"},
+  {id: "1u2otIQFnuU", t: "2-Hour Study With Me | No Music, Background Noise, Pomodoro 25/5", c: "Jay Studies", s: 7237, g: "quiet"},
+  {id: "ktB6gZkpzPk", t: "2-HOUR STUDY WITH ME | Disney Piano Music | Fire Crackling, Study ASMR Ambience | Pomodoro 50/10", c: "the late desk", s: 6706, g: "quiet"},
+  {id: "b0bTEChshE0", t: "STUDY WITH ME 2hrs | Background noise,no music,no break | ASMR | real time｜motivation", c: "Ray Hon", s: 7415, g: "quiet"},
+  {id: "sa61rE36264", t: "2 HOUR STUDY WITH ME / Rainy Day In The Forest / Pomodoro 50-10 / Rain Sounds / No Music", c: "Sora's Treehouse Study", s: 6643, g: "quiet"},
+  {id: "dv25f7RCkRc", t: "REAL TIME summer study with me (no music): 2 hour pomodoro session with breaks (background noise)", c: "A", s: 7096, g: "quiet"},
+  {id: "ugysq9LPgpg", t: "50 / 10 Pomodoro Timer - 4 Hours | No music - Study for dreams - Deep focus - Study timer", c: "Countdown Time", s: 14425, g: "long"},
+  {id: "IdjDjxNn9ws", t: "4-HOUR STUDY WITH ME / Sunset Meditation Calm Piano / Pomodoro 50-10", c: "StudyMD", s: 14408, g: "long"},
+  {id: "UHGYNJzuTJU", t: "4-Hour Study with Me / Panama City Sunrise / Pomodoro 50-10 / Relaxing Lo-Fi / Day 144", c: "Sean Study", s: 14431, g: "long"},
+  {id: "eusFXcYHGTY", t: "4-Hour Study with Me / Shanghai · The Bund Night / Pomodoro 50-10 / Relaxing Lo-Fi / Day 173", c: "Sean Study", s: 14461, g: "long"},
+  {id: "QH0t_ogClhA", t: "4 Hour Pomodoro | 50 Minute Intervals | with BROWN NOISE for ADHD Focus", c: "ADHD Focus Club", s: 13893, g: "long"},
+  {id: "zOXfvmWEOHc", t: "Study With Me 3 Hours | Deep Focus | Quiet Study Time (No Music)", c: "manew", s: 10831, g: "long"},
+  {id: "5jZvtNHLJZc", t: "3 HOUR STUDY WITH ME / Rainy Day In The Forest / Pomodoro 50-10 / Rain Sounds / No Music", c: "Sora's Treehouse Study", s: 10274, g: "long"},
+  {id: "eIoHJBA43lk", t: "3 HOUR STUDY WITH ME On a Rainy Day / Forest Rain Sounds / No Music / Pomodoro 50-10", c: "Sora's Treehouse Study", s: 10293, g: "long"},
+  {id: "LLf3wPHrKus", t: "ذاكر معي ساعتين بتقنية البومودورو - Study with me", c: "دروس أونلاين", s: 7200, g: "ar"},
+  {id: "jx9B-4AEbLE", t: "ادرس معي لمدة ساعتين معي | تلاوة القرآن | لوفي القرآن | بومودورو 50/10 | ادرس مع القرآن | ادرس معي", c: "With Anwar", s: 7339, g: "ar"},
+  {id: "bHopSt8NY_U", t: "ادرس معي مدة ساعتين مع تلاوة القرآن |تحفيز |بطريقة بومودورو 25/5 | طالبة توجيهي| study with me", c: "study with evyy", s: 6958, g: "ar"},
+  {id: "1XLM2wipr4A", t: "ادرس معي لمدة ساعتين مع فاصل و تحفيز | طالبة طب Study With Me", c: "Esra's Med", s: 6712, g: "ar"},
+  {id: "QXKB3gcsRkY", t: "2-Hour Study With Me | Quran recitation | Study with me quran | pomodoro 50/10 | With Anwar", c: "With Anwar", s: 7322, g: "ar"},
+  {id: "eJg0h643V68", t: "Study with Mr.Capy | 2 Hours Pomodoro (50 mins. focus &10 mins. break) | Lofi Music", c: "Jessy Chill Studio", s: 7209, g: "p50"},
+  {id: "zb3kAa2gKzQ", t: "Study with me for a full hour to the sound of the Holy Quran | study with me", c: "ITS EMAN", s: 3642, g: "ar"},
+  {id: "0devFfn-SDU", t: "ادرس معي لمدة ساعة | تلاوة القرآن الكريم عبد الرحمن مسعد | طالبة طب |STUDY WITH ME", c: "Study with me", s: 3634, g: "ar"},
+  {id: "EfvyfQWF5LQ", t: "ساعة كاملة |تلاوة القرآن بصوت عبد الرحمن مسعد للدراسة والتركيز| راحة نفسية |Abdulrhman Mossad", c: "Motivation with Quran", s: 3712, g: "ar"},
+  {id: "YoGItb_g0tg", t: "أدرس معي لمدة ساعه مع تلاوه هادئه للقارئ حسين ألعزام | طالب طبstudy with me for one hour", c: "Study with Hussein", s: 3601, g: "ar"},
+  {id: "ljGBzk_N4_0", t: "Study With Me | ساعة دراسة هادئة مع القرآن | تركيز + هدوء + فاصل 5 دقائق", c: "By Salma", s: 3908, g: "ar"},
+  {id: "oaH4kLZ1rqo", t: "Arabic ASMR Study With Me امتحاناتك قربت؟ ادرس معي لساعة كاملة", c: "Dania Arabic ASMR", s: 4274, g: "ar"},
+  {id: "4lWSkHiFrwk", t: "ادرس معي بدون استراحة ٣ ساعات ونصف من التركيز مع صوت القرآن الكريم(Study with me (No Breaks,Quran", c: "Study with Rama", s: 13269, g: "ar"},
+  {id: "Pnk1rAZ9LgA", t: "ادرس معي لمدة ثلاث ساعات مع تلاوة القرآن الكريم | طالبة طب |Study with me w/ Quran recitation", c: "Esra's Med", s: 10257, g: "ar"},
+  {id: "5R4o_LZxAGo", t: "STUDY WITH ME (ENGINEERİNG STUDENT, UNIVERSITY, EXAMS)", c: "selen duru", s: 3670, g: "p25"},
+  {id: "48rQ5Tt9zUY", t: "2 HOUR STUDY WITH ME + LOFI | *Mechanical Engineering Student*", c: "Jake Clarke", s: 7328, g: "p25"},
+  {id: "Qo7N-HbEMxE", t: "study with me - 4 a.m. 4 hours of deep work!", c: "james vinh scholz", s: 14424, g: "long"},
+  {id: "iWon8_6jK_o", t: "3am cramming before exam // pencil asmr, page-flipping, no music, study with me", c: "sheena kim", s: 4191, g: "quiet"},
+  {id: "okHXuSbDXY8", t: "Study With Me for Finals 2 hour 50/10 pomodoro, no music, background noise, medical student", c: "Ecem Gundogan", s: 7339, g: "quiet"},
+  {id: "xpRnIkNQVkE", t: "2 hour Study with me at the study cafe for a x2 happier tomorrow No music, korean medical student", c: "디아 Dia", s: 7237, g: "lib"}
 ];
 
 </script>
