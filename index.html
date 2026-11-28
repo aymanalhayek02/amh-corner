@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F7F8FA">
 <title>AMH Corners by Ayman Al-Hayek: applied statistics, Lean Six Sigma and industrial engineering</title>
-<meta name="description" content="AMH Corners by Ayman Al-Hayek: learn applied statistics, Lean Six Sigma (White to Black Belt) and industrial engineering with labs, games, a scientific calculator and a 600-question bank.">
+<meta name="description" content="AMH Corners by Ayman Al-Hayek: learn applied statistics, Lean Six Sigma (White to Black Belt) and industrial engineering with labs, games, a scientific calculator and a Question Corner of 600 questions.">
 <meta name="theme-color" content="#0B1520" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%230B1220'/%3E%3Cpath fill='%23F7F8FA' d='M12 10h6v22h18v6H12z'/%3E%3Crect x='20.5' y='22.5' width='7' height='7' rx='1' fill='%23E5484D'/%3E%3C/svg%3E">
 <meta name="author" content="Ayman Al-Hayek">
@@ -1771,6 +1771,48 @@ body.pk-dragging{cursor:grabbing}
 .tv2-spin{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.15);border-top-color:#E5484D;animation:tv2-spin .8s linear infinite}
 @keyframes tv2-spin{to{transform:rotate(360deg)}}
 
+/* Reading Corner */
+#lbhost{margin-bottom:56px}
+.lb-start h3{margin:0 0 10px;font:650 1rem var(--head)}
+.lb-strip{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:thin}
+.lb-mini{flex:none;width:124px;display:flex;flex-direction:column;gap:8px;border:0;background:none;padding:0;cursor:pointer;text-align:left;color:var(--ink);font:600 .8rem/1.3 var(--head)}
+.lb-mini .lb-cover{width:124px;transition:transform .2s}
+.lb-mini:hover .lb-cover{transform:translateY(-3px)}
+.lb-cover{--bc:#2F5BEA;position:relative;aspect-ratio:2/3;border-radius:4px 10px 10px 4px;padding:12px 12px 12px 16px;display:flex;flex-direction:column;gap:8px;overflow:hidden;color:#fff;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--bc) 88%,#fff),var(--bc) 55%,color-mix(in srgb,var(--bc) 70%,#000));box-shadow:0 10px 22px -12px rgba(0,0,0,.55),inset 4px 0 0 rgba(0,0,0,.18),inset 6px 0 0 rgba(255,255,255,.12)}
+.lb-cover::after{content:"";position:absolute;left:10px;right:10px;bottom:12px;height:1px;background:rgba(255,255,255,.35)}
+.lb-cat{font:700 .56rem var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.lb-cover b{font:700 .92rem/1.18 var(--head);display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.lb-au{margin-top:auto;margin-bottom:8px;font-size:.66rem;opacity:.85}
+.lb-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 10px}
+.lb-tools input{flex:1 1 280px;padding:11px 14px;font:inherit;border-radius:10px}
+.lb-tools select{padding:10px;font:inherit;border-radius:10px}
+.lb-tg,.lb-cats button{border:1px solid var(--rule);background:var(--sheet);color:var(--ink-2);border-radius:999px;padding:7px 13px;font:600 .8rem var(--head);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.lb-tg small,.lb-cats small{opacity:.6;font-weight:500}
+.lb-tg[aria-pressed="true"],.lb-cats button[aria-pressed="true"]{background:var(--ink);color:var(--paper,#fff);border-color:var(--ink)}
+.lb-cats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.lb-cats i{width:8px;height:8px;border-radius:50%;background:var(--bc)}
+.lb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;margin-top:8px}
+.lb-card{display:grid;grid-template-columns:104px minmax(0,1fr);gap:16px;padding:14px;border:1px solid var(--rule);border-radius:14px;background:var(--sheet)}
+.lb-card .lb-cover{padding:9px 9px 9px 12px;gap:5px}.lb-card .lb-cover b{font-size:.74rem;-webkit-line-clamp:5}.lb-card .lb-au{font-size:.58rem}.lb-card .lb-cat{font-size:.48rem}
+.lb-body{display:flex;flex-direction:column;gap:5px;min-width:0}
+.lb-body h4{margin:0;font:650 .98rem/1.3 var(--head);color:var(--ink)}
+.lb-meta{margin:0;font-size:.8rem;color:var(--ink-3)}
+.lb-tags{margin:2px 0 0;display:flex;gap:5px;flex-wrap:wrap}
+.lb-tags span{font:600 .66rem var(--head);padding:2px 7px;border-radius:5px;background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink-2)}
+.lb-tags .lv1{background:color-mix(in srgb,#17885B 14%,transparent);color:#17885B}.lb-tags .lv3{background:color-mix(in srgb,#D93A42 12%,transparent);color:#C0313A}
+.lb-tags .lb-free{background:color-mix(in srgb,#2F5BEA 13%,transparent);color:#2F5BEA}
+.lb-why{margin:2px 0 0;font-size:.86rem;line-height:1.45;color:var(--ink-2)}
+.lb-act{margin-top:auto;padding-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.lb-shelf{margin-left:auto;border:1px dashed var(--rule);background:none;color:var(--ink-3);border-radius:8px;padding:5px 9px;font:600 .74rem var(--head);cursor:pointer}
+.lb-shelf[aria-pressed="true"]{border-style:solid;border-color:#17885B;color:#17885B}
+@media(max-width:640px){.lb-grid{grid-template-columns:1fr}.lb-card{grid-template-columns:84px minmax(0,1fr);gap:12px;padding:12px}.lb-mini,.lb-mini .lb-cover{width:104px}.lb-shelf{margin-left:0}}
+
+/* top bar: when the corners do not all fit, fade the edge so it reads as "scroll for more" */
+.links{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);padding-right:28px}
+.lb-mini .lb-cover b{-webkit-line-clamp:5}
+@media(max-width:640px){.lb-cats{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.lb-cats button{flex:none}.lb-mini .lb-cover b{font-size:.8rem;-webkit-line-clamp:4}.lb-tools select{flex:1}}
+
 </style>
 <style>
 /* ===== Phone fixes (loaded last) ===== */
@@ -2191,10 +2233,10 @@ function amhMark(size = 32, cls = "") {
   </a>
   <nav class="links" id="links" aria-label="Main">
     <a data-v="home" href="#home">Today</a>
-    <a data-v="learn" href="#learn">Terms</a>
+    <a data-v="learn" href="#learn">Terminology Corner</a>
     <a data-v="labs" href="#labs">Labs Corner</a>
     <a data-v="calc" href="#calc">Calculator</a>
-    <a data-v="mcq" href="#mcq">Questions</a>
+    <a data-v="mcq" href="#mcq">Question Corner</a>
     <a data-v="bb" href="#bb">LSS Corner</a>
     <a data-v="corner" href="#corner">Innovators</a>
   </nav>
@@ -2213,9 +2255,9 @@ function amhMark(size = 32, cls = "") {
 
 <div class="drawer" id="drawer" aria-label="All sections">
   <div class="drawer-in">
-    <div class="dgroup"><h4>Learn</h4><a data-v="home" href="#home">Today</a><a data-v="road" href="#road">DMAIC road</a><a data-v="learn" href="#learn">Terms</a><a data-v="bb" href="#bb">LSS Corner (White to Black Belt)</a><a data-v="tasks" href="#tasks">Real-life tasks</a></div>
-    <div class="dgroup"><h4>Practise</h4><a data-v="labs" href="#labs">Labs Corner</a><a data-v="calc" href="#calc">AMH Calculator</a><a data-v="mcq" href="#mcq">Question bank</a><a data-v="quiz" href="#quiz">Chapter challenges</a><a data-v="games" href="#games">Games Corner</a><a data-v="board" href="#board">Whiteboard</a></div>
-    <div class="dgroup"><h4>Explore</h4><a data-v="videos" href="#videos">Videos Corner</a><a data-v="corner" href="#corner">Innovators Corner</a><a data-v="res" href="#res">Sources and books</a></div>
+    <div class="dgroup"><h4>Learn</h4><a data-v="home" href="#home">Today</a><a data-v="road" href="#road">DMAIC road</a><a data-v="learn" href="#learn">Terminology Corner</a><a data-v="bb" href="#bb">LSS Corner (White to Black Belt)</a><a data-v="tasks" href="#tasks">Real Life Corner</a></div>
+    <div class="dgroup"><h4>Practise</h4><a data-v="labs" href="#labs">Labs Corner</a><a data-v="calc" href="#calc">AMH Calculator</a><a data-v="mcq" href="#mcq">Question Corner</a><a data-v="quiz" href="#quiz">Chapter challenges</a><a data-v="games" href="#games">Games Corner</a><a data-v="board" href="#board">Think Tank Corner</a></div>
+    <div class="dgroup"><h4>Explore</h4><a data-v="videos" href="#videos">Videos Corner</a><a data-v="corner" href="#corner">Innovators Corner</a><a data-v="res" href="#res">Reading Corner</a></div>
     <div class="dgroup"><h4>Organise</h4><a data-v="plan" href="#plan">Focus Corner</a><a data-v="quran" href="#quran">Quran library</a></div>
   </div>
 </div>
@@ -2245,7 +2287,7 @@ function amhMark(size = 32, cls = "") {
 
 <nav class="tabbar" aria-label="Quick navigation">
   <a data-v="home" href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Today</a>
-  <a data-v="learn" href="#learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-7a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h7z"/></svg>Terms</a>
+  <a data-v="learn" href="#learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-7a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h7z"/></svg>Terminology</a>
   <a data-v="mcq" href="#mcq"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></svg>Questions</a>
   <a data-v="calc" href="#calc"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h4"/></svg>Calculator</a>
   <button id="tabMenu" aria-controls="drawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
@@ -5884,7 +5926,7 @@ function termVids(t) { const keys = termKeys(t), tagged = VIDEOS.filter(v => (v.
   if (TV_SYN[t.id]) res.unshift(new RegExp(TV_SYN[t.id], "i"));
   const matched = VIDEOS.filter(v => !tagged.includes(v) && res.some(r => r.test(v.t)));
   const L = [...tagged, ...matched].slice(0, 6);
-  return L.length ? `<div class="vids term-vids">${L.map(vlCard).join("")}</div><p class="small"><a href="#videos" data-vlq="${esc(keys[0] || t.n)}">Find more videos on this in the video library</a></p>` : ""; }
+  return L.length ? `<div class="vids term-vids">${L.map(vlCard).join("")}</div><p class="small"><a href="#videos" data-vlq="${esc(keys[0] || t.n)}">Find more videos on this in Videos Corner</a></p>` : ""; }
 /* any video card anywhere: play in place and remember it as watched */
 document.addEventListener("click", e => { const b = e.target.closest("button.vid-frame[data-yt]"); if (b) { vlWatched()[b.dataset.yt] = 1; save(); if (!b.onclick) { e.preventDefault();
     b.outerHTML = `<div class="vid-frame"><iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.yt}?autoplay=1&rel=0" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`; } }
@@ -6393,10 +6435,10 @@ function wbSave() { try { localStorage.setItem(WB_KEY, JSON.stringify(WB)); } ca
 const wbPage = () => WB.pages[WB.cur];
 
 function renderBoard() { wbLoad(); const pg = wbPage(), prompt = WB_PROMPTS[dayIndex() % WB_PROMPTS.length];
-  el("view-board").innerHTML = `<div class="page-head"><h2>Whiteboard</h2><p>Study the way engineers think: with a pen. Sketch curves, derive formulas, draw fishbones. Works with a mouse, a touchscreen or a stylus (pressure-sensitive). Your pages stay in this browser.</p></div>
+  el("view-board").innerHTML = `<div class="page-head"><h2>Think Tank Corner</h2><p>Think the way engineers think: with a pen. Sketch curves, derive formulas, draw fishbones. Works with a mouse, a touchscreen or a stylus (pressure-sensitive). Your pages stay in this browser.</p></div>
   <div class="note info" style="max-width:none"><b class="ui">Today's practice.</b> ${prompt}</div>
   <div class="wb" id="wb">
-    <div class="wb-bar" role="toolbar" aria-label="Whiteboard tools">
+    <div class="wb-bar" role="toolbar" aria-label="Think Tank tools">
       <div class="seg" role="group" aria-label="Tool">${[["pen", "Pen", "P"], ["hl", "Highlighter", "H"], ["line", "Line", "L"], ["text", "Text", "T"], ["erase", "Eraser", "E"]].map(([k, l, s]) => `<button data-tool="${k}" class="${wbTool === k ? "on" : ""}" title="${l} (${s})" aria-pressed="${wbTool === k}">${l}</button>`).join("")}</div>
       <div class="inks" role="group" aria-label="Colour">${WB_INKS.map(([n, c]) => `<button data-ink="${c}" class="${wbColor === c ? "on" : ""}" style="--c:${c}" title="${n}" aria-label="${n}" aria-pressed="${wbColor === c}"></button>`).join("")}</div>
       <label class="ui small">Size <input type="range" id="wbsize" min="1" max="24" value="${wbSize}" style="width:90px;vertical-align:middle"></label>
@@ -6460,7 +6502,7 @@ function wbWire() { const ink = el("wbink"), V = el("view-board");
   el("wbtpl").onchange = e => { wbPage().tpl = e.target.value; wbSave(); wbPaint(); };
   el("wbundo").onclick = wbUndo; el("wbredo").onclick = wbRedoFn;
   el("wbclear").onclick = () => { if (!wbPage().strokes.length || confirm("Clear everything on this page? Undo can't bring it back after you leave the page.")) { wbRedo = wbPage().strokes.slice().reverse(); wbPage().strokes = []; wbSave(); wbPaint(); } };
-  el("wbpng").onclick = () => { const out = document.createElement("canvas"); out.width = WB_W; out.height = WB_H; const c = out.getContext("2d"); c.drawImage(el("wbbg"), 0, 0); c.drawImage(ink, 0, 0); const a = document.createElement("a"); a.download = `statlab-whiteboard-page-${WB.cur + 1}.png`; a.href = out.toDataURL("image/png"); a.click(); };
+  el("wbpng").onclick = () => { const out = document.createElement("canvas"); out.width = WB_W; out.height = WB_H; const c = out.getContext("2d"); c.drawImage(el("wbbg"), 0, 0); c.drawImage(ink, 0, 0); const a = document.createElement("a"); a.download = `amh-think-tank-page-${WB.cur + 1}.png`; a.href = out.toDataURL("image/png"); a.click(); };
   el("wbfull").onclick = () => { const w = el("wb"); if (document.fullscreenElement) document.exitFullscreen(); else if (w.requestFullscreen) w.requestFullscreen(); };
   V.querySelectorAll("[data-pg]").forEach(b => b.onclick = () => { WB.cur = +b.dataset.pg; wbRedo = []; wbSave(); renderBoard(); });
   el("wbadd").onclick = () => { WB.pages.push({ paper: wbPage().paper, tpl: "none", strokes: [] }); WB.cur = WB.pages.length - 1; wbRedo = []; wbSave(); renderBoard(); };
@@ -7615,7 +7657,7 @@ const AC_BELTS = [
    who: "Experienced engineers; your CLSSBB course.",
    train: "Typically about 4 weeks of training spread over about 4 months, with a project between sessions.",
    proj: "Leads several projects a year with measurable financial results.",
-   next: "Pass the Black Belt exam, then the CLSSBB-format mock exam (165 questions, 65% to pass) in the question bank.",
+   next: "Pass the Black Belt exam, then the CLSSBB-format mock exam (165 questions, 65% to pass) in Question Corner.",
    vids: ["Y7GyEUj88PI", "ysTUFl5S93w", "oOuu8IBd-yo", "EkAQAi3a4js", "Rsc5znwR5FA", "pJKxwFl3Wpg", "6A9Gxk6bJWc", "GrXkZYhkUS8", "0MFpOQRY0rw"], ch: [] }
 ];
 const AC = Object.fromEntries(AC_BELTS.map(b => [b.k, b]));
@@ -7625,7 +7667,7 @@ const acVid = id => VIDEOS.find(v => v.id === id) || (typeof AI_VIDEOS !== "unde
 const acChapters = b => b.k === "black" ? BB.map(s => ({ n: s.n })) : b.ch;
 const acDoneCount = b => b.k === "black" ? BB.filter(s => s.topics.every((t, j) => (ST.bb || {})[s.k + j])).length : b.ch.filter((c, i) => acState().ch[b.k + i]).length;
 
-/* question pools for each belt exam, drawn from the checked question bank */
+/* question pools for each belt exam, drawn from the checked Question Corner */
 function acPool(k) { return MCQ.map((q, i) => ({ ...q, id: i })).filter(q => ({
   white: q.lv === 1 && (q.d === "Lean" || q.d === "Six Sigma"),
   yellow: (q.lv === 1) || (q.d === "Lean" && q.lv === 2) || (q.lv === 2 && q.tags.some(t => ["bb4", "bb5"].includes(t)) && q.d !== "Statistics"),
@@ -7656,7 +7698,7 @@ function acOverview() { const r = acRank(), nx = r ? AC_BELTS[AC_BELTS.indexOf(r
      <li><b>Pick your belt.</b> Start at White even if you are on a Black Belt course: it takes an hour and fills gaps.</li>
      <li><b>Study each chapter.</b> Read the lesson, watch the video, open the linked terms and labs, and do the practice task. Tick the chapter when you can explain it without notes.</li>
      <li><b>Play the games.</b> They drill the facts each belt needs: wastes, roles, DMAIC tools and sigma levels.</li>
-     <li><b>Pass the belt exam.</b> Questions come from the checked question bank, with a full explanation for each one. Pass mark 70%.</li>
+     <li><b>Pass the belt exam.</b> Questions come from the checked Question Corner, with a full explanation for each one. Pass mark 70%.</li>
      <li><b>Print your practice certificate</b> and move up the ladder.</li></ol></div>
    <div class="card"><h3>${nx ? `Next for you: ${nx.n}` : "You hold every belt"}</h3>${nx ? `<p>${nx.role}</p><p class="small muted">${acDoneCount(nx)} of ${acChapters(nx).length} chapters done.</p><div class="row"><a class="btn primary sm" href="#bb/${nx.k}">Open ${nx.n}</a><a class="btn sm quiet" href="#bb/exam-${nx.k}">Take the exam</a></div>` : `<p>Keep the knowledge alive: play the games and coach someone through their White Belt.</p>`}
      <p class="small muted" style="margin-top:14px">Belts earned here are practice belts that show what you have learned on this site. They are not an accredited certification. For that, see the road map.</p></div></section>`; }
@@ -7709,7 +7751,7 @@ let ACX = null;
 function acExam(k) { const b = AC[k];
   if (!ACX || ACX.k !== k || ACX.done === undefined) { const pool = acPool(k).sort(() => Math.random() - .5).slice(0, b.exam).map(q => shuffledQ(q)); ACX = { k, qs: pool, ans: {}, done: false }; }
   const X = ACX;
-  el("view-bb").innerHTML = acHead(k) + `<section class="ac-exam"><div class="page-head"><h2>${b.n} exam</h2><p>${X.qs.length} questions from the checked question bank. Pass mark ${b.pass}%. Take your time; use the calculator if you need it. Your answers are only marked when you submit.</p></div>
+  el("view-bb").innerHTML = acHead(k) + `<section class="ac-exam"><div class="page-head"><h2>${b.n} exam</h2><p>${X.qs.length} questions from the checked Question Corner. Pass mark ${b.pass}%. Take your time; use the calculator if you need it. Your answers are only marked when you submit.</p></div>
    ${X.qs.map((q, i) => `<article class="mq-card" id="acq${i}"><p class="small ui muted">Question ${i + 1} of ${X.qs.length}, ${q.d}</p><h3 class="mq-q">${q.q}</h3>${q.o.map((o, j) => { const pick = X.ans[i] === j, cls = X.done ? (j === q.a ? "right" : pick ? "wrong" : "") : pick ? "picked" : "";
      return `<button class="opt ${cls}" data-qi="${i}" data-j="${j}" ${X.done ? "disabled" : ""} aria-pressed="${pick}"><b>${"ABCD"[j]}</b><span>${o}</span></button>`; }).join("")}${X.done ? `<div class="mq-ans"><p>${q.e}</p><p class="cite">Source: ${q.s}</p></div>` : ""}</article>`).join("")}
    <div class="row" style="margin-top:16px">${X.done ? `<button class="btn primary" id="acagain">New exam</button><a class="btn" href="#bb/${k}">Back to ${b.n}</a>` : `<button class="btn primary" id="acsub">Submit exam</button><span class="muted small ui" id="acleft">${X.qs.length - Object.keys(X.ans).length} unanswered</span>`}</div>
@@ -8645,7 +8687,7 @@ function mqStats() { const s = mqState(), by = {}; Object.entries(s.a).forEach((
 
 function renderMCQ(arg) { if (arg) { if (arg === "exam") MQ.mode = "exam"; else if (arg === "clssbb") { MQ.mode = "exam"; MQ.dom = ""; MQ.sec = ""; MQ.lv = 0; MQ.bbOnly = false; MQ.clssbb = true; } else if (arg === "review") MQ.mode = "review"; else if (arg === "bb") { MQ.mode = "practice"; MQ.sec = ""; MQ.dom = ""; MQ.bbOnly = true; } else if (/^bb\d$/.test(arg)) { MQ.mode = "practice"; MQ.sec = arg; MQ.dom = ""; } }
   const s = mqState(), st = mqStats(), due = MCQ.filter((q, i) => s.a[i] && s.a[i].due <= dayIndex() && s.a[i].w > 0).length, answered = Object.keys(s.a).length;
-  el("view-mcq").innerHTML = `<div class="page-head" style="max-width:none"><h2>Question bank</h2><p style="max-width:var(--measure)">${MCQ.length} multiple-choice questions on Statistics, Six Sigma, Lean and Industrial Engineering, written from the textbooks and standards listed under Sources, plus unlimited generated calculation questions. Every answer has a full explanation and a link to the topic. Calculation answers were checked by computation.</p></div>
+  el("view-mcq").innerHTML = `<div class="page-head" style="max-width:none"><h2>Question Corner</h2><p style="max-width:var(--measure)">${MCQ.length} multiple-choice questions on Statistics, Six Sigma, Lean and Industrial Engineering, written from the textbooks and standards listed in Reading Corner, plus unlimited generated calculation questions. Every answer has a full explanation and a link to the topic. Calculation answers were checked by computation.</p></div>
   <div class="mq-stats">${["Statistics", "Six Sigma", "Lean", "IE"].map(d => { const b = st[d] || { n: 0, ok: 0 }, tot = MCQ.filter(q => q.d === d).length; return `<div class="kpi"><small>${d}</small><b class="num">${b.n}/${tot}</b><span class="small muted">${b.n ? Math.round(b.ok / b.n * 100) + "% right" : "not started"}</span></div>`; }).join("")}<div class="kpi"><small>Due for review</small><b class="num">${due}</b><span class="small muted">mistakes to revisit</span></div></div>
   <div class="seg mq-modes" role="tablist">${[["practice", "Practice"], ["exam", "Mock exam"], ["review", `Review mistakes${due ? " (" + due + ")" : ""}`], ["bookmarks", "Bookmarks"], ["reported", `Reported${Object.keys(mqReports()).length ? " (" + Object.keys(mqReports()).length + ")" : ""}`]].map(([k, l]) => `<button role="tab" aria-selected="${MQ.mode === k}" class="${MQ.mode === k ? "on" : ""}" data-mode="${k}">${l}</button>`).join("")}</div>
   <div class="mq-filters">
@@ -8862,7 +8904,7 @@ const TIPS = [
   ["Study", "Explain today's term out loud in one minute, as if to a first-year friend. Where you hesitate is what to reread."],
   ["Study", "Retrieval beats rereading: answer five questions from the bank before you open your notes."],
   ["Study", "Space your practice. Ten questions a day for a week beats seventy in one night."],
-  ["Study", "When you get a question wrong, write the rule you missed in your own words on the whiteboard."],
+  ["Study", "When you get a question wrong, write the rule you missed in your own words in Think Tank Corner."],
   ["Time", "Plan tomorrow tonight: three tasks maximum, the most important one first."],
   ["Time", "Protect one 50-minute focus block a day with your phone in another room."],
   ["Time", "Multiply your time estimates by your planning factor from the Plan page. Most people need about 1.5×."],
@@ -8948,7 +8990,7 @@ function spQueue(goal) { const Q = [];
     chunk(ts, 3).forEach(g => Q.push(S_(`Learn: ${g.map(t => shortName(t)).join(", ")}`, 20, `#learn/${m}`, "Study a chapter")));
     [...new Set(ts.map(t => t.lab).filter(Boolean))].slice(0, 2).forEach(id => Q.push(S_(`Lab: ${TOOLS.find(x => x.id === id).name.split("(")[0].trim()}`, 15, `#labs/${id}`, "Lab practice")));
     Q.push(S_(`Chapter ${m} challenge (9 questions)`, 15, `#quiz/${m}`, "Challenge")); };
-  if (goal === "newstats") { [0, 1, 2, 3, 4].forEach(m => { learnChapter(m); if (TASKS[m]) Q.push(S_(`Real-life task: ${TASKS[m].t}`, 60, "#tasks", "Real-life task")); Q.push(S_("Question bank: 20 statistics questions", 25, "#mcq", "Challenge")); });
+  if (goal === "newstats") { [0, 1, 2, 3, 4].forEach(m => { learnChapter(m); if (TASKS[m]) Q.push(S_(`Real-life task: ${TASKS[m].t}`, 60, "#tasks", "Real-life task")); Q.push(S_("Question Corner: 20 statistics questions", 25, "#mcq", "Challenge")); });
     Q.push(S_("Play ‘Name that distribution’ and ‘Guess the correlation’", 15, "#games/dist", "Stat game")); [5, 6].forEach(learnChapter); Q.push(S_("Mock exam: 20 questions", 30, "#mcq/exam", "Challenge")); }
   if (goal === "bb") { BB.forEach((b, i) => { const R = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"][i];
       chunk(b.topics, 2).forEach(g => Q.push(S_(`LSSBB ${R}: ${g.map(t => t.n).join("; ")}`, 30, `#bb/${b.k}`, "Study a chapter")));
@@ -8960,7 +9002,7 @@ function spQueue(goal) { const Q = [];
       if (b.k === "bb6") { Q.push(S_("Capstone Analyze: verify root causes", 90, "#tasks", "Project")); Q.push(S_("Mock exam: 50 questions", 75, "#mcq/exam", "Challenge")); }
       if (b.k === "bb7") Q.push(S_("Capstone Improve: test your solution", 90, "#tasks", "Project"));
       if (b.k === "bb8") Q.push(S_("Capstone Control: control plan and chart", 90, "#tasks", "Project")); });
-    Q.push(S_("Review all your mistakes in the question bank", 45, "#mcq/review", "Challenge")); Q.push(S_("Full CLSSBB-format mock exam (165 questions)", 330, "#mcq/clssbb", "Challenge")); Q.push(S_("Rework your weakest section and retest", 60, "#bb", "Study a chapter")); }
+    Q.push(S_("Review all your mistakes in Question Corner", 45, "#mcq/review", "Challenge")); Q.push(S_("Full CLSSBB-format mock exam (165 questions)", 330, "#mcq/clssbb", "Challenge")); Q.push(S_("Rework your weakest section and retest", 60, "#bb", "Study a chapter")); }
   if (goal === "engineer") { const ph = { D: ["charter", "sipoc", "voc", "ctq"], M: ["dcplan", "opdef", "msa", "cpk"], A: ["pareto", "fishbone", "whys", "t2"], I: ["doe", "pokayoke", "wastes", "kaizen"], C: ["spc", "imr", "controlplan"] }, labs = { D: [], M: ["grr", "cap"], A: ["pareto", "ttest", "regress"], I: ["doe", "fmea"], C: ["spc"] };
     Q.push(S_("Use the ‘Which tool?’ helper on your problem", 10, "#road", "Study a chapter"));
     Object.entries(ph).forEach(([p, ids]) => { chunk(ids.map(id => TERM[id]), 2).forEach(g => Q.push(S_(`${PHASES[p].name}: learn ${g.map(t => shortName(t)).join(" and ")}`, 20, `#term/${g[0].id}`, "Study a chapter")));
@@ -8969,7 +9011,7 @@ function spQueue(goal) { const Q = [];
     Q.push(S_("Present your project in 10 slides", 90, "#tasks", "Project")); }
   if (goal === "data") { [1, 3, 4].forEach(learnChapter); Q.push(S_("Play ‘Guess the correlation’ until you reach the target", 15, "#games/corr", "Stat game"));
     Q.push(S_("Calculator: fit regression models in Lists & stats", 20, "#calc/stats", "Lab practice")); Q.push(S_("Read AI for IE: the twelve uses", 40, "#ai", "Study a chapter")); Q.push(S_("Watch two AI videos (bias–variance, cross-validation)", 30, "#ai", "Study a chapter"));
-    Q.push(S_("Read three Innovation stories", 30, "#inno", "Study a chapter")); Q.push(S_("Build one AI or data idea on the idea canvas", 40, "#inno", "Project")); Q.push(S_("Question bank: 20 statistics questions", 25, "#mcq", "Challenge")); }
+    Q.push(S_("Read three Innovation stories", 30, "#inno", "Study a chapter")); Q.push(S_("Build one AI or data idea on the idea canvas", 40, "#inno", "Project")); Q.push(S_("Question Corner: 20 statistics questions", 25, "#mcq", "Challenge")); }
   return Q; }
 function spBuild(cfg) { const q = spQueue(cfg.goal), daysPer = Math.max(1, Math.min(7, cfg.days)), cap = Math.max(15, cfg.min), out = [];
   const isStudy = d => ((d.getDay() + 6) % 7) < daysPer; let d = new Date(cfg.start + "T12:00"), day = null, used = 0, guard = 0;
@@ -8987,7 +9029,7 @@ function howToUse() { const steps = [
     ["Follow one path.", "Choose a goal below. The site tracks your milestones and always shows the next step."],
     ["Make your study plan.", "Tell the planner your time and it builds a dated plan you can send to your to-do list."],
     ["Practise before you read.", "Try the question or the lab first, then read the term. Struggling first makes the explanation stick."],
-    ["Review your mistakes.", "Wrong answers come back after 1, 3, 7, 14 and 30 days in the question bank until you master them."],
+    ["Review your mistakes.", "Wrong answers come back after 1, 3, 7, 14 and 30 days in Question Corner until you master them."],
     ["Use real data.", "Do the real-life tasks with your own numbers. That is what turns knowledge into skill, and into a portfolio."]];
   return `<section class="howto"><div class="page-head"><h2>How to get the most from AMH Corners</h2><p>Six habits that turn this site into real skill.</p></div><ol class="steps howto-steps">${steps.map(([h, t]) => `<li><b>${h}</b> ${t}</li>`).join("")}</ol></section>`; }
 
@@ -9031,11 +9073,11 @@ function showHomeTab(t) { ST.homeTab = t; localStorage.setItem(KEY, JSON.stringi
   el("view-home").querySelectorAll("[data-ht]").forEach(b => { const on = b.dataset.ht === t; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
   const x = xp(), [b] = beltOf(x), P = el("hometab");
   if (t === "plan") P.innerHTML = studyPlanSection();
-  if (t === "path") P.innerHTML = (pathTimeline() || `<p class="muted">You have not chosen a path yet. Pick one below.</p>`) + `<section><div class="page-head"><h2>Your progress</h2><p>You have <b class="num">${x}</b> practice points from terms, challenges, tasks and the question bank. Belts are earned in the LSS Academy by passing each belt exam.</p></div><a class="btn" href="#bb">Open the LSS Academy</a></section>` + pathPicker();
+  if (t === "path") P.innerHTML = (pathTimeline() || `<p class="muted">You have not chosen a path yet. Pick one below.</p>`) + `<section><div class="page-head"><h2>Your progress</h2><p>You have <b class="num">${x}</b> practice points from terms, challenges, tasks and Question Corner. Belts are earned in the LSS Academy by passing each belt exam.</p></div><a class="btn" href="#bb">Open the LSS Academy</a></section>` + pathPicker();
   if (t === "chapters") P.innerHTML = `<section><div class="page-head"><h2>Ten chapters</h2><p>Work through them in order. Each chapter ends with a real-life task and nine challenge questions.</p></div><ol class="toc">${MODULES.map(tocRow).join("")}</ol></section>`;
   if (t === "explore") P.innerHTML = `<section class="hero"><div class="hero-text"><h1>Learn to tell signal from noise.</h1>
       <p class="lede">Every process varies. Applied statistics is how an industrial engineer decides which variation is normal and which needs action, then proves the fix worked.</p>
-      <div class="row"><a class="btn primary" href="#road">Walk the DMAIC road</a><a class="btn" href="#labs">Open the labs</a><a class="btn quiet" href="#games">Play the stat games</a></div></div>
+      <div class="row"><a class="btn primary" href="#road">Walk the DMAIC road</a><a class="btn" href="#labs">Open the labs</a><a class="btn quiet" href="#games">Open Games Corner</a></div></div>
     <figure class="hero-chart" style="margin:0"><canvas id="heroCv" aria-label="Individuals control chart of 30 fill weights. Point 23 is above the upper control limit."></canvas><div class="callout" id="callout">Point 23 is above the upper control limit. That is a signal, not noise: stop and look for a special cause.</div>
       <figcaption class="hero-cap"><span><span class="key" style="color:var(--red)"><i></i>Control limits</span><span class="key" style="color:var(--green)"><i class="solid"></i>Centre line</span><span class="key" style="color:var(--ink)"><i class="solid"></i>Fill weight, g</span></span><a href="#labs/spc">Build your own chart</a></figcaption></figure></section>
     ${howToUse()}
@@ -9068,6 +9110,266 @@ function wireStart() { let goal = ST.path || "";
   el("stgo").onclick = () => { ST.path = goal; ST.studyPlan = { goal, min: +el("stm").value, days: +el("std").value, start: el("sts").value || fmtD(new Date()) }; ST.homeTab = "plan"; logActivity(); save(); toast("Your plan is ready"); renderHome(); scrollTo(0, 0); };
   el("stskip").onclick = () => { ST.skipStart = true; ST.homeTab = "explore"; save(); renderHome(); };
   prev(); }
+
+</script>
+<script>
+/* ===== READING CORNER: a library of books that go with the corners of this site =====
+   B(title, author, first published, category, level 1 start / 2 intermediate / 3 advanced, why it is here, free legal copy) */
+const LIB_CATS = [
+  ["stat", "Statistics", "#2F5BEA", "#learn"], ["prob", "Probability and risk", "#7B4FD6", "#learn"], ["doe", "Regression, DOE and forecasting", "#0E8A8A", "#labs"],
+  ["qual", "Quality and SPC", "#C27C0E", "#labs"], ["lss", "Lean Six Sigma", "#17885B", "#bb"], ["lean", "Lean and Toyota", "#D93A42", "#bb"],
+  ["ie", "Industrial engineering and operations", "#4A5568", "#tasks"], ["data", "Data science and AI", "#0B7FB5", "#corner"], ["inno", "Innovation and entrepreneurship", "#E0663A", "#corner"],
+  ["think", "Thinking and problem solving", "#8A5A2B", "#board"], ["learn", "Learning and focus", "#5B6B2E", "#plan"], ["bio", "Innovators' lives", "#9C2F6B", "#corner"]
+];
+const LIB = [];
+const LB = (t, a, y, c, l, w, f = "") => LIB.push({ t, a, y, c, l, w, f });
+/* Statistics */
+LB("The Art of Statistics: Learning from Data", "David Spiegelhalter", 2019, "stat", 1, "The best first book on thinking with data: questions first, formulas second.");
+LB("Naked Statistics", "Charles Wheelan", 2013, "stat", 1, "Statistics explained with everyday stories, light on maths.");
+LB("How to Lie with Statistics", "Darrell Huff", 1954, "stat", 1, "A short classic on misleading charts, averages and samples.");
+LB("Statistics Done Wrong", "Alex Reinhart", 2015, "stat", 1, "The common mistakes behind p-values, power and multiple comparisons.");
+LB("The Signal and the Noise", "Nate Silver", 2012, "stat", 1, "Why most predictions fail and how good forecasters think.");
+LB("The Lady Tasting Tea", "David Salsburg", 2001, "stat", 1, "How statistics was invented, told through the people who did it.");
+LB("OpenIntro Statistics", "David Diez, Mine Çetinkaya-Rundel and Christopher Barr", 2011, "stat", 1, "A complete first-year textbook, free online with exercises.", "https://www.openintro.org/book/os/");
+LB("Introductory Statistics", "Barbara Illowsky and Susan Dean (OpenStax)", 2013, "stat", 1, "Free, peer-reviewed university textbook covering chapters 0 to 4 of this site.", "https://openstax.org/details/books/introductory-statistics-2e");
+LB("Introductory Business Statistics", "Alexander Holmes, Barbara Illowsky and Susan Dean (OpenStax)", 2017, "stat", 1, "Free textbook with business and operations examples.", "https://openstax.org/details/books/introductory-business-statistics-2e");
+LB("Statistical Thinking for the 21st Century", "Russell A. Poldrack", 2019, "stat", 1, "A modern, free introduction that includes Bayesian ideas and resampling.", "https://statsthinking21.org/");
+LB("Think Stats", "Allen B. Downey", 2011, "stat", 1, "Learn statistics by writing small Python programs. Free online.", "https://greenteapress.com/wp/think-stats-2e/");
+LB("Statistics", "David Freedman, Robert Pisani and Roger Purves", 1978, "stat", 1, "Famous for teaching ideas through clear words, not formulas.");
+LB("The Cartoon Guide to Statistics", "Larry Gonick and Woollcott Smith", 1993, "stat", 1, "A fun, accurate tour of the first-year course.");
+LB("Storytelling with Data", "Cole Nussbaumer Knaflic", 2015, "stat", 1, "How to make charts that people understand and act on.");
+LB("The Visual Display of Quantitative Information", "Edward R. Tufte", 1983, "stat", 2, "The classic on honest, clear statistical graphics.");
+LB("Applied Statistics and Probability for Engineers", "Douglas C. Montgomery and George C. Runger", 1994, "stat", 2, "The core engineering statistics textbook cited on most term pages.");
+LB("Probability and Statistics for Engineers and Scientists", "Ronald E. Walpole, Raymond H. Myers, Sharon L. Myers and Keying Ye", 1972, "stat", 2, "A widely used engineering course book with many worked examples.");
+LB("NIST/SEMATECH e-Handbook of Statistical Methods", "NIST", 2003, "stat", 2, "Free reference with industrial case studies for almost every method on this site.", "https://www.itl.nist.gov/div898/handbook/");
+LB("Exploratory Data Analysis", "John W. Tukey", 1977, "stat", 2, "Where the box plot, stem-and-leaf and outlier fences come from.");
+LB("Sampling Techniques", "William G. Cochran", 1953, "stat", 3, "The classic on sampling designs and sample size.");
+LB("Practical Nonparametric Statistics", "W. J. Conover", 1971, "stat", 3, "Rank-based tests for data that are not normal.");
+LB("Statistical Power Analysis for the Behavioral Sciences", "Jacob Cohen", 1969, "stat", 3, "Effect size and power, from the person who defined them.");
+LB("Statistical Inference", "George Casella and Roger L. Berger", 1990, "stat", 3, "The standard graduate text on the theory behind estimation and tests.");
+LB("All of Statistics", "Larry Wasserman", 2004, "stat", 3, "A fast, rigorous tour for students with strong maths.");
+LB("Statistical Rethinking", "Richard McElreath", 2015, "stat", 3, "A friendly route into Bayesian modelling.");
+/* Probability and risk */
+LB("Introduction to Probability", "Joseph K. Blitzstein and Jessica Hwang", 2014, "prob", 2, "Harvard's Stat 110 book; lectures and the book are free online.", "https://stat110.hsites.harvard.edu/");
+LB("A First Course in Probability", "Sheldon Ross", 1976, "prob", 2, "The standard undergraduate probability textbook.");
+LB("Introduction to Probability Models", "Sheldon Ross", 1972, "prob", 3, "Markov chains, queues and reliability for engineers.");
+LB("Fifty Challenging Problems in Probability", "Frederick Mosteller", 1965, "prob", 2, "Short puzzles that build real intuition.");
+LB("An Introduction to Probability Theory and Its Applications", "William Feller", 1950, "prob", 3, "The classic advanced text.");
+LB("The Drunkard's Walk", "Leonard Mlodinow", 2008, "prob", 1, "How randomness shapes everyday life.");
+LB("Fooled by Randomness", "Nassim Nicholas Taleb", 2001, "prob", 1, "Why we mistake luck for skill.");
+LB("The Black Swan", "Nassim Nicholas Taleb", 2007, "prob", 1, "Rare, high-impact events and the limits of the normal curve.");
+LB("Against the Gods: The Remarkable Story of Risk", "Peter L. Bernstein", 1996, "prob", 1, "The history of probability, insurance and risk.");
+/* Regression, DOE and forecasting */
+LB("Design and Analysis of Experiments", "Douglas C. Montgomery", 1976, "doe", 2, "The standard textbook on ANOVA and designed experiments.");
+LB("Statistics for Experimenters", "George E. P. Box, J. Stuart Hunter and William G. Hunter", 1978, "doe", 2, "Designed experiments taught by the people who built the field.");
+LB("DOE Simplified", "Mark J. Anderson and Patrick J. Whitcomb", 2000, "doe", 1, "A practical first book on factorial experiments.");
+LB("Understanding Industrial Designed Experiments", "Stephen R. Schmidt and Robert G. Launsby", 1988, "doe", 2, "DOE for engineers, with industrial cases.");
+LB("Introduction to Linear Regression Analysis", "Douglas C. Montgomery, Elizabeth A. Peck and G. Geoffrey Vining", 1982, "doe", 2, "Regression, diagnostics and model building with engineering data.");
+LB("Applied Linear Statistical Models", "Michael H. Kutner, Christopher J. Nachtsheim, John Neter and William Li", 1974, "doe", 3, "The deep reference on regression and ANOVA.");
+LB("Applied Logistic Regression", "David W. Hosmer and Stanley Lemeshow", 1989, "doe", 3, "The standard text on modelling pass/fail outcomes.");
+LB("Response Surface Methodology", "Raymond H. Myers and Douglas C. Montgomery", 1995, "doe", 3, "How to find the best settings when the response curves.");
+LB("Quality Engineering Using Robust Design", "Madhav S. Phadke", 1989, "doe", 3, "Taguchi's robust design explained by a practitioner.");
+LB("Taguchi Techniques for Quality Engineering", "Phillip J. Ross", 1988, "doe", 2, "Orthogonal arrays and signal-to-noise ratios step by step.");
+LB("The Design of Experiments", "Ronald A. Fisher", 1935, "doe", 3, "Randomisation, replication and blocking from their source.");
+LB("Forecasting: Principles and Practice", "Rob J. Hyndman and George Athanasopoulos", 2013, "doe", 2, "The best free book on demand forecasting and time series.", "https://otexts.com/fpp3/");
+LB("Time Series Analysis: Forecasting and Control", "George E. P. Box and Gwilym M. Jenkins", 1970, "doe", 3, "The origin of ARIMA models.");
+/* Quality and SPC */
+LB("Understanding Variation: The Key to Managing Chaos", "Donald J. Wheeler", 1993, "qual", 1, "A short, readable book on common versus special causes.");
+LB("Understanding Statistical Process Control", "Donald J. Wheeler and David S. Chambers", 1986, "qual", 2, "Control charts explained properly, with many industrial examples.");
+LB("Introduction to Statistical Quality Control", "Douglas C. Montgomery", 1985, "qual", 2, "The standard SPC, capability and MSA textbook.");
+LB("Statistical Quality Control", "Eugene L. Grant and Richard S. Leavenworth", 1946, "qual", 2, "A long-running classic on control charts and acceptance sampling.");
+LB("Economic Control of Quality of Manufactured Product", "Walter A. Shewhart", 1931, "qual", 3, "The book that invented the control chart.");
+LB("Statistical Method from the Viewpoint of Quality Control", "Walter A. Shewhart", 1939, "qual", 3, "Shewhart's lectures, edited by Deming; the source of Plan-Do-Study-Act.");
+LB("Out of the Crisis", "W. Edwards Deming", 1982, "qual", 2, "Variation, the 14 points and management's role in quality.");
+LB("The New Economics for Industry, Government, Education", "W. Edwards Deming", 1993, "qual", 2, "Deming's system of profound knowledge.");
+LB("The Deming Management Method", "Mary Walton", 1986, "qual", 1, "An easy introduction to Deming's ideas.");
+LB("Guide to Quality Control", "Kaoru Ishikawa", 1968, "qual", 1, "The seven basic quality tools, from their champion.");
+LB("What Is Total Quality Control? The Japanese Way", "Kaoru Ishikawa", 1985, "qual", 2, "How Japanese companies built quality into everything.");
+LB("Juran's Quality Handbook", "Joseph M. Juran", 1951, "qual", 3, "The encyclopaedia of quality management.");
+LB("Juran on Quality by Design", "Joseph M. Juran", 1992, "qual", 2, "Planning quality into new products and services.");
+LB("Total Quality Control", "Armand V. Feigenbaum", 1951, "qual", 2, "The book that named total quality.");
+LB("Quality Is Free", "Philip B. Crosby", 1979, "qual", 1, "The cost of poor quality, written for managers.");
+LB("Quality Function Deployment", "Yoji Akao", 1990, "qual", 3, "QFD and the house of quality from its inventor.");
+LB("Zero Quality Control: Source Inspection and the Poka-yoke System", "Shigeo Shingo", 1986, "qual", 2, "The origin of mistake-proofing.");
+LB("Measurement Systems Analysis Reference Manual", "AIAG", 1990, "qual", 2, "The automotive standard for gauge R&R and bias studies.");
+/* Lean Six Sigma */
+LB("The Lean Six Sigma Pocket Toolbook", "Michael L. George, John Maxey, David Rowlands and Mark Price", 2005, "lss", 1, "Every DMAIC tool on a page or two: keep it next to you.");
+LB("What Is Lean Six Sigma?", "Michael L. George, David Rowlands and Bill Kastle", 2004, "lss", 1, "A short overview to read before your Yellow Belt.");
+LB("The Six Sigma Way", "Peter S. Pande, Robert P. Neuman and Roland R. Cavanagh", 2000, "lss", 1, "How GE, Motorola and others ran Six Sigma programmes.");
+LB("Six Sigma: The Breakthrough Management Strategy", "Mikel Harry and Richard Schroeder", 2000, "lss", 1, "Six Sigma explained by one of its creators.");
+LB("Statistics for Six Sigma Made Easy", "Warren Brussee", 2004, "lss", 1, "The statistics a Green Belt really uses, simply explained.");
+LB("Lean Six Sigma for Dummies", "John Morgan and Martin Brenig-Jones", 2009, "lss", 1, "A plain-English start for complete beginners.");
+LB("The Memory Jogger 2", "Michael Brassard and Diane Ritter", 1994, "lss", 1, "Pocket guide to planning and quality tools for teams.");
+LB("Lean Six Sigma: Combining Six Sigma Quality with Lean Production Speed", "Michael L. George", 2002, "lss", 2, "Why speed and quality belong together.");
+LB("Lean Six Sigma for Service", "Michael L. George", 2003, "lss", 2, "Applying the methods in offices, banks and hospitals.");
+LB("The Certified Six Sigma Green Belt Handbook", "Roderick A. Munro, Govindarajan Ramu and Daniel J. Zrymiak", 2008, "lss", 2, "Follows the ASQ Green Belt body of knowledge.");
+LB("The Black Belt Memory Jogger", "Six Sigma Academy", 2002, "lss", 2, "Black Belt tools in pocket form.");
+LB("The Six Sigma Handbook", "Thomas Pyzdek and Paul Keller", 2001, "lss", 3, "The complete practitioner reference, cited in LSS Corner.");
+LB("The Certified Six Sigma Black Belt Handbook", "T. M. Kubiak and Donald W. Benbow", 2005, "lss", 3, "Follows the ASQ Black Belt body of knowledge.");
+LB("Implementing Six Sigma", "Forrest W. Breyfogle III", 1999, "lss", 3, "Deep statistical treatment for Black Belts.");
+LB("Design for Six Sigma", "Kai Yang and Basem El-Haik", 2003, "lss", 3, "DMADV and designing new processes to six sigma.");
+/* Lean and Toyota */
+LB("The Machine That Changed the World", "James P. Womack, Daniel T. Jones and Daniel Roos", 1990, "lean", 1, "The MIT study that introduced the word 'lean'.");
+LB("Lean Thinking", "James P. Womack and Daniel T. Jones", 1996, "lean", 1, "The five Lean principles.");
+LB("The Toyota Way", "Jeffrey K. Liker", 2004, "lean", 1, "The 14 principles behind Toyota's success.");
+LB("Toyota Production System: Beyond Large-Scale Production", "Taiichi Ohno", 1978, "lean", 2, "The origin of the seven wastes and the 5 Whys.");
+LB("Workplace Management", "Taiichi Ohno", 1982, "lean", 1, "Short lessons from the shop floor by TPS's creator.");
+LB("A Study of the Toyota Production System", "Shigeo Shingo", 1981, "lean", 3, "TPS from an industrial engineer's point of view.");
+LB("A Revolution in Manufacturing: The SMED System", "Shigeo Shingo", 1985, "lean", 2, "Quick changeover, from its inventor.");
+LB("Learning to See", "Mike Rother and John Shook", 1998, "lean", 2, "The workbook for value stream mapping.");
+LB("Creating Continuous Flow", "Mike Rother and Rick Harris", 2001, "lean", 2, "Designing lean cells and line balancing.");
+LB("Toyota Kata", "Mike Rother", 2009, "lean", 2, "The improvement and coaching routines behind Toyota.");
+LB("Managing to Learn", "John Shook", 2008, "lean", 2, "A3 problem solving told as a story.");
+LB("Kaizen: The Key to Japan's Competitive Success", "Masaaki Imai", 1986, "lean", 1, "Continuous improvement explained.");
+LB("Gemba Kaizen", "Masaaki Imai", 1997, "lean", 2, "Low-cost improvement where the work happens.");
+LB("Gemba Walks", "James P. Womack", 2011, "lean", 1, "Essays from decades of walking the shop floor.");
+LB("5 Pillars of the Visual Workplace", "Hiroyuki Hirano", 1995, "lean", 1, "The 5S sourcebook.");
+LB("Introduction to TPM: Total Productive Maintenance", "Seiichi Nakajima", 1988, "lean", 2, "OEE and the six big losses, from TPM's founder.");
+LB("Lean Hospitals", "Mark Graban", 2008, "lean", 2, "Lean in healthcare, with real hospital results.");
+/* Industrial engineering and operations */
+LB("The Goal", "Eliyahu M. Goldratt and Jeff Cox", 1984, "ie", 1, "A novel that teaches bottlenecks and the Theory of Constraints.");
+LB("Critical Chain", "Eliyahu M. Goldratt", 1997, "ie", 1, "The Theory of Constraints applied to projects.");
+LB("The Principles of Scientific Management", "Frederick Winslow Taylor", 1911, "ie", 1, "Where industrial engineering began. Free as a public-domain e-book.", "https://www.gutenberg.org/ebooks/6435");
+LB("Operations Management", "William J. Stevenson", 1982, "ie", 1, "A clear first course in operations.");
+LB("Principles of Management", "David S. Bright, Anastasia H. Cortes and others (OpenStax)", 2019, "ie", 1, "Free textbook on how organisations are run.", "https://openstax.org/details/books/principles-management");
+LB("The Box: How the Shipping Container Made the World Smaller", "Marc Levinson", 2006, "ie", 1, "How one simple innovation transformed logistics.");
+LB("Factory Physics", "Wallace J. Hopp and Mark L. Spearman", 1996, "ie", 3, "Little's Law, variability and flow, for industrial engineers.");
+LB("Introduction to Operations Research", "Frederick S. Hillier and Gerald J. Lieberman", 1967, "ie", 2, "Linear programming, queues and simulation: the standard text.");
+LB("Operations Research: An Introduction", "Hamdy A. Taha", 1971, "ie", 2, "Widely used OR textbook with many solved problems.");
+LB("Production and Operations Analysis", "Steven Nahmias", 1989, "ie", 2, "Forecasting, inventory and scheduling models.");
+LB("Automation, Production Systems, and Computer-Integrated Manufacturing", "Mikell P. Groover", 1980, "ie", 2, "Line balancing, automation and manufacturing systems.");
+LB("Work Systems: The Methods, Measurement and Management of Work", "Mikell P. Groover", 2007, "ie", 2, "Work study, time standards and ergonomics.");
+LB("Niebel's Methods, Standards, and Work Design", "Andris Freivalds and Benjamin W. Niebel", 1955, "ie", 2, "The classic on methods engineering and time study.");
+LB("Facilities Planning", "James A. Tompkins, John A. White and others", 1984, "ie", 2, "Layout, material handling and warehouse design.");
+LB("Supply Chain Management: Strategy, Planning, and Operation", "Sunil Chopra and Peter Meindl", 2001, "ie", 2, "The standard supply-chain textbook.");
+LB("Human Factors in Engineering and Design", "Mark S. Sanders and Ernest J. McCormick", 1957, "ie", 2, "Ergonomics: designing work for people.");
+LB("Project Management: A Systems Approach", "Harold Kerzner", 1979, "ie", 2, "Planning, scheduling and controlling projects.");
+LB("Simulation Modeling and Analysis", "Averill M. Law and W. David Kelton", 1982, "ie", 3, "Discrete-event simulation done properly.");
+/* Data science and AI */
+LB("R for Data Science", "Hadley Wickham, Mine Çetinkaya-Rundel and Garrett Grolemund", 2017, "data", 1, "Import, tidy, visualise and model data in R. Free online.", "https://r4ds.hadley.nz/");
+LB("Python for Data Analysis", "Wes McKinney", 2012, "data", 2, "pandas from its creator. Free online.", "https://wesmckinney.com/book/");
+LB("Data Smart", "John W. Foreman", 2013, "data", 1, "Data science done in a spreadsheet.");
+LB("Data Science for Business", "Foster Provost and Tom Fawcett", 2013, "data", 1, "How data mining creates business value.");
+LB("The Book of Why", "Judea Pearl and Dana Mackenzie", 2018, "data", 1, "Cause and effect, beyond correlation.");
+LB("The Master Algorithm", "Pedro Domingos", 2015, "data", 1, "The five schools of machine learning.");
+LB("Prediction Machines", "Ajay Agrawal, Joshua Gans and Avi Goldfarb", 2018, "data", 1, "The simple economics of AI.");
+LB("Competing in the Age of AI", "Marco Iansiti and Karim R. Lakhani", 2020, "data", 1, "How AI changes the way companies operate.");
+LB("Co-Intelligence: Living and Working with AI", "Ethan Mollick", 2024, "data", 1, "Practical advice on using AI tools at work and in study.");
+LB("Weapons of Math Destruction", "Cathy O'Neil", 2016, "data", 1, "When algorithms go wrong, and who pays.");
+LB("An Introduction to Statistical Learning", "Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani", 2013, "data", 2, "The best first book on machine learning. Free online.", "https://www.statlearning.com/");
+LB("Mathematics for Machine Learning", "Marc Peter Deisenroth, A. Aldo Faisal and Cheng Soon Ong", 2020, "data", 2, "The linear algebra and calculus behind ML. Free online.", "https://mml-book.github.io/");
+LB("Hands-On Machine Learning with Scikit-Learn, Keras and TensorFlow", "Aurélien Géron", 2017, "data", 2, "Practical machine learning in Python.");
+LB("The Elements of Statistical Learning", "Trevor Hastie, Robert Tibshirani and Jerome Friedman", 2001, "data", 3, "The advanced companion to ISL. Free online.", "https://hastie.su.domains/ElemStatLearn/");
+LB("Deep Learning", "Ian Goodfellow, Yoshua Bengio and Aaron Courville", 2016, "data", 3, "The standard deep learning text. Free online.", "https://www.deeplearningbook.org/");
+LB("Dive into Deep Learning", "Aston Zhang, Zachary C. Lipton, Mu Li and Alexander J. Smola", 2019, "data", 3, "Interactive deep learning with runnable code. Free online.", "https://d2l.ai/");
+LB("Artificial Intelligence: A Modern Approach", "Stuart Russell and Peter Norvig", 1995, "data", 3, "The leading university AI textbook.");
+/* Innovation and entrepreneurship */
+LB("The Lean Startup", "Eric Ries", 2011, "inno", 1, "Build, measure, learn: Lean thinking for new ventures.");
+LB("Zero to One", "Peter Thiel and Blake Masters", 2014, "inno", 1, "How to build something new rather than copy.");
+LB("The Innovator's Dilemma", "Clayton M. Christensen", 1997, "inno", 1, "Why great companies miss disruptive innovations.");
+LB("The Innovator's Solution", "Clayton M. Christensen and Michael E. Raynor", 2003, "inno", 2, "How to create disruptive growth.");
+LB("Competing Against Luck", "Clayton M. Christensen, Taddy Hall, Karen Dillon and David S. Duncan", 2016, "inno", 1, "Jobs to be done: why customers 'hire' products.");
+LB("Blue Ocean Strategy", "W. Chan Kim and Renée Mauborgne", 2005, "inno", 1, "Creating new markets instead of fighting in crowded ones.");
+LB("Business Model Generation", "Alexander Osterwalder and Yves Pigneur", 2010, "inno", 1, "The Business Model Canvas, explained visually.");
+LB("Value Proposition Design", "Alexander Osterwalder, Yves Pigneur, Gregory Bernarda and Alan Smith", 2014, "inno", 1, "Designing products customers want.");
+LB("The Mom Test", "Rob Fitzpatrick", 2013, "inno", 1, "How to ask customers questions that give honest answers.");
+LB("Sprint", "Jake Knapp, John Zeratsky and Braden Kowitz", 2016, "inno", 1, "Google Ventures' five-day method to test ideas.");
+LB("Change by Design", "Tim Brown", 2009, "inno", 1, "Design thinking from IDEO's leader.");
+LB("Creative Confidence", "Tom Kelley and David Kelley", 2013, "inno", 1, "Everyone can be creative: exercises from IDEO and Stanford d.school.");
+LB("The Design of Everyday Things", "Don Norman", 1988, "inno", 1, "Why products confuse people, and how to design them better.");
+LB("Where Good Ideas Come From", "Steven Johnson", 2010, "inno", 1, "The patterns behind innovation through history.");
+LB("Hooked", "Nir Eyal", 2014, "inno", 1, "How habit-forming products are built.");
+LB("Crossing the Chasm", "Geoffrey A. Moore", 1991, "inno", 1, "Taking a technology from early adopters to the mainstream.");
+LB("Good to Great", "Jim Collins", 2001, "inno", 1, "What separates lasting companies from the rest.");
+LB("The Hard Thing About Hard Things", "Ben Horowitz", 2014, "inno", 1, "Honest lessons on running a start-up.");
+LB("Inspired", "Marty Cagan", 2008, "inno", 2, "How strong technology companies build products.");
+LB("The Four Steps to the Epiphany", "Steve Blank", 2005, "inno", 2, "Customer development, the method behind the lean start-up.");
+LB("The Startup Owner's Manual", "Steve Blank and Bob Dorf", 2012, "inno", 2, "A step-by-step guide to building a company.");
+LB("Diffusion of Innovations", "Everett M. Rogers", 1962, "inno", 2, "How new ideas spread through society.");
+LB("Entrepreneurship", "Michael Laverty and Chris Littel (OpenStax)", 2020, "inno", 1, "Free university textbook on starting and growing a venture.", "https://openstax.org/details/books/entrepreneurship");
+LB("Introduction to Business", "Lawrence J. Gitman and others (OpenStax)", 2018, "inno", 1, "Free textbook on how businesses work.", "https://openstax.org/details/books/introduction-business");
+/* Thinking and problem solving */
+LB("How to Solve It", "George Pólya", 1945, "think", 1, "The four steps of problem solving, still the best guide.");
+LB("Thinking, Fast and Slow", "Daniel Kahneman", 2011, "think", 1, "The two systems of thinking and the biases they create.");
+LB("Noise: A Flaw in Human Judgment", "Daniel Kahneman, Olivier Sibony and Cass R. Sunstein", 2021, "think", 1, "Variation in human decisions: SPC thinking for judgment.");
+LB("Superforecasting", "Philip E. Tetlock and Dan Gardner", 2015, "think", 1, "What makes some people far better at predicting.");
+LB("Factfulness", "Hans Rosling, Ola Rosling and Anna Rosling Rönnlund", 2018, "think", 1, "Ten reasons we misread the world, and how data corrects them.");
+LB("How to Measure Anything", "Douglas W. Hubbard", 2007, "think", 2, "Putting numbers on 'intangibles' to make better decisions.");
+LB("Thinking in Systems", "Donella H. Meadows", 2008, "think", 1, "Feedback loops, delays and leverage points.");
+LB("The Fifth Discipline", "Peter M. Senge", 1990, "think", 2, "Systems thinking and the learning organisation.");
+LB("Algorithms to Live By", "Brian Christian and Tom Griffiths", 2016, "think", 1, "Computer science ideas applied to everyday decisions.");
+LB("Decisive", "Chip Heath and Dan Heath", 2013, "think", 1, "A simple process for making better choices.");
+LB("Upstream", "Dan Heath", 2020, "think", 1, "Solving problems before they happen: root cause thinking.");
+LB("The Scout Mindset", "Julia Galef", 2021, "think", 1, "Seeing things as they are, not as you wish.");
+LB("The Pyramid Principle", "Barbara Minto", 1987, "think", 2, "Structuring reports and presentations so people follow them.");
+LB("The Art of Thinking Clearly", "Rolf Dobelli", 2011, "think", 1, "Short chapters on common thinking errors.");
+/* Learning and focus */
+LB("Make It Stick", "Peter C. Brown, Henry L. Roediger III and Mark A. McDaniel", 2014, "learn", 1, "The science of learning: retrieval, spacing and interleaving.");
+LB("A Mind for Numbers", "Barbara Oakley", 2014, "learn", 1, "How to excel at maths and science, even if you struggled before.");
+LB("Deep Work", "Cal Newport", 2016, "learn", 1, "Focused work in a distracted world: pairs with Focus Corner.");
+LB("Atomic Habits", "James Clear", 2018, "learn", 1, "Small habits that compound into big results.");
+LB("Ultralearning", "Scott H. Young", 2019, "learn", 1, "Plans for learning hard skills fast.");
+LB("Peak", "Anders Ericsson and Robert Pool", 2016, "learn", 1, "Deliberate practice from the researcher who studied it.");
+LB("Mindset", "Carol S. Dweck", 2006, "learn", 1, "Why believing you can improve helps you improve.");
+LB("Range", "David Epstein", 2019, "learn", 1, "Why broad experience helps in a specialised world.");
+LB("So Good They Can't Ignore You", "Cal Newport", 2012, "learn", 1, "Build rare skills before chasing passion.");
+LB("Getting Things Done", "David Allen", 2001, "learn", 1, "A complete system for organising tasks.");
+LB("The 7 Habits of Highly Effective People", "Stephen R. Covey", 1989, "learn", 1, "Priorities, planning and working with others.");
+LB("How to Read a Book", "Mortimer J. Adler and Charles Van Doren", 1940, "learn", 1, "How to read actively and understand difficult books.");
+/* Innovators' lives */
+LB("The Innovators", "Walter Isaacson", 2014, "bio", 1, "How teams of hackers, geniuses and geeks created the digital revolution.");
+LB("Steve Jobs", "Walter Isaacson", 2011, "bio", 1, "The authorised biography of Apple's co-founder.");
+LB("Leonardo da Vinci", "Walter Isaacson", 2017, "bio", 1, "Curiosity and observation as an innovator's tools.");
+LB("Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future", "Ashlee Vance", 2015, "bio", 1, "Engineering-led companies and first-principles thinking.");
+LB("Shoe Dog", "Phil Knight", 2016, "bio", 1, "Nike's founder on the early, uncertain years.");
+LB("The Everything Store", "Brad Stone", 2013, "bio", 1, "Jeff Bezos and the operations machine behind Amazon.");
+LB("Made in America", "Sam Walton and John Huey", 1992, "bio", 1, "Walmart's founder on logistics, cost and customers.");
+LB("Grinding It Out", "Ray Kroc and Robert Anderson", 1977, "bio", 1, "How McDonald's standardised fast food.");
+LB("The Man Who Discovered Quality", "Andrea Gabor", 1990, "bio", 1, "How Deming changed industry in Japan and America.");
+LB("The Idea Factory: Bell Labs and the Great Age of American Innovation", "Jon Gertner", 2012, "bio", 1, "The lab that gave us the transistor, information theory and Shewhart's control chart.");
+LB("The Wright Brothers", "David McCullough", 2015, "bio", 1, "Experiment, measurement and persistence in the first flight.");
+LB("Tesla: Inventor of the Electrical Age", "W. Bernard Carlson", 2013, "bio", 2, "A historian's account of Nikola Tesla's methods.");
+LB("Edison: A Life of Invention", "Paul Israel", 1998, "bio", 2, "Edison's invention factory at Menlo Park.");
+LB("The Chip", "T. R. Reid", 1984, "bio", 1, "How two engineers invented the integrated circuit.");
+LB("Chip War", "Chris Miller", 2022, "bio", 1, "The race to make the world's most critical technology.");
+LB("The Man Who Solved the Market", "Gregory Zuckerman", 2019, "bio", 1, "Jim Simons and the statisticians who beat Wall Street.");
+
+const LIB_START = ["The Art of Statistics: Learning from Data", "The Lean Six Sigma Pocket Toolbook", "The Goal", "The Toyota Way", "Make It Stick", "The Lean Startup"];
+const libId = b => b.t.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 48);
+const LIBF = { q: "", c: "", l: 0, free: false, shelf: false };
+const libCited = b => typeof BOOKS !== "undefined" && Object.values(BOOKS).some(x => x.t === b.t);
+const libShelf = () => (ST.lib = ST.lib || {});
+function libCover(b) { const c = LIB_CATS.find(x => x[0] === b.c);
+  return `<div class="lb-cover" style="--bc:${c[2]}" aria-hidden="true"><span class="lb-cat">${esc(c[1])}</span><b>${esc(b.t.split(":")[0])}</b><span class="lb-au">${esc(b.a.split(/,| and /)[0].replace(/\s*\(.*\)/, ""))}</span></div>`; }
+function libCard(b) { const id = libId(b), s = libShelf()[id] || 0, q = enc(b.t + " " + b.a.split(/,| and /)[0].replace(/\s*\(.*\)/, ""));
+  return `<article class="lb-card" data-id="${id}">${libCover(b)}<div class="lb-body">
+    <h4>${esc(b.t)}</h4><p class="lb-meta">${esc(b.a)}, ${b.y}</p>
+    <p class="lb-tags"><span class="lb-lv lv${b.l}">${["", "Start here", "Intermediate", "Advanced"][b.l]}</span>${b.f ? '<span class="lb-free">Free to read</span>' : ""}${libCited(b) ? '<span class="lb-cite">Cited on term pages</span>' : ""}</p>
+    <p class="lb-why">${esc(b.w)}</p>
+    <div class="lb-act">${b.f ? `<a class="btn sm primary" href="${b.f}" target="_blank" rel="noopener">Read free</a>` : ""}<a class="btn sm" href="https://openlibrary.org/search?q=${q}" target="_blank" rel="noopener">Open Library</a><a class="btn sm quiet" href="https://search.worldcat.org/search?q=${q}" target="_blank" rel="noopener">Find in a library</a>
+      <button class="lb-shelf" data-shelf="${id}" aria-pressed="${s > 0}" title="Add to my shelf">${s === 2 ? "Finished" : s === 1 ? "On my shelf" : "Add to shelf"}</button></div></div></article>`; }
+function libList() { const q = LIBF.q.trim().toLowerCase(), sh = libShelf();
+  return LIB.filter(b => (!LIBF.c || b.c === LIBF.c) && (!LIBF.l || b.l === LIBF.l) && (!LIBF.free || b.f) && (!LIBF.shelf || sh[libId(b)]) && (!q || (b.t + " " + b.a + " " + b.w).toLowerCase().includes(q))); }
+function libGrid() { const L = libList();
+  return L.length ? `<p class="count">${L.length} ${L.length === 1 ? "book" : "books"}</p><div class="lb-grid">${L.map(libCard).join("")}</div>`
+    : `<p class="muted" style="padding:30px 0">${LIBF.shelf ? "Your shelf is empty. Use “Add to shelf” on any book." : "No books match. Try another word or clear the filters."}</p>`; }
+function libBlock() { const n = c => LIB.filter(b => b.c === c).length, sh = Object.keys(libShelf()).length;
+  return `<div class="lb-start"><h3>Start here</h3><div class="lb-strip">${LIB_START.map(t => LIB.find(b => b.t === t)).filter(Boolean).map(b => `<button class="lb-mini" data-find="${esc(b.t)}">${libCover(b)}<span>${esc(b.t.split(":")[0])}</span></button>`).join("")}</div></div>
+    <div class="lb-tools"><label class="sr" for="lbq">Search books</label><input type="search" id="lbq" placeholder="Search by title, author or topic, for example control charts" value="${esc(LIBF.q)}">
+      <select id="lbl" aria-label="Level"><option value="0">All levels</option><option value="1"${LIBF.l === 1 ? " selected" : ""}>Start here</option><option value="2"${LIBF.l === 2 ? " selected" : ""}>Intermediate</option><option value="3"${LIBF.l === 3 ? " selected" : ""}>Advanced</option></select>
+      <button class="lb-tg" id="lbfree" aria-pressed="${LIBF.free}">Free to read <small>${LIB.filter(b => b.f).length}</small></button><button class="lb-tg" id="lbshelf" aria-pressed="${LIBF.shelf}">My shelf <small>${sh}</small></button></div>
+    <div class="lb-cats" role="group" aria-label="Topics"><button data-cat="" aria-pressed="${!LIBF.c}">All <small>${LIB.length}</small></button>${LIB_CATS.map(([k, nm, col]) => `<button data-cat="${k}" aria-pressed="${LIBF.c === k}" style="--bc:${col}"><i></i>${nm} <small>${n(k)}</small></button>`).join("")}</div>
+    <div id="lbgrid">${libGrid()}</div>`; }
+function wireLib(V) { const redraw = () => { el("lbgrid").innerHTML = libGrid(); wireShelf(); }, full = () => { const y = scrollY; el("lbhost").innerHTML = libBlock(); wireLib(V); scrollTo(0, y); };
+  const wireShelf = () => V.querySelectorAll("[data-shelf]").forEach(b => b.onclick = () => { const sh = libShelf(), id = b.dataset.shelf; sh[id] = ((sh[id] || 0) + 1) % 3; if (!sh[id]) delete sh[id]; localStorage.setItem(KEY, JSON.stringify(ST));
+    b.setAttribute("aria-pressed", !!sh[id]); b.textContent = sh[id] === 2 ? "Finished" : sh[id] === 1 ? "On my shelf" : "Add to shelf"; const c = el("lbshelf"); if (c) c.querySelector("small").textContent = Object.keys(sh).length; });
+  const q = el("lbq"); q.oninput = () => { LIBF.q = q.value; redraw(); };
+  el("lbl").onchange = e => { LIBF.l = +e.target.value; redraw(); };
+  el("lbfree").onclick = () => { LIBF.free = !LIBF.free; full(); };
+  el("lbshelf").onclick = () => { LIBF.shelf = !LIBF.shelf; full(); };
+  V.querySelectorAll("[data-cat]").forEach(b => b.onclick = () => { LIBF.c = b.dataset.cat; full(); });
+  V.querySelectorAll("[data-find]").forEach(b => b.onclick = () => { Object.assign(LIBF, { q: b.dataset.find, c: "", l: 0, free: false, shelf: false }); full(); el("lbgrid").scrollIntoView({ behavior: "smooth", block: "start" }); });
+  wireShelf(); }
 
 </script>
 <script>
@@ -9131,7 +9433,7 @@ function renderHomeClassic() {
   <section class="teaser">
     <div class="page-head"><h2>Innovation: where statistics changed the outcome</h2><p>Code-breaking, lunchboxes, million-dollar prizes and a headline worth $100 million a year. Stories, videos, project ideas and your own idea canvas.</p></div>
     <div class="teaser-row">${STORIES.slice(0, 4).map(s => `<a href="#inno"><span class="story-num">${s.big}</span><b>${esc(s.t)}</b><span class="muted small">${s.cap}</span></a>`).join("")}</div>
-    <div class="row" style="margin-top:18px"><a class="btn primary" href="#inno">Open Innovation</a><a class="btn" href="#games">Play the stat games</a></div>
+    <div class="row" style="margin-top:18px"><a class="btn primary" href="#inno">Open Innovation</a><a class="btn" href="#games">Open Games Corner</a></div>
   </section>
 
   <section class="split">
@@ -9187,7 +9489,7 @@ let filt = { q: "", ph: "" };
 function renderLearn(mi) {
   const v = el("view-learn"), m = mi !== undefined && mi !== "" ? mod(+mi) : null;
   v.innerHTML = (m ? `<a class="back" href="#learn">All chapters</a><div class="page-head"><h2>Chapter ${m.id}. ${m.name}</h2><p>${m.desc}</p></div>`
-      : `<div class="page-head"><h2>Terms</h2><p>${TERMS.length} terms in ten chapters. Search by name or meaning, or filter by the DMAIC phase where the tool is used.</p></div>`) +
+      : `<div class="page-head"><h2>Terminology Corner</h2><p>${TERMS.length} terms in ten chapters. Search by name or meaning, or filter by the DMAIC phase where the tool is used.</p></div>`) +
     `<div class="filters"><label class="sr" for="q">Search terms</label><input type="search" id="q" placeholder="Search, for example Cpk, p-value, Pareto" value="${esc(filt.q)}">
      <div class="seg" role="group" aria-label="Filter by phase">${["", "D", "M", "A", "I", "C"].map(p => `<button class="${filt.ph === p ? "on" : ""}" data-p="${p}" aria-pressed="${filt.ph === p}">${p ? PHASES[p].name : "All phases"}</button>`).join("")}</div></div><div id="tl"></div>`;
   const list = () => { const q = filt.q.toLowerCase().trim();
@@ -9213,7 +9515,7 @@ function openTerm(id) { const t = TERM[id]; if (!t) return; const m = mod(t.m), 
     ${sec("Data you need", t.data)}
     ${sec("Examples", `<div class="pair"><div><h5>At work</h5>${t.work}</div><div><h5>In your life</h5>${t.life}</div></div>`)}
     ${sec("Watch out for", t.mis, "warn")}
-    ${sec("Source", `<span class="src">${t.ref} Full citations are under Sources.</span>`)}
+    ${sec("Source", `<span class="src">${t.ref} Full citations are in Reading Corner.</span>`)}
     ${(() => { const md = termMedia(t); return sec("Watch", termVids(t) + `<ul class="links-list">${md.videos.map(v => `<li><a href="${v.u}" target="_blank" rel="noopener">${esc(v.l)}</a><small>${v.s}</small></li>`).join("")}</ul>`) +
       sec("Read", `<ul class="links-list">${md.books.map(x => `<li><b>${esc(x.b.t)}</b>, ${esc(x.b.a)}. <span class="muted">${x.b.why}</span><br><a href="${x.ol}" target="_blank" rel="noopener">Find it on Open Library</a> <span class="muted">or</span> <a href="${x.ia}" target="_blank" rel="noopener">Internet Archive</a></li>`).join("")}${md.free.map(([l, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${esc(l)}</a><small>Free to read online</small></li>`).join("")}</ul>`); })()}
     ${cs.length ? sec("Case studies", cs.map(c => `<a class="tag" href="#cases">${esc(c.t)}</a>`).join("")) : ""}
@@ -9240,7 +9542,7 @@ function renderCases() { const h = CASES.filter(c => c.tag === "Historical").len
    <div class="body"><h3>${esc(c.t)}</h3><p>${c.story}</p><dl><dt>Data</dt><dd>${c.data}</dd><dt>Tools</dt><dd>${c.terms.map(termLink).join("")}</dd></dl><div class="lesson"><b class="ui">What you should take from it.</b> ${c.lesson}</div><p class="cite">${c.ref}</p></div></article>`).join("")}</div>`; }
 
 /* ---------- tasks ---------- */
-function renderTasks() { el("view-tasks").innerHTML = `<div class="page-head"><h2>Real-life tasks</h2><p>Statistics becomes yours when you use it on your own data. Each chapter has one task worth 30 XP. The capstone project is a full DMAIC cycle, 20 XP per phase.</p></div>
+function renderTasks() { el("view-tasks").innerHTML = `<div class="page-head"><h2>Real Life Corner</h2><p>Statistics becomes yours when you use it on your own data. Each chapter has one task worth 30 XP. The capstone project is a full DMAIC cycle, 20 XP per phase.</p></div>
   <div class="articles">${TASKS.map((t, i) => { const m = mod(t.m); return `<article class="art"><div class="side"><b>Chapter ${m.id}</b>${m.name}</div><div class="body"><h3>${esc(t.t)}</h3><p>${t.goal}</p><ol class="steps">${t.steps.map(s => `<li>${s}</li>`).join("")}</ol><dl><dt>Data</dt><dd>${t.data}</dd><dt>Hand in</dt><dd>${t.out}</dd><dt>Terms</dt><dd>${t.terms.map(termLink).join("")}</dd></dl><label class="check"><input type="checkbox" ${ST.tasks[i] ? "checked" : ""} onchange="toggleTask(${i},this.checked)"> I finished this task</label></div></article>`; }).join("")}</div>
   <div class="capstone"><h2>Capstone: your own DMAIC project</h2><p class="muted" style="margin-top:8px;max-width:var(--measure)">Choose a process you can measure: a family business, a university service, a part-time job, or your own routine. Work alone or in a team of three and present it in ten slides, the way Green Belt projects are reviewed in industry.</p>
   ${CAPSTONE.steps.map(([p, s]) => `<div class="cap-step"><span class="L">${p}</span><div><h4>${PHASES[p].name}</h4>${s}</div><label class="check" style="margin:0"><input type="checkbox" ${ST.cap[p] ? "checked" : ""} onchange="toggleCap('${p}',this.checked)"> Done</label></div>`).join("")}</div>`; }
@@ -9261,16 +9563,16 @@ function markQ(i, j) { const q = QUIZ[i]; document.querySelectorAll(`#q${i} .opt
 function resetQuiz(m) { QUIZ.forEach((q, i) => { if (q.m === m) { delete ST.quiz[i]; delete ST.quiz["c" + i]; } }); save(); renderQuiz(m); }
 
 /* ---------- sources ---------- */
-function renderRes() { el("view-res").innerHTML = `<section><div class="page-head"><h2>Websites worth bookmarking</h2><p>Reliable and mostly free. Start with the NIST e-Handbook: it covers almost every method on this site with worked industrial examples.</p></div>
+function renderRes() { el("view-res").innerHTML = `<div class="page-head" style="max-width:none"><h2>Reading Corner</h2><p style="max-width:var(--measure)">${LIB.length} books on statistics, quality, Lean Six Sigma, industrial engineering, data, innovation and how to learn, chosen to go with the corners of this site. ${LIB.filter(b => b.f).length} can be read free online, legally. Save books to your shelf as you go.</p></div>
+  <section id="lbhost">${libBlock()}</section>
+  <section><div class="page-head"><h2>Websites worth bookmarking</h2><p>Reliable and mostly free. Start with the NIST e-Handbook: it covers almost every method on this site with worked industrial examples.</p></div>
   <div class="sites">${SITES.map(s => `<a class="site" href="${s.u}" target="_blank" rel="noopener"><h4>${esc(s.n)}</h4><p>${s.w}</p><small>${s.u.replace(/^https?:\/\//, "").replace(/\/$/, "")}</small></a>`).join("")}</div></section>
   <section><div class="page-head"><h2>Video channels</h2><p>Every term page links to searches inside these channels, so you always see their current lessons for that exact term.</p></div>
   <div class="sites">${CHANNELS.map(c => `<a class="site" href="${c.u}" target="_blank" rel="noopener"><h4>${esc(c.n)}</h4><p>${c.w}</p><small>${c.u.replace("https://www.", "")}</small></a>`).join("")}</div></section>
-  <section><div class="page-head"><h2>Books to read in full</h2><p>The textbooks behind the term pages. Open Library shows library copies and editions, and some can be borrowed free with an account. Internet Archive lists scanned copies that may be borrowable.</p></div>
-  <div class="sites">${Object.values(BOOKS).map(b => `<div class="site"><h4 style="color:var(--ink)">${esc(b.t)}</h4><p>${esc(b.a)}. ${b.why}</p><small><a href="https://openlibrary.org/search?q=${enc(b.t + " " + b.a.split(" and ")[0])}" target="_blank" rel="noopener">Open Library</a> &nbsp; <a href="https://archive.org/search?query=${enc(b.t)}" target="_blank" rel="noopener">Internet Archive</a></small></div>`).join("")}</div></section>
   <section><div class="page-head"><h2>Scientific references</h2><p>Definitions, formulas and acceptance criteria on this site follow these textbooks, standards and peer-reviewed papers. Term pages cite the chapter or section.</p></div>
   <table class="t"><thead><tr><th>Short name</th><th>Reference</th><th>Used for</th></tr></thead><tbody>${REFS.map(r => `<tr><td><b class="ui">${r.k}</b></td><td>${r.t}</td><td class="muted">${r.use}</td></tr>`).join("")}</tbody></table>
   <p class="note" style="margin-top:22px">Where industry practice is a convention rather than a mathematical result, such as the 1.5-sigma shift, the 80/20 split or rule-of-thumb thresholds for r and Cpk, the term page says so.</p></section>
-  <section><h3>Reset progress</h3><p class="muted">Clears learned terms, answers, tasks and XP stored in this browser.</p><button class="btn quiet" onclick="if(confirm('Clear all progress in this browser?')){localStorage.removeItem(KEY);location.reload()}">Clear my progress</button></section>`; }
+  <section><h3>Reset progress</h3><p class="muted">Clears learned terms, answers, tasks and XP stored in this browser.</p><button class="btn quiet" onclick="if(confirm('Clear all progress in this browser?')){localStorage.removeItem(KEY);location.reload()}">Clear my progress</button></section>`; wireLib(el("view-res")); }
 
 /* ---------- init ---------- */
 document.querySelectorAll("a[data-v]").forEach(a => { a.href = "#" + a.dataset.v; });
@@ -9697,7 +9999,7 @@ const TV_DEF = [
     { k: "shark", n: "Shark Tank", sub: "Entrepreneurs pitch to the Sharks", g: "pitch", col: "#1E88E5" },
     { k: "dragons", n: "Dragons' Den", sub: "BBC and CBC: pitches and negotiations", g: "pitch", col: "#C62828" },
     { k: "arshark", n: "شارك تانك مصر", sub: "Shark Tank Egypt", g: "pitch", ar: true, col: "#00897B" },
-    { k: "games", n: "Game Shows", sub: "Family Feud, Jeopardy!, Millionaire, The Chase", g: "game", col: "#F9A825" },
+    { k: "games", n: "Game Shows", sub: "Family Feud (answers come from real surveys), Jeopardy!, Millionaire, The Chase", g: "game", col: "#F9A825" },
     { k: "bank", n: "بنك المعلومات", sub: "Bank AlMalomat: the Arabic knowledge quiz, every episode in order", g: "game", ar: true, col: "#0D47A1" },
     { k: "argames", n: "مسابقات", sub: "الملياردير مع جورج قرداحي، فاملي فيود", g: "game", ar: true, col: "#8E24AA" },
     { k: "eqk", n: "اقتصاد الكوكب", sub: "Planet Economy: the stories behind companies, money and markets, every episode", g: "biz", ar: true, col: "#2E7D32" },
@@ -9904,8 +10206,8 @@ function renderCorner() { icHead("corner");
   <section><div class="page-head"><h2>Five centuries of innovators</h2><p>${HEROES.length} people, from Cardano to Hinton. Scroll the timeline. Each card says what the person gave us and how you can use it this week.</p></div>
    <ol class="ic-line">${sorted.map(h => `<li><span class="ic-yr">${icYear(h)}</span><b>${esc(h.n)}</b><span class="muted small">${esc(h.f)}</span><p>${h.gave.split(". ")[0]}.</p><p class="ic-use"><b class="ui">Try it.</b> ${h.use}</p></li>`).join("")}</ol></section>
 
-  <section><div class="page-head"><h2>Watch</h2><p>Three videos on innovation in quality, operations and data, new every day. Over a thousand more in the video library.</p></div>
-   <div class="vids">${vids.map(v => videoFacade(v)).join("")}</div><div class="row" style="margin-top:14px"><a class="btn" href="#videos">Open the video library</a></div></section>`;
+  <section><div class="page-head"><h2>Watch</h2><p>Three videos on innovation in quality, operations and data, new every day. Over a thousand more in Videos Corner.</p></div>
+   <div class="vids">${vids.map(v => videoFacade(v)).join("")}</div><div class="row" style="margin-top:14px"><a class="btn" href="#videos">Open Videos Corner</a></div></section>`;
   wireVideos(el("view-corner")); if (typeof wireTV === "function") wireTV(el("view-corner")); icConstellation(el("icsky"), el("ictip")); }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", icSync); else icSync();
@@ -9953,7 +10255,7 @@ function ckIndex() { if (CK_INDEX) return CK_INDEX; const I = [];
   I.push({ g: "LSS Academy", t: "Road map: White to Black Belt", h: "#bb/guide" });
   BB.forEach(s => I.push({ g: "LSS Academy", t: s.n, h: "#bb/" + s.k, s: "Black Belt" }));
   AG_LIST.forEach(g => I.push({ g: "Game", t: g.n, h: "#bb/g-" + g.id, s: "Academy" }));
-  GAMES.forEach(g => I.push({ g: "Game", t: g.name, h: "#games/" + g.id, s: "Stat games" }));
+  GAMES.forEach(g => I.push({ g: "Game", t: g.name, h: "#games/" + g.id, s: "Games Corner" }));
   [["Take a timed mock exam", "#mcq/exam"], ["CLSSBB-format mock exam (165 questions)", "#mcq/clssbb"], ["Review my mistakes", "#mcq/review"]].forEach(([t, h]) => I.push({ g: "Action", t, h }));
   I.push({ g: "Action", t: "Use the light theme", run: () => setTheme("light") }, { g: "Action", t: "Use the dark theme", run: () => setTheme("dark") }, { g: "Action", t: "Follow the system theme", run: () => setTheme("system") },
     { g: "Action", t: "Start focus mode", run: () => focusSetup() }, { g: "Action", t: "Play or pause the Quran", run: () => qToggle() }, { g: "Action", t: "Replay the intro", run: () => playIntro() }, { g: "Action", t: "Back up my progress", run: () => backupProgress() });
